@@ -18,7 +18,7 @@ To clone and run this repository you'll need [Git](https://git-scm.com), [Node.j
 # Clone this repository
 git clone https://git.uni-paderborn.de/ltappe/asta-copyclient-angulardart.git
 # Go into the repository
-cd electron-angulardart-quickstart
+cd asta-copyclient-angulardart
 # Install dependencies
 npm install
 # Run the app
