@@ -7,10 +7,24 @@
 		"name": "AStA der Universität Paderborn",
 		"email": "it@asta.upb.de"
 	},
+	"contributors": [
+		{
+			"name": "Leon Tappe",
+			"email": "ltappe@mail.upb.de"
+		},
+		{
+			"name": "Michael Koch",
+			"email": "m.koch@emkay443.de"
+		}
+	],
 	"homepage": "https://asta.uni-paderborn.de/service/copyservice/",
 	"repository": {
 		"type": "git",
 		"url": "https://git.uni-paderborn.de/asta/asta-copyclient-angulardart"
+	},
+	"bugs": {
+		"url": "https://git.uni-paderborn.de/asta/asta-copyclient-angulardart/issues",
+		"email": "it@asta.upb.de"
 	},
 	"main": "main.js",
 	"scripts": {
