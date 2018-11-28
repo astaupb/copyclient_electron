@@ -1,21 +1,124 @@
 {
-  "name": "electron-angulardart-quickstart",
-  "version": "0.1.0",
-  "description": "A minimal Electron application displaying site provided by an AngularDart app",
-  "main": "main.js",
-  "scripts": {
-    "start": "./build_angular.sh && electron ."
-  },
-  "keywords": [
-    "Electron",
-    "quick",
-    "start",
-    "AngularDart",
-    "demo"
-  ],
-  "author": "Leon Tappe <ltappe@mail.upb.de>",
-  "license": "CC0-1.0",
-  "devDependencies": {
-    "electron": "^3.0.6"
-  }
+	"name": "asta-copyclient",
+	"productName": "AStA Copyclient",
+	"version": "0.0.10",
+	"description": "Copyclient für das Drucksystem des AStA Copyservice",
+	"author": {
+		"name": "AStA der Universität Paderborn",
+		"email": "it@asta.upb.de"
+	},
+	"homepage": "https://asta.uni-paderborn.de/service/copyservice/",
+	"repository": {
+		"type": "git",
+		"url": "https://git.uni-paderborn.de/asta/asta-copyclient-angulardart"
+	},
+	"main": "main.js",
+	"scripts": {
+		"start": "./build_angular.sh && electron ."
+	},
+	"keywords": [
+		"AStA",
+		"Copyclient",
+		"Copy",
+		"Print"
+	],
+	"license": "GPL-2.0-or-later",
+	"devDependencies": {
+		"electron": "^3.0.6",
+		"electron-builder": "^20.36.2"
+	},
+	"dependencies": {
+		"chokidar": "^2.0.4",
+		"command-line-args": "^5.0.2",
+		"drag-drop": "^4.2.0",
+		"electron-better-dialog": "^1.0.6",
+		"jquery": "^3.3.1",
+		"underscore": "^1.9.1",
+		"mime-types": "^2.1.21"
+	},
+	"build": {
+		"appId": "de.upb.asta.copyclient",
+		"files": [
+			"node_modules/**/*",
+			"main.js",
+			"package.json",
+			"index.html",
+			"includes"
+		],
+		"mac": {
+			"target": "pkg",
+			"category": "public.app-category.productivity",
+			"icon": "includes/icons/asta.icns",
+			"extraFiles": [
+				"fakeprinter/unix"
+			],
+			"type": "distribution"
+		},
+		"pkg": {
+			"scripts": "fakeprinter/unix",
+			"allowCurrentUserHome": false
+		},
+		"win": {
+			"target": [
+				"portable"
+			],
+			"icon": "includes/icons/asta.ico"
+		},
+		"linux": {
+			"target": [
+				"deb",
+				"rpm",
+				"pacman",
+				"tar.gz"
+			],
+			"extraFiles": [
+				"fakeprinter/unix",
+				"README.TXT",
+				"asta-copyclient.desktop",
+				"asta.svg"
+			],
+			"category": "Office",
+			"icon": "includes/icons/linux"
+		},
+		"deb": {
+			"afterInstall": "fakeprinter/unix/install_printer.sh",
+			"afterRemove": "fakeprinter/unix/uninstall_printer.sh",
+			"depends": [
+				"gconf2",
+				"gconf-service",
+				"libnotify4",
+				"libappindicator1",
+				"libxtst6",
+				"libnss3",
+				"cups",
+				"cups-filters"
+			]
+		},
+		"pacman": {
+			"afterInstall": "fakeprinter/unix/install_printer.sh",
+			"afterRemove": "fakeprinter/unix/uninstall_printer.sh",
+			"depends": [
+				"libappindicator3",
+				"gconf",
+				"libnotify",
+				"libxtst",
+				"nss",
+				"cups",
+				"cups-filters"
+			]
+		},
+		"rpm": {
+			"afterInstall": "fakeprinter/unix/install_printer.sh",
+			"afterRemove": "fakeprinter/unix/uninstall_printer.sh",
+			"depends": [
+				"gconf2",
+				"libnotify4",
+				"libappindicator1",
+				"libXtst6",
+				"mozilla-nss",
+				"cups",
+				"cups-filters"
+			]
+		}
+	}
 }
