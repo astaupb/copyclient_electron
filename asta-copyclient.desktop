@@ -1,0 +1,10 @@
+[Desktop Entry]
+Type=Application
+Version=1.0
+Name=AStA Copyclient
+Comment=Copyclient für das Drucksystem des AStA Copyservice
+Path=/opt/AStA Copyclient
+Exec=/opt/AStA Copyclient/asta-copyclient
+Icon=/opt/AStA Copyclient/asta.svg
+Terminal=false
+Categories=Office;

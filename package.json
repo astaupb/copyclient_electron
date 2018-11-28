@@ -1,0 +1,21 @@
+{
+  "name": "electron-angulardart-quickstart",
+  "version": "0.1.0",
+  "description": "A minimal Electron application displaying site provided by an AngularDart app",
+  "main": "main.js",
+  "scripts": {
+    "start": "./build_angular.sh && electron ."
+  },
+  "keywords": [
+    "Electron",
+    "quick",
+    "start",
+    "AngularDart",
+    "demo"
+  ],
+  "author": "Leon Tappe <ltappe@mail.upb.de>",
+  "license": "CC0-1.0",
+  "devDependencies": {
+    "electron": "^3.0.6"
+  }
+}

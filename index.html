@@ -1,0 +1,64 @@
+<!--
+ * @license LGPL-3.0-or-later
+ * Copyright (c) 2018 Michael Koch <m.koch@emkay443.de>
+ *
+ * This file is part of AStA Copyclient.
+ * AStA Copyclient is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU Lesser General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * AStA Copyclient is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU Lesser General Public License
+ * along with AStA Copyclient.  If not, see <http://www.gnu.org/licenses/>.
+-->
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, minimum-scale=1, user-scalable=no, minimal-ui, viewport-fit=cover">
+
+		<script type="text/javascript" src="includes/config.js"></script>
+		<script type="text/javascript" src="includes/l10n.js"></script>
+		<script type="text/javascript" src="includes/main.js"></script>
+		<script type="text/javascript" src="includes/copyclient.js"></script>
+
+		<link rel="stylesheet" href="includes/main.css">
+	</head>
+	<body onload="init();">
+		<h1 id="header"><script>writeString(0);</script></h1>
+		<div id="view-login" class="view" style="display: none;">
+			<h3><script>writeString(1);</script></h3>
+			<input type="text" id="username" class="textbox" placeholder="" onkeypress="loginKeypressEvent(event);"><br />
+			<input type="password" id="password" class="textbox" placeholder="" onkeypress="loginKeypressEvent(event);"><br />
+			<button class="button" onclick="doLogin();">Einloggen</button>
+		</div>
+		<div id="view-jobs" class="view" style="display: none;">
+			<h4><script>writeString(4);</script>: <span id="credit_amount"></span>€</h4>
+			<button id="upload-btn" onclick="showOpenPDF();"><script>writeString(60);</script></button>
+			<h2><script>writeString(5);</script></h2>
+			<table id="table-jobs">
+				<thead>
+					<tr>
+						<th style="width: 300px;"><script>writeString(6);</script></th>
+						<th style="width: calc(100% - 300px);"><script>writeString(7);</script></th>
+					</tr>
+				</thead>
+				<tbody>
+				</tbody>
+			</table><br />
+			<span id="msg-jobs" style="display: none;"><script>writeString(8);</script><br /><br /></span>
+			<button class="button" onclick="doLogout();"><script>writeString(9);</script></button>
+		</div>
+		<script type="text/javascript">
+			document.title = getString(0);
+			document.getElementById("username").setAttribute("placeholder", getString(2));
+			document.getElementById("password").setAttribute("placeholder", getString(3));
+		</script>
+	</body>
+</html>

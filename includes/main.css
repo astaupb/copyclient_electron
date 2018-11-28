@@ -1,0 +1,165 @@
+/*
+ * @license LGPL-3.0-or-later
+ * Copyright (c) 2018 Michael Koch <m.koch@emkay443.de>
+ *
+ * This file is part of AStA Copyclient.
+ * AStA Copyclient is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU Lesser General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * AStA Copyclient is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU Lesser General Public License
+ * along with AStA Copyclient.  If not, see <http://www.gnu.org/licenses/>.
+*/
+body {
+	position: fixed;
+	top: 0px;
+	left: 0px;
+	height: 100%;
+	width: 100%;
+	display: block;
+	margin: 0px;
+	overflow: auto;
+}
+
+input, select, button, html, body {
+	font-family: "Source Sans Pro", sans-serif;
+	font-size: 14px;
+}
+
+.monospace {
+	font-family: "Source Code Pro", monospace;
+}
+
+.button {
+	margin: 5px;
+	padding: 12px 24px;
+	overflow: hidden;
+	border-width: 0;
+	outline: none;
+	border-radius: 2px;
+	box-shadow: 0 1px 4px rgba(0, 0, 0, .6);
+	background-color: #BBBBBB;
+	color: #FFFFFF;
+	cursor: pointer;
+	transition: background-color .3s;
+	text-transform: uppercase;
+	font-weight: bold;
+	outline: none;
+}
+
+.button:hover {
+	background-color: #999999;
+}
+
+.button:active {
+	background-color: #EDEDED;
+}
+
+.clickable {
+	cursor: pointer;
+}
+
+.clickable:not(#header-logo):hover {
+	background-color: #7094C2;
+	color: #FFFFFF;
+}
+
+.textbox {
+	background-color: #F5F5F5;
+	width: 300px;
+	height: 47px;
+	border: none;
+	border-bottom: 1px solid #4A4A4A;
+	margin: 5px;
+	padding-left: 10px;
+	outline: none;
+	transition: padding-top .3s, height .3s, border-botton .3s;
+}
+
+.textbox:focus {
+	color: #6200EE;
+	border-bottom: 2px solid #6200EE;
+	padding-top: 12px;
+	height: 35px;
+}
+
+.textbox::placeholder {
+	color: #BDBDBD;
+	position: relative;
+	top: 0;
+	transition: top .3s, font-size .3s, color .3s;
+}
+
+.textbox:focus::placeholder {
+	color: #6200EE;
+	font-size: 80%;
+	position: relative;
+	top: -18px;
+}
+
+#info-user {
+	position: absolute;
+	top: 10px;
+	right: 10px;
+}
+
+table#table-jobs > * > tr:nth-child(even) {
+	background: #D1E2ED;
+}
+
+table#table-jobs > * > tr:nth-child(odd) {
+	background: #FFFFFF;
+}
+
+table#table-jobs > * > * > th {
+	background: #54ABDD;
+	color: #FFFFFF;
+	text-align: left;
+}
+
+th, td {
+	/*border: 1px solid black;*/
+	padding: 5px;
+}
+
+table#table-jobs {
+	width: calc(100% - 10px);
+	border-collapse: collapse;
+	border: 1px solid black;
+	margin: 5px;
+}
+
+img#details_preview {
+	width: 300px;
+	height: 424px;
+	border: 1px solid black;
+	margin: 5px;
+	position: absolute;
+	top: 100px;
+	right: 10px;
+}
+
+img#details_preview.wide {
+	width: 424px;
+	height: 300px;
+}
+
+input.long, select.long, progress.long {
+	width: 14em;
+}
+
+input.longer, select.longer, progress.longer {
+	width: 29em;
+}
+
+button#upload-btn {
+	position: absolute;
+	top: 10px;
+	right: 10px;
+}

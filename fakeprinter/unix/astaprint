@@ -1,0 +1,132 @@
+#!/bin/bash
+################# "astaprint" CUPS backend script ##############################
+#
+# /usr/lib/cups/backend/astaprint
+#
+# (c) September 2007  Kurt Pfeifle <pfeifle@kde.org>
+#                                  <kurt.pfeifle@infotec.com>
+#     Network printing consultant Linux/Unix/Windows/Samba/CUPS
+#
+# License: GNU GPLv2 or GPLv3 (your choice)
+# Warranty: None at all; you may need to fix included defects on your own.
+#
+
+backend=${0}
+jobid=${1}
+cupsuser=${2}
+jobtitle=${3}
+jobcopies=${4}
+joboptions=${5}
+jobfile=${6}
+printtime=$(date +%Y-%b-%d-%H-%M-%S)
+
+# we are free to compose the output filename written by the astaprint backend
+# in whatever way we like... However, we must be careful when using the
+# $jobtitle part -- the job may originate from a web browser and contain
+# slashes and all kinds of illegal or problematic characters. Therefore
+# we prefer to radically convert every "weird" character to an underscore
+# for our current purpose...
+
+sanitized_jobtitle="$(echo ${jobtitle} | tr [[:blank:]:/%\&=+?\\\\#\'\`\´\*] _)"
+
+# the following lines would do (nearly) the same as the above, but slower
+# -- yet better readable (and the above may be in need of some fixing still):
+#sanitized_jobtitle="$(echo ${jobtitle} \
+#                |tr [:blank:] _ \
+#                |tr : _ \
+#                |tr \"\ \" _ \
+#                |tr / _ \
+#                |tr % _ \
+#                |tr \' _ \
+#                |tr \` _ \
+#                |tr \´ _ \
+#                |tr \' _ \
+#                |tr \& _ \
+#                |tr \* _ \
+#                |tr \# _ \
+#                |tr = _ \
+#                |tr + _ \
+#                |tr ? _ \
+#                |tr \\\\ _ )"
+##               # last line to get rid of "backslashes"...
+
+# now for our final job output name:
+outname=${sanitized_jobtitle}
+# we include the $printtime part to have a uniq name in case the same job
+# is tested with different settings to be kept for comparing. It is also
+# useful for aligning debug efforts to CUPS' error_log entries.
+
+
+# we will read the output directory from the printers $DEVICE_URI environment
+# variable that should look s.th. like "astaprint:/path/to/a/directory" and write
+# our printfile as $outname there....
+
+# Now do the real work:
+case ${#} in
+	0)
+		# this case is for "backend discovery mode"
+		echo "file astaprint \"AStA Copyclient Fakeprinter\" \"AStA Copyclient Fakeprinter for UNIX-like operating systems\""
+		exit 0
+		;;
+	5)
+		if [ ! -e ${DEVICE_URI#astaprint:} ]; then
+			mkdir -p ${DEVICE_URI#astaprint:}
+			chmod 777 ${DEVICE_URI#astaprint:}
+		fi
+
+		# backend needs to read from stdin if number of arguments is 5
+		tmpfile="$(mktemp)"
+		cat - > $tmpfile
+
+		# remove PJL shit
+		if [[ $(head -n 3 $tmpfile) == *"@PJL"* ]]; then
+			cat $tmpfile | sed -n '/^%PDF-/,$p' | sed -n '1,/^%%EOF/p' > ${DEVICE_URI#astaprint:}/${outname}.pdf
+		else
+			mv $tmpfile ${DEVICE_URI#astaprint:}/${outname}.pdf
+		fi
+
+		# remove tmp file
+		rm $tmpfile
+
+		# Make sure everyone can read it
+		chmod 777 ${DEVICE_URI#astaprint:}/${outname}.pdf
+		# WARNING! WARNING! WARNING! Don't use these file permissions
+		# on a production print server! This is for development convenience
+		# only! WARNING, security risk!
+		;;
+	6)
+		if [ ! -e ${DEVICE_URI#astaprint:} ]; then
+			mkdir -p ${DEVICE_URI#astaprint:}
+			chmod 777 ${DEVICE_URI#astaprint:}
+		fi
+
+		# backend needs to read from file if number of arguments is 6
+		tmpfile="$(mktemp)"
+		cat ${6} > $tmpfile
+
+		# remove PJL shit
+		if [[ $(head -n 3 $tmpfile) == *"@PJL"* ]]; then
+			cat $tmpfile | sed -n '/^%PDF-/,$p' | sed -n '1,/^%%EOF/p' > ${DEVICE_URI#astaprint:}/${outname}.pdf
+		else
+			mv $tmpfile ${DEVICE_URI#astaprint:}/${outname}.pdf
+		fi
+
+		# remove tmp file
+		rm $tmpfile
+
+		# Make sure everyone can read it
+		chmod 777 ${DEVICE_URI#astaprint:}/${outname}.pdf
+		;;
+	1|2|3|4|*)
+		# these cases are unsupported
+		echo " "
+		echo " Usage: astaprint job-id user title copies options [file]"
+		echo " "
+		echo " (Install as CUPS backend in /usr/lib/cups/backend/astaprint)"
+		echo " (Use as 'device URI' like \"astaprint:/path/to/writeable/directory\" for printer installation.)"
+		exit 0
+esac
+
+echo 1>&2
+
+################# end "astaprint" ##############################################

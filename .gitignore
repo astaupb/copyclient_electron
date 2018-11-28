@@ -1,0 +1,11 @@
+.init
+package-lock.json
+node_modules
+config.*
+dist
+fakeprinter/drivers/32/*
+fakeprinter/drivers/64/*
+*.code-workspace
+*.exe
+out
+web/*
