@@ -1,4 +1,4 @@
-# asta-copyclient-angulardart
+# copyclient_electron
 
 Copyclient for the AStA Copyservice Paderborn.
 
@@ -16,7 +16,7 @@ To clone and run this repository you'll need [Git](https://git-scm.com), [Node.j
 
 ```bash
 # Clone this repository
-git clone https://git.uni-paderborn.de/ltappe/asta-copyclient-angulardart.git
+git clone https://git.uni-paderborn.de/ltappe/copyclient_electron_.git
 # Go into the repository
 cd asta-copyclient-angulardart
 # Install dependencies
@@ -24,6 +24,16 @@ npm install
 # Run the app
 npm start
 ```
+
+## How To Install On Unsupported Distributions
+
+- install cups and cups-filters
+- enable and start cups daemon
+- create directory "/opt/AStA Copyclient/"
+- copy contents of this folder to "/opt/AStA Copyclient/"
+- change directory to "/opt/AStA Copyclient/fakeprinter/unix"
+- run "install_printer.sh" as root or with sudo
+- copy "asta-copyclient.desktop" to "/usr/share/applications"
 
 ## License
 
