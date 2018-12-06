@@ -20,11 +20,11 @@
 	"homepage": "https://asta.uni-paderborn.de/service/copyservice/",
 	"repository": {
 		"type": "git",
-		"url": "https://git.uni-paderborn.de/asta/asta-copyclient-angulardart"
+		"url": "https://git.uni-paderborn.de/asta/copyclient_electron"
 	},
 	"bugs": {
-		"url": "https://git.uni-paderborn.de/asta/asta-copyclient-angulardart/issues",
-		"email": "it@asta.upb.de"
+		"url": "https://git.uni-paderborn.de/asta/copyclient_electron/issues",
+		"email": "app@asta.upb.de"
 	},
 	"main": "main.js",
 	"scripts": {
