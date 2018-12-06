@@ -1,0 +1,3 @@
+[submodule "angularapp"]
+	path = src
+	url = https://git.uni-paderborn.de/asta/copyclient_ng.git
