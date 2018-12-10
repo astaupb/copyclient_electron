@@ -50,8 +50,6 @@ var _dragDrop = false;
  *
  * @param {String} jobfile - The full path to the job file to be uploaded.
  * @param {boolean} [delFile=true] - Whether to delete the job file after uploading or not.
- * @param {boolean} [uploadNotif=false] - Whether to show a notification after uploading or not.
- * @param {Object} [uploadNotifFile={}] - The original print job. This is needed to get the original job name when showing a notification.
  */
 function uploadJob(jobfile) {
 	var delFile = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : true;
@@ -76,6 +74,9 @@ function uploadJob(jobfile) {
 				}
 			});
 			document.dispatchEvent(event);
+			new Notification(getString(51), {
+				body: getString(52).format(filename, filesize_mb)
+			});
 			if (delFile) {
 				fs.unlink(jobfile, function(err) {
 					if (! err) {
@@ -173,7 +174,7 @@ function setupDragDrop() {
 		_dragDrop = dragDrop('body', function (files, pos, fileList, directories) {
 			$.each(fileList, function(index, file) {
 				if (file.type === "application/pdf") {
-					uploadJob(file.path, false, true, file);
+					uploadJob(file.path, false);
 				}
 			});
 		});
@@ -214,5 +215,13 @@ function init() {
 	document.addEventListener("unsetWatches", function(event) {
 		console.log("Caught event unsetWatches");
 		unsetWatches();
+	});
+	document.addEventListener("setupDragDrop", function(event) {
+		console.log("Caught event setupDragDrop");
+		setupDragDrop();
+	});
+	document.addEventListener("unsetDragDrop", function(event) {
+		console.log("Caught event unsetDragDrop");
+		unsetDragDrop();
 	});
 }
