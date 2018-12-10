@@ -72,7 +72,6 @@ function createTray() {
 					createWindow();
 				} else {
 					mainWindow.show();
-					mainWindow.webContents.executeJavaScript("setupIntervals();");
 				}
 			}
 		},
@@ -95,13 +94,11 @@ function createTray() {
 	tray.on('click', function() {
 		if (mainWindow.isVisible()) {
 			mainWindow.hide();
-			mainWindow.webContents.executeJavaScript("unsetIntervals();");
 		} else {
 			if (! _windowCreated) {
 				createWindow();
 			} else {
 				mainWindow.show();
-				mainWindow.webContents.executeJavaScript("setupIntervals();");
 			}
 		}
 	});
