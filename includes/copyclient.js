@@ -91,8 +91,7 @@ function uploadJob(jobfile) {
 
 /**
  * Set up Chokidar file system watcher.<br />
- * This will watch a specific directory
- * (C:\astaprint on Windows, /tmp/astaprint for UNIX)
+ * This will watch the spool directory
  * for new and changed files and execute uploadJob on them.
  *
  * @returns {boolean} - Whether setting up watcher was succesful or not.
