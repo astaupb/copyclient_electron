@@ -19,6 +19,7 @@ default: install run
 
 install:
 	npm install
+	./build_angular.sh
 
 run:
 	npm start
