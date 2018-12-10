@@ -35,11 +35,11 @@ function l10n() {
 	}
 
 	try {
-		json = JSON.parse(fs.readFileSync(path.join(__dirname, (__dirname.includes('includes') ? '': 'includes'), 'locales', _locale + '.json'), 'utf8'));
+		json = JSON.parse(fs.readFileSync(path.join(__dirname, 'locales', _locale + '.json'), 'utf8'));
 	} catch (e) {
 		console.warn("Couldn't find locale, falling back to default locale (German).");
 		try {
-			json = JSON.parse(fs.readFileSync(path.join(__dirname, (__dirname.includes('includes') ? '': 'includes'), 'locales/de.json'), 'utf8'));
+			json = JSON.parse(fs.readFileSync(path.join(__dirname, 'locales/de.json'), 'utf8'));
 		} catch (e2) {
 			console.error("Couldn't find default locale (German), giving up.");
 		}
