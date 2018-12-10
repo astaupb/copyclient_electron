@@ -91,6 +91,33 @@ function uploadJob(jobfile) {
 }
 
 /**
+ * Show "open file" dialog
+ */
+function showOpenPDF() {
+
+	remote.dialog.showOpenDialog({
+		filters: [
+			{
+				name: getString(59),
+				extensions: ['pdf']
+			}
+		],
+		properties: [
+			'openFile',
+			'multiSelections',
+			'showHiddenFiles',
+			'createDirectory'
+		]
+	}, function(files) {
+		if (files === undefined) return;
+
+		$.each(files, function(index, file) {
+			uploadJob(file, false);
+		});
+	});
+}
+
+/**
  * Set up Chokidar file system watcher.<br />
  * This will watch the spool directory
  * for new and changed files and execute uploadJob on them.
@@ -223,5 +250,9 @@ function init() {
 	document.addEventListener("unsetDragDrop", function(event) {
 		console.log("Caught event unsetDragDrop");
 		unsetDragDrop();
+	});
+	document.addEventListener("showOpenPDF", function(event) {
+		console.log("Caught event showOpenPDF");
+		showOpenPDF();
 	});
 }

@@ -129,14 +129,12 @@ function createWindow() {
 	mainWindow.on('minimize', function(event) {
 		event.preventDefault();
 		mainWindow.hide();
-		mainWindow.webContents.executeJavaScript("unsetIntervals();");
 	});
 
 	mainWindow.on('close', function(event) {
 		if (! app.isQuitting) {
 			event.preventDefault();
 			mainWindow.hide();
-			mainWindow.webContents.executeJavaScript("unsetIntervals();");
 		}
 
 		return false;
