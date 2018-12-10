@@ -52,14 +52,9 @@ var _dragDrop = false;
  * @param {boolean} [delFile=true] - Whether to delete the job file after uploading or not.
  * @param {boolean} [uploadNotif=false] - Whether to show a notification after uploading or not.
  * @param {Object} [uploadNotifFile={}] - The original print job. This is needed to get the original job name when showing a notification.
- * @see doKioskLogin
- * @see _callBackend
- * @see showJobs
  */
 function uploadJob(jobfile) {
 	var delFile = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : true;
-	var uploadNotif = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : false;
-	var uploadNotifFile = arguments.length > 3 && arguments[3] !== undefined ? arguments[3] : {};
 	var r;
 	var fs = require("fs");
 	var path = require("path");
@@ -81,6 +76,15 @@ function uploadJob(jobfile) {
 				}
 			});
 			document.dispatchEvent(event);
+			if (delFile) {
+				fs.unlink(jobfile, function(err) {
+					if (! err) {
+						console.log("file " + filename + " successfully deleted");
+					} else {
+						console.error("could not delete file " + filename);
+					}
+				});
+			}
 		}
 	});
 }
