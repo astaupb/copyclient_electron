@@ -128,7 +128,7 @@ function doLogin() {
 	var user = $("#username").val();
 	var pass = $("#password").val();
 
-	_callBackend("/user/login", function(r) {
+	_callBackend("/user/tokens", function(r) {
 		if (r !== "error" && r !== "timeout") {
 			localStorage.setItem("token", r);
 
@@ -151,6 +151,8 @@ function doLogin() {
 							_callback(..._callbackArgs);
 						}
 					}
+				} else {
+					showMessage(getString(35), getString(43), "error");
 				}
 			}, 'GET');
 		} else {
@@ -217,6 +219,32 @@ function doKioskLogin(callback, callbackArgs) {
 }
 
 /**
+ * Register a new account on the backend
+ */
+function registerNewAccount() {
+	var user = $("#username").val();
+	var pass = $("#password").val();
+
+	if (user !== "" && pass !== "") {
+		if (confirm(getString(75))) {
+			_callBackend("/register", function(r) {
+				if (r !== "error" && r !== "timeout") {
+					showMessage(getString(76), getString(46));
+				}
+			}, 'POST', undefined, undefined, {
+				'type': 'application/json',
+				'content': JSON.stringify({
+					'username': user,
+					'password': pass
+				})
+			});
+		}
+	} else {
+		showMessage(getString(35), getString(43));
+	}
+}
+
+/**
  * Log user in when user presses enter (keyCode 13) on any of the dialog's input fields.
  *
  * @param {event} event - The keypress event of the invoker.
@@ -268,7 +296,7 @@ function showJobs() {
 		if (localStorage.getItem("token") !== "" && localStorage.getItem("token") !== null) {
 			_callBackend("/jobs", function(r) {
 				if (r !== "error" && r !== "timeout") {
-					if (typeof _currentJobs === "string") {
+					if (typeof _currentJobs === "string" || typeof r === "string") {
 						doLogout();
 						return false;
 					} else {
@@ -296,12 +324,12 @@ function showJobs() {
 							$("#table-jobs tbody").append("<tr class='clickable' onclick='showJobDetailsWindow(\"" + c.id + "\");'>" +
 							"<td><b>" + c.info.filename + "</b></td><td>" +
 							c.info.pagecount + " " + (c.info.pagecount > 1 ? getString(36) : getString(37)) + ", " +
-							(c.options.a3 ? getString(24) : getString(25)) + ", " +
+							(c.options.a3 ? getString(25) : getString(24)) + ", " +
 							(c.info.color ? firstCharLowercase(getString(15)) : firstCharLowercase(getString(14))) + ", " +
 							(c.options.duplex === 0 ? firstCharLowercase(getString(17)) : (c.options.duplex === 1 ? firstCharLowercase(getString(18)) : firstCharLowercase(getString(19)))) + ", " +
 							((c.options.nup === 0 || c.options.nup === 1) ? firstCharLowercase(getString(38)) : firstCharLowercase(getString(39))) + ", " +
 							(c.options.collate ? firstCharLowercase(getString(27)) : firstCharLowercase(getString(28))) + ", " +
-							(c.options.keep ? firstCharLowercase(getString(30)) : firstCharLowercase(getString(31))) + " " + firstCharLowercase(getString(6)) + ", " +
+							firstCharLowercase(c.options.keep ? getString(31) : getString(30)) + ", " +
 							(c.options.nup !== 1 ? getString(62).format(c.options.nup, getString(36)) + ", " : "") +
 							(c.options.range === "" ? firstCharLowercase(getString(40)) : firstCharLowercase(getString(71).format((c.options.range.includes(",") || c.options.range.includes("-") ? getString(36) : getString(37)), c.options.range))) +
 							"</td></tr>");
@@ -542,7 +570,7 @@ function uploadJob(jobfile) {
 	} else if (localStorage.getItem("token") !== "" && localStorage.getItem("token") !== null) {
 		fs.readFile(jobfile, function(err, data) {
 			if (! err) {
-				_callBackend("/jobs?filename=" + filename + "&color=true", function(r) {
+				_callBackend("/jobs/queue?filename=" + filename + "&color=true", function(r) {
 					if (r !== "error" && r !== "timeout") {
 						console.log("completed uploading");
 						new Notification(getString(51), {
@@ -585,12 +613,11 @@ function uploadJob(jobfile) {
 function updateJobOption(key) {
 	var value = arguments.length > 1 && arguments[1] !== undefined && arguments[1] !== null ? arguments[1] : $("#details_" + key).val();
 	var id = $("#details_uid").val();
-	var options = {};
 
 	if (! isNaN(value) && key !== "range") {
-		options[key] = parseInt(value);
+		value = parseInt(value);
 	} else {
-		options[key] = value.toString();
+		value = value.toString();
 	}
 
 	switch (key) {
@@ -604,10 +631,10 @@ function updateJobOption(key) {
 		case "copies":
 			if (parseInt(value) < 1) {
 				$("#details_" + key).val("1");
-				options[key] = 1;
+				value = 1;
 			} else if (parseInt(value) > 999) {
 				$("#details_" + key).val("999");
-				options[key] = 999;
+				value = 999;
 			}
 			break;
 		case "color":
@@ -616,27 +643,27 @@ function updateJobOption(key) {
 		case "keep":
 			if (! [0, 1].includes(parseInt(value))) {
 				$("#details_" + key).val("0");
-				options[key] = false;
+				value = false;
 			} else {
-				options[key] = !!value;
+				value = !!value;
 			}
 			break;
 		case "duplex":
 			if (! [0, 1, 2].includes(parseInt(value))) {
 				$("#details_" + key).val("0");
-				options[key] = 0;
+				value = 0;
 			}
 			break;
 		case "nuppageorder":
 			if (! [0, 1, 2, 3].includes(parseInt(value))) {
 				$("#details_" + key).val("0");
-				options[key] = 0;
+				value = 0;
 			}
 			break;
 		case "nup":
 			if (! [1, 2, 4].includes(parseInt(value))) {
 				$("#details_" + key).val("1");
-				options[key] = 1;
+				value = 1;
 			}
 			break;
 		default:

@@ -101,7 +101,7 @@ function _callBackend(request) {
 
 	http.onload = function(e) {
 		if (http.readyState === 4) {
-			if (http.status === 200 || http.status === 202 || http.status === 205) {
+			if ($.inArray(http.status, [200, 202, 204, 205]) !== -1) {
 				if (http.response === "" || http.response === null) {
 					console.debug("_callBackend: empty response");
 					callback('error', e);
