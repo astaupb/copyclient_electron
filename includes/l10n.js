@@ -21,7 +21,7 @@ let json;
 const path = require("path");
 const electron = require('electron');
 const fs = require('fs');
-const config = require(path.join(__dirname, (__dirname.includes('includes') ? '': 'includes'), 'config.js'));
+const config = require(path.join(__dirname, 'config.js'));
 _locale = config._locale;
 let app = electron.app ? electron.app : electron.remote.app;
 
