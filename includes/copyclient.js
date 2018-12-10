@@ -68,10 +68,10 @@ function uploadJob(jobfile) {
 		if (! err) {
 			console.log("Sending " + filename + " via custom event to Dart");
 			var event = new CustomEvent("uploadJob", {
-				detail: {
+				detail: JSON.stringify({
 					filename: filename,
 					data: data
-				}
+				})
 			});
 			document.dispatchEvent(event);
 			new Notification(getString(51), {
