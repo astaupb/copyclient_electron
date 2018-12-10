@@ -70,7 +70,7 @@ function uploadJob(jobfile) {
 			var event = new CustomEvent("uploadJob", {
 				detail: JSON.stringify({
 					filename: filename,
-					data: data
+					data: data.toString('base64')
 				})
 			});
 			document.dispatchEvent(event);
