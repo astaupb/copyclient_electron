@@ -16,7 +16,7 @@
 # You should have received a copy of the GNU General Public License
 # along with AStA Copyclient.  If not, see <http://www.gnu.org/licenses/>.
 
-if [[ "$(uname)" ==#Darwin* ]]; then
+if [[ "$(uname)" == *Darwin* ]]; then
 	cups_backend_dir="/usr/libexec/cups/backend"
 	cups_backend_file="astaprint"
 	cups_ppd_file="Ricoh-MP_C4504ex-PDF-Ricoh.ppd"
@@ -38,23 +38,23 @@ else
 	spool_dir="/var/spool/astaprint"
 	if [ -x "$(command -v systemctl)" ]; then # systemd exists
 		if systemctl list-unit-files | grep org.cups.cupsd.service; then
-			systemctl enable org.cups.cupsd.service
-			systemctl start org.cups.cupsd.service
+			sudo systemctl enable org.cups.cupsd.service
+			sudo systemctl start org.cups.cupsd.service
 		else
 			if systemctl list-unit-files | grep cups.service; then
-				systemctl enable cups.service
-				systemctl start cups.service
+				sudo systemctl enable cups.service
+				sudo systemctl start cups.service
 			fi
 		fi
 	else
 		if [ -x "$(command -v service)" ]; then # service exists
 			if service --status-all 2>&1 | grep -Fq 'org.cups.cupsd'; then
-				update-rc.d enable org.cups.cupsd
-				service org.cups.cupsd start
+				sudo update-rc.d enable org.cups.cupsd
+				sudo service org.cups.cupsd start
 			else
 				if service --status-all 2>&1 | grep -Fq 'cups'; then
-					update-rc.d enable cups
-					service cups start
+					sudo update-rc.d enable cups
+					sudo service cups start
 				fi
 			fi
 		fi
