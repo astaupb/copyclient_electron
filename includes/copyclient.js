@@ -70,22 +70,17 @@ function uploadJob(jobfile) {
 	var filesize_b = fs.statSync(jobfile).size;
 	var filesize_mb = (filesize_b / 1000000.0).toFixed(2);
 
-	if (_kiosk && (localStorage.getItem("token") === "" || localStorage.getItem("token") === null)) {
-		doKioskLogin(uploadJob, [jobfile, delFile, uploadNotif, uploadNotifFile]);
-	} else if (localStorage.getItem("token") !== "" && localStorage.getItem("token") !== null) {
-		fs.readFile(jobfile, function(err, data) {
-			if (! err) {
-				var event = new CustomEvent("uploadJob", {
-					filename: filename,
-					data: data
-				});
-				document.dispatchEvent(event);
-				if (_kiosk && localStorage.getItem("token") !== "" && localStorage.getItem("token") !== null) {
-					localStorage.removeItem("token");
-				}
-			}
-		});
-	}
+	console.log("Reading " + filename);
+	fs.readFile(jobfile, function(err, data) {
+		if (! err) {
+			console.log("Sending " + filename + " via custom event to Dart");
+			var event = new CustomEvent("uploadJob", {
+				filename: filename,
+				data: data
+			});
+			document.dispatchEvent(event);
+		}
+	});
 }
 
 /**
@@ -208,9 +203,11 @@ function unsetDragDrop() {
 function init() {
 
 	document.addEventListener("setupWatches", function(event) {
+		console.log("Caught event setupWatches");
 		setupWatches();
 	});
 	document.addEventListener("unsetWatches", function(event) {
+		console.log("Caught event unsetWatches");
 		unsetWatches();
 	});
 }
