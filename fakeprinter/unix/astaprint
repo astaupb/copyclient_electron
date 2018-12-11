@@ -27,7 +27,7 @@ printtime=$(date +%Y-%b-%d-%H-%M-%S)
 # we prefer to radically convert every "weird" character to an underscore
 # for our current purpose...
 
-sanitized_jobtitle="$(echo ${jobtitle} | tr [[:blank:]:/%\&=+?\\\\#\'\`\´\*] _)"
+sanitized_jobtitle="$(echo ${jobtitle} | tr [:/%\&=+?\\\\#\'\`\´\*] _)"
 
 # the following lines would do (nearly) the same as the above, but slower
 # -- yet better readable (and the above may be in need of some fixing still):
@@ -69,53 +69,43 @@ case ${#} in
 		exit 0
 		;;
 	5)
-		if [ ! -e ${DEVICE_URI#astaprint:} ]; then
-			mkdir -p ${DEVICE_URI#astaprint:}
-			chmod 777 ${DEVICE_URI#astaprint:}
-		fi
-
-		# backend needs to read from stdin if number of arguments is 5
 		tmpfile="$(mktemp)"
 		cat - > $tmpfile
+		;;&
+	6)
+		tmpfile="$(mktemp)"
+		cat ${6} > $tmpfile
+		;;&
+	5|6)
+		if [ ! -e ${DEVICE_URI#astaprintgtk:} ]; then
+			mkdir -p ${DEVICE_URI#astaprintgtk:}
+			chmod 777 ${DEVICE_URI#astaprintgtk:}
+		fi
+
+		outpdf=${DEVICE_URI#astaprintgtk:}/${outname}.pdf
 
 		# remove PJL shit
 		if [[ $(head -n 3 $tmpfile) == *"@PJL"* ]]; then
-			cat $tmpfile | sed -n '/^%PDF-/,$p' | sed -n '1,/^%%EOF/p' > ${DEVICE_URI#astaprint:}/${outname}.pdf
+			cat $tmpfile | sed -n '/^%PDF-/,$p' | sed -n '1,/^%%EOF/p' > "$outpdf"
 		else
-			mv $tmpfile ${DEVICE_URI#astaprint:}/${outname}.pdf
+			mv $tmpfile "$outpdf"
 		fi
+
+		# urlencode dat sheeet
+		outnameurlsafe=$(echo "$outname" | perl -MURI::Escape -ne 'chomp;print uri_escape($_),"\n"')
 
 		# remove tmp file
 		rm $tmpfile
 
 		# Make sure everyone can read it
-		chmod 777 ${DEVICE_URI#astaprint:}/${outname}.pdf
+		chmod 777 "$outpdf"
+
+		# Cleanup
+		rm "$outpdf"
+
 		# WARNING! WARNING! WARNING! Don't use these file permissions
 		# on a production print server! This is for development convenience
 		# only! WARNING, security risk!
-		;;
-	6)
-		if [ ! -e ${DEVICE_URI#astaprint:} ]; then
-			mkdir -p ${DEVICE_URI#astaprint:}
-			chmod 777 ${DEVICE_URI#astaprint:}
-		fi
-
-		# backend needs to read from file if number of arguments is 6
-		tmpfile="$(mktemp)"
-		cat ${6} > $tmpfile
-
-		# remove PJL shit
-		if [[ $(head -n 3 $tmpfile) == *"@PJL"* ]]; then
-			cat $tmpfile | sed -n '/^%PDF-/,$p' | sed -n '1,/^%%EOF/p' > ${DEVICE_URI#astaprint:}/${outname}.pdf
-		else
-			mv $tmpfile ${DEVICE_URI#astaprint:}/${outname}.pdf
-		fi
-
-		# remove tmp file
-		rm $tmpfile
-
-		# Make sure everyone can read it
-		chmod 777 ${DEVICE_URI#astaprint:}/${outname}.pdf
 		;;
 	1|2|3|4|*)
 		# these cases are unsupported
