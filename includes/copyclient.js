@@ -221,38 +221,23 @@ function unsetDragDrop() {
 	}
 }
 
-/**
- * Do initial setup after loading the DOM.<br />
- * If in kiosk mode, hide all windows, setup drag-drop-handling,
- * FS watcher and hide the main window to systray.<br />
- * If not, try to show job list.
- * If not successful (because of not being logged in), show login dialog.
- *
- * @see setupDragDrop
- * @see setupWatches
- * @see switchView
- * @see currentWindow
- */
-function init() {
-
-	document.addEventListener("setupWatches", function(event) {
-		console.log("Caught event setupWatches");
-		setupWatches();
-	});
-	document.addEventListener("unsetWatches", function(event) {
-		console.log("Caught event unsetWatches");
-		unsetWatches();
-	});
-	document.addEventListener("setupDragDrop", function(event) {
-		console.log("Caught event setupDragDrop");
-		setupDragDrop();
-	});
-	document.addEventListener("unsetDragDrop", function(event) {
-		console.log("Caught event unsetDragDrop");
-		unsetDragDrop();
-	});
-	document.addEventListener("showOpenPDF", function(event) {
-		console.log("Caught event showOpenPDF");
-		showOpenPDF();
-	});
-}
+document.addEventListener("setupWatches", function(event) {
+    console.log("Caught event setupWatches");
+    setupWatches();
+});
+document.addEventListener("unsetWatches", function(event) {
+    console.log("Caught event unsetWatches");
+    unsetWatches();
+});
+document.addEventListener("setupDragDrop", function(event) {
+    console.log("Caught event setupDragDrop");
+    setupDragDrop();
+});
+document.addEventListener("unsetDragDrop", function(event) {
+    console.log("Caught event unsetDragDrop");
+    unsetDragDrop();
+});
+document.addEventListener("showOpenPDF", function(event) {
+    console.log("Caught event showOpenPDF");
+    showOpenPDF();
+});
