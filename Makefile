@@ -45,11 +45,14 @@ build-all:
 	$(MAKE) build-mac
 
 build-win:
+	./build_angular.sh
 	./node_modules/.bin/electron-builder --win --ia32 --x64
 	makensis build_installer.nsi
 
 build-mac:
+	./build_angular.sh
 	./node_modules/.bin/electron-builder --mac --x64
 
 build-linux:
+	./build_angular.sh
 	env SHELL=bash ./node_modules/.bin/electron-builder --linux --ia32 --x64

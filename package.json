@@ -57,7 +57,8 @@
 			"main.js",
 			"package.json",
 			"index.html",
-			"includes"
+			"includes",
+			"web"
 		],
 		"mac": {
 			"target": "pkg",
