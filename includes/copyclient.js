@@ -241,3 +241,11 @@ document.addEventListener("showOpenPDF", function(event) {
     console.log("Caught event showOpenPDF");
     showOpenPDF();
 });
+document.addEventListener("askForKioskMode", function(event) {
+    console.log("Caught event askForKioskMode");
+    if (_kiosk) {
+		document.dispatchEvent(new CustomEvent("confirmKioskMode"));
+	} else {
+		document.dispatchEvent(new CustomEvent("denyKioskMode"));
+	}
+});
