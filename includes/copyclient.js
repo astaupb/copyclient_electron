@@ -67,16 +67,12 @@ function uploadJob(jobfile) {
 	fs.readFile(jobfile, function(err, data) {
 		if (! err) {
 			console.log("Sending " + filename + " via custom event to Dart");
-			var event = new CustomEvent("uploadJob", {
+			document.dispatchEvent(new CustomEvent((_kiosk ? "kioskUpload" : "uploadJob"), {
 				detail: JSON.stringify({
 					filename: filename,
 					data: data.toString('base64')
 				})
-			});
-			document.dispatchEvent(event);
-			new Notification(getString(51), {
-				body: getString(52).format(filename, filesize_mb)
-			});
+			}));
 			if (delFile) {
 				fs.unlink(jobfile, function(err) {
 					if (! err) {
@@ -84,6 +80,16 @@ function uploadJob(jobfile) {
 					} else {
 						console.error("could not delete file " + filename);
 					}
+				});
+			}
+			if (_kiosk) {
+				if (! currentWindow.isVisible()) {
+					currentWindow.show();
+				}
+				_kioskNotification = [getString(51), getString(52).format(filename, filesize_mb)];
+			} else {
+				new Notification(getString(51), {
+					body: getString(52).format(filename, filesize_mb)
 				});
 			}
 		}
@@ -221,23 +227,44 @@ function unsetDragDrop() {
 	}
 }
 
-document.addEventListener("setupWatches", function(event) {
-    console.log("Caught event setupWatches");
-    setupWatches();
+document.addEventListener("requestKioskStatus", function(event) {
+	console.log("Caught event requestKioskStatus");
+	if (_kiosk) {
+		document.dispatchEvent(new CustomEvent("isKiosk"));
+	}
 });
-document.addEventListener("unsetWatches", function(event) {
-    console.log("Caught event unsetWatches");
-    unsetWatches();
-});
-document.addEventListener("setupDragDrop", function(event) {
-    console.log("Caught event setupDragDrop");
-    setupDragDrop();
-});
-document.addEventListener("unsetDragDrop", function(event) {
-    console.log("Caught event unsetDragDrop");
-    unsetDragDrop();
-});
-document.addEventListener("showOpenPDF", function(event) {
-    console.log("Caught event showOpenPDF");
-    showOpenPDF();
-});
+
+if (_kiosk) {
+	setupWatches();
+	document.addEventListener("kioskUploadDone", function(event) {
+		console.log("Caught event kioskUploadDone");
+		if (_kioskNotification.length === 2) {
+			new Notification(_kioskNotification[0], {
+				body: _kioskNotification[1]
+			});
+		}
+		currentWindow.hide();
+	});
+	currentWindow.hide();
+} else {
+	document.addEventListener("setupWatches", function(event) {
+		console.log("Caught event setupWatches");
+		setupWatches();
+	});
+	document.addEventListener("unsetWatches", function(event) {
+		console.log("Caught event unsetWatches");
+		unsetWatches();
+	});
+	document.addEventListener("setupDragDrop", function(event) {
+		console.log("Caught event setupDragDrop");
+		setupDragDrop();
+	});
+	document.addEventListener("unsetDragDrop", function(event) {
+		console.log("Caught event unsetDragDrop");
+		unsetDragDrop();
+	});
+	document.addEventListener("showOpenPDF", function(event) {
+		console.log("Caught event showOpenPDF");
+		showOpenPDF();
+	});
+}
