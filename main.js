@@ -84,8 +84,13 @@ function createTray() {
 		{
 			label: l10n.getString(57),
 			click:  function() {
-				app.isQuitting = true;
-				app.quit();
+                if (!_kiosk) {
+                    app.isQuitting = true;
+                    app.quit();
+                } else {
+                    mainWindow.webContents.executeJavaScript('document.dispatchEvent(new CustomEvent("logout"))');
+                    mainWindow.hide(); 
+                }
 			}
 		}
 	]);
@@ -129,6 +134,9 @@ function createWindow() {
 	mainWindow.on('minimize', function(event) {
 		event.preventDefault();
 		mainWindow.hide();
+        if (_kiosk) {
+            mainWindow.webContents.executeJavaScript('document.dispatchEvent(new CustomEvent("logout"))');
+        }
 	});
 
 	mainWindow.on('close', function(event) {
@@ -136,6 +144,9 @@ function createWindow() {
 			event.preventDefault();
 			mainWindow.hide();
 		}
+        if (_kiosk) {
+            mainWindow.webContents.executeJavaScript('document.dispatchEvent(new CustomEvent("logout"))');
+        }
 
 		return false;
 	});
@@ -180,6 +191,39 @@ app.on('activate', function() {
 		createWindow();
 	}
 })
-
 // In this file you can include the rest of your app's specific main process
 // code. You can also put them in separate files and require them here.
+if (_kiosk) {
+    var c = require("chokidar");
+    var fs = require("fs");
+
+    var watchPath;
+    switch (process.platform) {
+        case "win32":
+            watchPath = process.env.SYSTEMDRIVE + "/astaprint";
+            break;
+        default:
+            watchPath = "/var/spool/astaprint";
+    }
+
+    if (! fs.existsSync(watchPath)) {
+        console.log("Spool directory doesn't exist, trying to create it...");
+        try {
+            fs.mkdirSync(watchPath);
+        } catch (error) {
+            console.error("Can't create spool directory: " + error);
+            return false;
+        }
+    }
+
+    _watcher = c.watch(watchPath, {
+        awaitWriteFinish: {
+            stabilityThreshold: 2000,
+            pollInterval: 100
+        }
+    });
+
+    _watcher.on("add", function(path) {
+        mainWindow.show();
+    });
+}
