@@ -16,11 +16,9 @@
 # You should have received a copy of the GNU General Public License
 # along with AStA Copyclient.  If not, see <http://www.gnu.org/licenses/>.
 
-if [[ "$(uname)" ==#Darwin* ]]; then
+if [[ "$(uname)" == *Darwin* ]]; then
 	cups_path="/usr/libexec/cups/backend"
 	spool_dir="/var/spool/astaprint"
-#elif [[ "$(uname)" ==#BSD* ]]; then
-	# foo
 else
 	cups_path="/usr/lib/cups/backend"
 	spool_dir="/var/spool/astaprint"
