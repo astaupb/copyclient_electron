@@ -56,7 +56,6 @@
 			"node_modules/**/*",
 			"main.js",
 			"package.json",
-			"index.html",
 			"includes",
 			"web"
 		],
