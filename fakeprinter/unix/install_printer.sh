@@ -16,6 +16,10 @@
 # You should have received a copy of the GNU General Public License
 # along with AStA Copyclient.  If not, see <http://www.gnu.org/licenses/>.
 
+if ! [ $(id -u) = 0 ]; then
+	SUDO='sudo'
+fi
+
 if [[ "$(uname)" == *Darwin* ]]; then
 	cups_backend_dir="/usr/libexec/cups/backend"
 	cups_backend_file="astaprint"
@@ -38,34 +42,34 @@ else
 	spool_dir="/var/spool/astaprint"
 	if [ -x "$(command -v systemctl)" ]; then # systemd exists
 		if systemctl list-unit-files | grep org.cups.cupsd.service; then
-			sudo systemctl enable org.cups.cupsd.service
-			sudo systemctl start org.cups.cupsd.service
+			$SUDO systemctl enable org.cups.cupsd.service > /dev/null 2>&1
+			$SUDO systemctl start org.cups.cupsd.service > /dev/null 2>&1
 		else
 			if systemctl list-unit-files | grep cups.service; then
-				sudo systemctl enable cups.service
-				sudo systemctl start cups.service
+				$SUDO systemctl enable cups.service > /dev/null 2>&1
+				$SUDO systemctl start cups.service > /dev/null 2>&1
 			fi
 		fi
 	else
 		if [ -x "$(command -v service)" ]; then # service exists
 			if service --status-all 2>&1 | grep -Fq 'org.cups.cupsd'; then
-				sudo update-rc.d enable org.cups.cupsd
-				sudo service org.cups.cupsd start
+				$SUDO update-rc.d org.cups.cupsd enable > /dev/null 2>&1
+				$SUDO service org.cups.cupsd start > /dev/null 2>&1
 			else
 				if service --status-all 2>&1 | grep -Fq 'cups'; then
-					sudo update-rc.d enable cups
-					sudo service cups start
+					$SUDO update-rc.d cups enable > /dev/null 2>&1
+					$SUDO service cups start > /dev/null 2>&1
 				fi
 			fi
 		fi
 	fi
 fi
-sudo cp "$cups_backend_file" "$cups_backend_dir"
-sudo chown $root_user:$root_group "$cups_backend_dir/astaprint"
-sudo chmod 750 "$cups_backend_dir/astaprint"
-sudo mkdir -p "$spool_dir"
-sudo chmod $spool_chmod "$spool_dir"
-sudo lpadmin -p "Copyclient" -v "astaprint:$spool_dir" -E -P "$cups_ppd_file"
-sudo lpadmin -p "Copyclient" -o "media=A4"
+$SUDO cp "$cups_backend_file" "$cups_backend_dir"
+$SUDO chown $root_user:$root_group "$cups_backend_dir/astaprint"
+$SUDO chmod 750 "$cups_backend_dir/astaprint"
+$SUDO mkdir -p "$spool_dir"
+$SUDO chmod $spool_chmod "$spool_dir"
+$SUDO lpadmin -p "Copyclient" -v "astaprint:$spool_dir" -E -P "$cups_ppd_file"
+$SUDO lpadmin -p "Copyclient" -o "media=A4"
 
 exit 0
