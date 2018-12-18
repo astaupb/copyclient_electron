@@ -25,7 +25,7 @@ echo ==================================================================
 cd /d %~dp0
 
 :: Creating printer folder
-echo Erstelle Spoolverzeichnes, wenn noch nicht vorhanden
+echo Erstelle Spoolverzeichnis, wenn noch nicht vorhanden
 if not exist "%systemdrive%\astaprint" mkdir "%systemdrive%\astaprint"
 
 :: Installing printer port and driver (PDF on W10, XPS else)
