@@ -90,7 +90,9 @@ function createTray() {
 		}
 	]);
 	tray.setToolTip(l10n.getString(0));
-	tray.setContextMenu(contextMenu);
+	if (! _kiosk) {
+		tray.setContextMenu(contextMenu);
+	}
 	tray.on('click', function() {
 		if (mainWindow.isVisible()) {
 			mainWindow.hide();
