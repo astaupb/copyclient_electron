@@ -75,12 +75,12 @@ function createTray() {
 				}
 			}
 		},
-		{
+		/*{
 			label: l10n.getString(58),
 			click: function() {
 				mainWindow.webContents.openDevTools();
 			}
-		},
+		},*/
 		{
 			label: l10n.getString(57),
 			click: function() {
