@@ -257,13 +257,6 @@ function setupInterval() {
 	}, 1000);
 }
 
-document.addEventListener("requestKioskStatus", function(event) {
-	console.log("Caught event requestKioskStatus");
-	if (_kiosk) {
-		document.dispatchEvent(new CustomEvent("isKiosk"));
-	}
-});
-
 if (_kiosk) {
 	setupWatches();
 	setupDragDrop();
