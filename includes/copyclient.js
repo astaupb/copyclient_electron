@@ -169,10 +169,24 @@ function setupWatches() {
 		});
 
 		_watcher.on("add", function(path) {
-			uploadJob(path);
+			if (! _kiosk || _kioskIsLoggedIn) {
+				uploadJob(path);
+			} else if (_kiosk && ! _kioskIsLoggedIn) {
+				_kioskPrint = path;
+				if (! currentWindow.isVisible()) {
+					currentWindow.show();
+				}
+			}
 		});
 		_watcher.on("change", function(path) {
-			uploadJob(path);
+			if (! _kiosk || _kioskIsLoggedIn) {
+				uploadJob(path);
+			} else if (_kiosk && ! _kioskIsLoggedIn) {
+				_kioskPrint = path;
+				if (! currentWindow.isVisible()) {
+					currentWindow.show();
+				}
+			}
 		});
 		_watcher.on("unlink", function(path) {
 			console.log("unlink: " + path);
@@ -243,22 +257,43 @@ function setupInterval() {
 	}, 1000);
 }
 
-document.addEventListener("setupWatches", function(event) {
-	console.log("Caught event setupWatches");
-	setupInterval();
+document.addEventListener("requestKioskStatus", function(event) {
+	console.log("Caught event requestKioskStatus");
+	if (_kiosk) {
+		document.dispatchEvent(new CustomEvent("isKiosk"));
+	}
+});
+
+if (_kiosk) {
 	setupWatches();
-});
-document.addEventListener("unsetWatches", function(event) {
-	console.log("Caught event unsetWatches");
-	unsetWatches();
-});
-document.addEventListener("setupDragDrop", function(event) {
-	console.log("Caught event setupDragDrop");
 	setupDragDrop();
+}
+
+document.addEventListener("loggedIn", function(event) {
+	console.log("Caught event loggedIn");
+	setupInterval();
+
+	if (_kiosk) {
+		_kioskIsLoggedIn = true;
+		if (_kioskPrint !== "") {
+			uploadJob(_kioskPrint);
+			_kioskPrint = "";
+		}
+	} else {
+		setupWatches();
+		setupDragDrop();
+	}
 });
-document.addEventListener("unsetDragDrop", function(event) {
-	console.log("Caught event unsetDragDrop");
-	unsetDragDrop();
+document.addEventListener("loggedOut", function(event) {
+	console.log("Caught event loggedOut");
+	window.clearInterval(_kioskTimeoutInterval);
+
+	if (_kiosk) {
+		_kioskIsLoggedIn = false;
+	} else {
+		unsetWatches();
+		unsetDragDrop();
+	}
 });
 document.addEventListener("showOpenPDF", function(event) {
 	console.log("Caught event showOpenPDF");
