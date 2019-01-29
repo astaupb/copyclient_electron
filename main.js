@@ -92,18 +92,18 @@ function createTray() {
 	tray.setToolTip(l10n.getString(0));
 	if (! _kiosk) {
 		tray.setContextMenu(contextMenu);
-	}
-	tray.on('click', function() {
-		if (mainWindow.isVisible()) {
-			mainWindow.hide();
-		} else {
-			if (! _windowCreated) {
-				createWindow();
+		tray.on('click', function() {
+			if (mainWindow.isVisible()) {
+				mainWindow.hide();
 			} else {
-				mainWindow.show();
+				if (! _windowCreated) {
+					createWindow();
+				} else {
+					mainWindow.show();
+				}
 			}
-		}
-	});
+		});
+	}
 }
 
 function createWindow() {
