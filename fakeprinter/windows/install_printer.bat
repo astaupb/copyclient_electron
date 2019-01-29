@@ -67,7 +67,7 @@ goto EXIT
 :INST10
 net stop spooler /yes >nul 2>nul
 echo Fuege virtuellen Druckeranschluss hinzu
-reg add "HKLM\SOFTWARE\Microsoft\Windows NT\CurrentVersion\Ports" /v "%systemdrive%\astaprint\print.pdf" /t reg_sz /f >nul
+reg add "HKLM\SOFTWARE\Microsoft\Windows NT\CurrentVersion\Ports" /v "%systemdrive%\astaprint\astaprint_windows10.pdf" /t reg_sz /f >nul
 net start spooler >nul 2>nul
 ping 127.0.0.1 -n 6 >nul
 echo Installiere modifizierten Windows 10 PDF-Drucker

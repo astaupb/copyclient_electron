@@ -44,7 +44,7 @@ if errorlevel 1 (
 ) else (
 	:: Win 10
 	echo Entferne virtuellen Druckeranschluss
-	reg delete "HKLM\SOFTWARE\Microsoft\Windows NT\CurrentVersion\Ports" /f /v "%systemdrive%\astaprint\print.pdf"
+	reg delete "HKLM\SOFTWARE\Microsoft\Windows NT\CurrentVersion\Ports" /f /v "%systemdrive%\astaprint\astaprint_windows10.pdf"
 )
 net start spooler >nul 2>nul
 

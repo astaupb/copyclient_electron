@@ -63,6 +63,10 @@ function uploadJob(jobfile) {
 	var filesize_b = fs.statSync(jobfile).size;
 	var filesize_mb = (filesize_b / 1000000.0).toFixed(2);
 
+	if (filename === "astaprint_windows10.pdf") {
+		filename = "";
+	}
+
 	console.log("Reading " + filename);
 	fs.readFile(jobfile, function(err, data) {
 		if (! err) {
