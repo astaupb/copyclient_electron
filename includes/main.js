@@ -47,6 +47,9 @@ const currentWindow = remote.getCurrentWindow();
  */
 const showBetterMessageBox = remote.require('electron-better-dialog').showBetterMessageBox;
 
+var _kioskTimeoutCnt = 0;
+var _kioskTimeoutInterval;
+
 /**
  * Close Electron's currently shown window.
  */

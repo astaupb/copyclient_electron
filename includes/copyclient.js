@@ -67,7 +67,7 @@ function uploadJob(jobfile) {
 	fs.readFile(jobfile, function(err, data) {
 		if (! err) {
 			console.log("Sending " + filename + " via custom event to Dart");
-			document.dispatchEvent(new CustomEvent((_kiosk ? "kioskUpload" : "uploadJob"), {
+			document.dispatchEvent(new CustomEvent("uploadJob", {
 				detail: JSON.stringify({
 					filename: filename,
 					data: data.toString('base64')
@@ -227,44 +227,41 @@ function unsetDragDrop() {
 	}
 }
 
-document.addEventListener("requestKioskStatus", function(event) {
-	console.log("Caught event requestKioskStatus");
-	if (_kiosk) {
-		document.dispatchEvent(new CustomEvent("isKiosk"));
-	}
+function setupInterval() {
+	_kioskTimeoutInterval = window.setInterval(function() {
+		if (_kioskTimeoutCnt >= config._kioskTimeoutMax) {
+			document.dispatchEvent(new CustomEvent("logout"));
+			window.clearInterval(_kioskTimeoutInterval);
+			_kioskTimeoutCnt = 0;
+		} else {
+			_kioskTimeoutCnt++;
+		}
+		console.error("Interval cnt: " + _kioskTimeoutCnt);
+	}, 1000);
+}
+
+document.addEventListener("setupWatches", function(event) {
+	console.log("Caught event setupWatches");
+	setupInterval();
+	setupWatches();
+});
+document.addEventListener("unsetWatches", function(event) {
+	console.log("Caught event unsetWatches");
+	unsetWatches();
+});
+document.addEventListener("setupDragDrop", function(event) {
+	console.log("Caught event setupDragDrop");
+	setupDragDrop();
+});
+document.addEventListener("unsetDragDrop", function(event) {
+	console.log("Caught event unsetDragDrop");
+	unsetDragDrop();
+});
+document.addEventListener("showOpenPDF", function(event) {
+	console.log("Caught event showOpenPDF");
+	showOpenPDF();
 });
 
-if (_kiosk) {
-	setupWatches();
-	document.addEventListener("kioskUploadDone", function(event) {
-		console.log("Caught event kioskUploadDone");
-		if (_kioskNotification.length === 2) {
-			new Notification(_kioskNotification[0], {
-				body: _kioskNotification[1]
-			});
-		}
-		currentWindow.hide();
-	});
-	currentWindow.hide();
-} else {
-	document.addEventListener("setupWatches", function(event) {
-		console.log("Caught event setupWatches");
-		setupWatches();
-	});
-	document.addEventListener("unsetWatches", function(event) {
-		console.log("Caught event unsetWatches");
-		unsetWatches();
-	});
-	document.addEventListener("setupDragDrop", function(event) {
-		console.log("Caught event setupDragDrop");
-		setupDragDrop();
-	});
-	document.addEventListener("unsetDragDrop", function(event) {
-		console.log("Caught event unsetDragDrop");
-		unsetDragDrop();
-	});
-	document.addEventListener("showOpenPDF", function(event) {
-		console.log("Caught event showOpenPDF");
-		showOpenPDF();
-	});
-}
+$("*").on("mousemove mouseenter keydown focus", function() {
+	_kioskTimeoutCnt = 0;
+});

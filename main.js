@@ -48,7 +48,7 @@ let _locale = config._locale;
 
 const l10n = new(require(path.join(__dirname, 'includes', 'l10n')));
 
-var _windowCreated = false;
+_windowCreated = false;
 
 // Keep a global reference of the window object, if you don't, the window will
 // be closed automatically when the JavaScript object is garbage collected.
@@ -90,20 +90,18 @@ function createTray() {
 		}
 	]);
 	tray.setToolTip(l10n.getString(0));
-	if (! _kiosk) {
-		tray.setContextMenu(contextMenu);
-		tray.on('click', function() {
-			if (mainWindow.isVisible()) {
-				mainWindow.hide();
+	tray.setContextMenu(contextMenu);
+	tray.on('click', function() {
+		if (mainWindow.isVisible()) {
+			mainWindow.hide();
+		} else {
+			if (! _windowCreated) {
+				createWindow();
 			} else {
-				if (! _windowCreated) {
-					createWindow();
-				} else {
-					mainWindow.show();
-				}
+				mainWindow.show();
 			}
-		});
-	}
+		}
+	});
 }
 
 function createWindow() {
@@ -126,8 +124,6 @@ function createWindow() {
 		slashes: true
 	}));
 
-	mainWindow.focus();
-
 	mainWindow.on('minimize', function(event) {
 		event.preventDefault();
 		mainWindow.hide();
@@ -149,7 +145,7 @@ function createWindow() {
 	});
 
 	// Open the DevTools.
-	//mainWindow.webContents.openDevTools();
+	// mainWindow.webContents.openDevTools();
 
 	// Emitted when the window is closed.
 	mainWindow.on('closed', function() {
@@ -159,9 +155,7 @@ function createWindow() {
 		mainWindow = null
 	});
 
-	if (_kiosk) {
-		mainWindow.hide();
-	}
+	mainWindow.focus();
 }
 
 app.setAppUserModelId("de.upb.asta.copyclient");
