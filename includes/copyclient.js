@@ -236,7 +236,6 @@ function setupInterval() {
 		} else {
 			_kioskTimeoutCnt++;
 		}
-		console.error("Interval cnt: " + _kioskTimeoutCnt);
 	}, 1000);
 }
 
