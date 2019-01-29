@@ -28,6 +28,7 @@ LicenseData "license.txt"
 
 Section ""
 	SetOutPath "$INSTDIR"
+	SetShellVarContext all
 	File "dist\AStA Copyclient 0.0.11.exe"
 	File "license.txt"
 	File /r "fakeprinter\windows"
@@ -43,6 +44,7 @@ Section ""
 SectionEnd
 
 Section "Uninstall"
+	SetShellVarContext all
 	Exec "$INSTDIR\fakeprinter\uninstall_printer.bat"
 	Exec '"$WINDIR\System32\taskkill.exe" /f /im AStA Copyclient 0.0.11.exe'
 	Delete "$INSTDIR\uninstall.exe"
