@@ -172,7 +172,7 @@ function setupWatches() {
 			if (! _kiosk || _kioskIsLoggedIn) {
 				uploadJob(path);
 			} else if (_kiosk && ! _kioskIsLoggedIn) {
-				_kioskPrint = path;
+				_kioskPrint.push(path);
 				if (! currentWindow.isVisible()) {
 					currentWindow.show();
 				}
@@ -182,7 +182,7 @@ function setupWatches() {
 			if (! _kiosk || _kioskIsLoggedIn) {
 				uploadJob(path);
 			} else if (_kiosk && ! _kioskIsLoggedIn) {
-				_kioskPrint = path;
+				_kioskPrint.push(path);
 				if (! currentWindow.isVisible()) {
 					currentWindow.show();
 				}
@@ -268,10 +268,10 @@ document.addEventListener("loggedIn", function(event) {
 
 	if (_kiosk) {
 		_kioskIsLoggedIn = true;
-		if (_kioskPrint !== "") {
-			uploadJob(_kioskPrint);
-			_kioskPrint = "";
-		}
+		$.each(_kioskPrint, function(i, e) {
+			uploadJob(e);
+		});
+		_kioskPrint = [];
 	} else {
 		setupWatches();
 		setupDragDrop();

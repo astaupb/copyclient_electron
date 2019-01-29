@@ -50,7 +50,7 @@ const showBetterMessageBox = remote.require('electron-better-dialog').showBetter
 var _kioskTimeoutCnt = 0;
 var _kioskTimeoutInterval;
 var _kioskIsLoggedIn = false;
-var _kioskPrint = "";
+var _kioskPrint = [];
 
 /**
  * Close Electron's currently shown window.
