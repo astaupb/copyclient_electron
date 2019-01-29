@@ -127,18 +127,12 @@ function createWindow() {
 	mainWindow.on('minimize', function(event) {
 		event.preventDefault();
 		mainWindow.hide();
-		if (_kiosk) {
-			mainWindow.webContents.executeJavaScript('document.dispatchEvent(new CustomEvent("logout"))');
-		}
 	});
 
 	mainWindow.on('close', function(event) {
 		if (! app.isQuitting) {
 			event.preventDefault();
 			mainWindow.hide();
-		}
-		if (_kiosk) {
-			mainWindow.webContents.executeJavaScript('document.dispatchEvent(new CustomEvent("logout"))');
 		}
 
 		return false;
