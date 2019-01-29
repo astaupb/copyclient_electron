@@ -246,15 +246,18 @@ function unsetDragDrop() {
 }
 
 function setupInterval() {
-	_kioskTimeoutInterval = window.setInterval(function() {
-		if (_kioskTimeoutCnt >= config._kioskTimeoutMax) {
-			document.dispatchEvent(new CustomEvent("logout"));
-			window.clearInterval(_kioskTimeoutInterval);
-			_kioskTimeoutCnt = 0;
-		} else {
-			_kioskTimeoutCnt++;
-		}
-	}, 1000);
+	if (_kiosk) {
+		_kioskTimeoutInterval = window.setInterval(function() {
+			if (_kioskTimeoutCnt >= _kioskTimeoutMax) {
+				document.dispatchEvent(new CustomEvent("logout"));
+				window.clearInterval(_kioskTimeoutInterval);
+				_kioskTimeoutCnt = 0;
+			} else {
+				_kioskTimeoutCnt++;
+			}
+			//console.log("kiosk timeout counter: " + _kioskTimeoutCnt + "s of max. " + _kioskTimeoutMax + "s till logout");
+		}, 1000);
+	}
 }
 
 if (_kiosk) {
@@ -277,6 +280,7 @@ document.addEventListener("loggedIn", function(event) {
 		setupDragDrop();
 	}
 });
+
 document.addEventListener("loggedOut", function(event) {
 	console.log("Caught event loggedOut");
 	window.clearInterval(_kioskTimeoutInterval);
@@ -288,11 +292,15 @@ document.addEventListener("loggedOut", function(event) {
 		unsetDragDrop();
 	}
 });
+
 document.addEventListener("showOpenPDF", function(event) {
 	console.log("Caught event showOpenPDF");
 	showOpenPDF();
 });
 
-$("*").on("mousemove mouseenter keydown focus", function() {
-	_kioskTimeoutCnt = 0;
-});
+if (_kiosk) {
+	$("*").on("mousemove mouseenter keydown focus", function() {
+		_kioskTimeoutCnt = 0;
+		//console.log("detected activity");
+	});
+}
