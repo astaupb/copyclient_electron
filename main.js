@@ -178,6 +178,9 @@ app.on('ready', function() {
 	if (! options.hide && ! _windowCreated) {
 		createWindow();
 	}
+	if (_kiosk) {
+		mainWindow.maximize();
+	}
 	createTray();
 });
 
