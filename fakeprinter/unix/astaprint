@@ -100,9 +100,6 @@ case ${#} in
 		# Make sure everyone can read it
 		chmod 777 "$outpdf"
 
-		# Cleanup
-		rm "$outpdf"
-
 		# WARNING! WARNING! WARNING! Don't use these file permissions
 		# on a production print server! This is for development convenience
 		# only! WARNING, security risk!
