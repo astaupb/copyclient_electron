@@ -91,9 +91,6 @@ case ${#} in
 			mv $tmpfile "$outpdf"
 		fi
 
-		# urlencode dat sheeet
-		outnameurlsafe=$(echo "$outname" | perl -MURI::Escape -ne 'chomp;print uri_escape($_),"\n"')
-
 		# remove tmp file
 		rm $tmpfile
 
