@@ -77,12 +77,12 @@ case ${#} in
 		cat ${6} > $tmpfile
 		;;&
 	5|6)
-		if [ ! -e ${DEVICE_URI#astaprintgtk:} ]; then
-			mkdir -p ${DEVICE_URI#astaprintgtk:}
-			chmod 777 ${DEVICE_URI#astaprintgtk:}
+		if [ ! -e ${DEVICE_URI#astaprint:} ]; then
+			mkdir -p ${DEVICE_URI#astaprint:}
+			chmod 777 ${DEVICE_URI#astaprint:}
 		fi
 
-		outpdf=${DEVICE_URI#astaprintgtk:}/${outname}.pdf
+		outpdf=${DEVICE_URI#astaprint:}/${outname}.pdf
 
 		# remove PJL shit
 		if [[ $(head -n 3 $tmpfile) == *"@PJL"* ]]; then
