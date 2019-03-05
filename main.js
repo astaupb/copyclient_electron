@@ -154,6 +154,21 @@ function createWindow() {
 	mainWindow.focus();
 }
 
+// Make sure there's only one instance of this running
+var singletonLock = app.requestSingleInstanceLock();
+
+if (! singletonLock) {
+	app.quit();
+	return;
+} else {
+	app.on('second-instance', (event, commandLine, workingDirectory) => {
+		if (mainWindow) {
+			mainWindow.show();
+			mainWindow.focus();
+		}
+	});
+}
+
 app.setAppUserModelId("de.upb.asta.copyclient");
 
 // This method will be called when Electron has finished
