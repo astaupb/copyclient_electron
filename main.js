@@ -127,14 +127,19 @@ function createWindow() {
 	}));
 
 	mainWindow.on('minimize', function(event) {
-		event.preventDefault();
-		mainWindow.hide();
+		if (! _kiosk) {
+			event.preventDefault();
+			mainWindow.hide();
+		}
 	});
 
 	mainWindow.on('close', function(event) {
 		if (! app.isQuitting) {
 			event.preventDefault();
 			mainWindow.hide();
+			if (_kiosk) {
+				mainWindow.executeJavaScript('document.dispatchEvent(new CustomEvent("logout"));');
+			}
 		}
 
 		return false;
