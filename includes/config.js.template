@@ -1,0 +1,11 @@
+let _kiosk = false;
+let _kioskTimeoutMax = 180;
+let _allowPrint = false;
+let _locale = "de";
+
+module.exports = {
+	backend: backend,
+	_kiosk: _kiosk,
+	_allowPrint: _allowPrint,
+	_locale: _locale
+}
