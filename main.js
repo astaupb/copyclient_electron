@@ -138,7 +138,7 @@ function createWindow() {
 			event.preventDefault();
 			mainWindow.hide();
 			if (_kiosk) {
-				mainWindow.executeJavaScript('document.dispatchEvent(new CustomEvent("logout"));');
+				mainWindow.webContents.executeJavaScript('document.dispatchEvent(new CustomEvent("logout"));');
 			}
 		}
 
