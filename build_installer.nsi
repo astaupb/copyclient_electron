@@ -29,16 +29,16 @@ LicenseData "license.txt"
 Section ""
 	SetOutPath "$INSTDIR"
 	SetShellVarContext all
-	File "dist\AStA Copyclient 0.0.13.exe"
+	File "dist\AStA Copyclient 0.1.0.exe"
 	File "license.txt"
 	File /r "fakeprinter\windows"
 	Rename "$INSTDIR\windows" "$INSTDIR\fakeprinter"
 	WriteUninstaller "$INSTDIR\uninstall.exe"
 	CreateDirectory "$SMPROGRAMS\AStA Uni Paderborn"
-	CreateShortCut "$SMPROGRAMS\AStA Uni Paderborn\AStA Copyclient.lnk" "$INSTDIR\AStA Copyclient 0.0.13.exe" ""
+	CreateShortCut "$SMPROGRAMS\AStA Uni Paderborn\AStA Copyclient.lnk" "$INSTDIR\AStA Copyclient 0.1.0.exe" ""
 	CreateShortCut "$SMPROGRAMS\AStA Uni Paderborn\Deinstallieren.lnk" "$INSTDIR\uninstall.exe" ""
-	CreateShortCut "$DESKTOP\AStA Copyclient.lnk" "$INSTDIR\AStA Copyclient 0.0.13.exe" ""
-	CreateShortCut "$SMSTARTUP\AStA Copyclient starten.lnk" "$INSTDIR\AStA Copyclient 0.0.13.exe" ""
+	CreateShortCut "$DESKTOP\AStA Copyclient.lnk" "$INSTDIR\AStA Copyclient 0.1.0.exe" ""
+	CreateShortCut "$SMSTARTUP\AStA Copyclient starten.lnk" "$INSTDIR\AStA Copyclient 0.1.0.exe" ""
 	SetOutPath "$INSTDIR\fakeprinter"
 	Exec "install_printer.bat"
 SectionEnd
@@ -46,9 +46,9 @@ SectionEnd
 Section "Uninstall"
 	SetShellVarContext all
 	Exec "$INSTDIR\fakeprinter\uninstall_printer.bat"
-	Exec '"$WINDIR\System32\taskkill.exe" /f /im AStA Copyclient 0.0.13.exe'
+	Exec '"$WINDIR\System32\taskkill.exe" /f /im AStA Copyclient 0.1.0.exe'
 	Delete "$INSTDIR\uninstall.exe"
-	Delete "$INSTDIR\AStA Copyclient 0.0.13.exe"
+	Delete "$INSTDIR\AStA Copyclient 0.1.0.exe"
 	Delete "$INSTDIR\license.txt"
 	RMDir "$INSTDIR\fakeprinter"
 	Delete "$SMPROGRAMS\AStA Uni Paderborn\AStA Copyclient.lnk"
