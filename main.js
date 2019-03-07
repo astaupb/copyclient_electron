@@ -136,9 +136,11 @@ function createWindow() {
 	mainWindow.on('close', function(event) {
 		if (! app.isQuitting) {
 			event.preventDefault();
-			mainWindow.hide();
 			if (_kiosk) {
+				mainWindow.minimize();
 				mainWindow.webContents.executeJavaScript('document.dispatchEvent(new CustomEvent("logout"));');
+			} else {
+				mainWindow.hide();
 			}
 		}
 
