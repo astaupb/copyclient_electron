@@ -30,11 +30,23 @@ LicenseData "license.txt"
 Section ""
 	SetOutPath "$INSTDIR"
 	SetShellVarContext all
-	IfFileExists "$INSTDIR\uninstall.exe" UninstallFirst Install
-	UninstallFirst:
-		MessageBox MB_YESNO "Es wurde eine vorherige Installation des Copyclients gefunden.$\r$\nSoll diese vorher entfernt werden?" IDYES Uninstall IDNO Goodbye
-		Uninstall:
-			ExecWait "$INSTDIR\uninstall.exe"
+	IfFileExists "$INSTDIR\AStA Copyclient 0.1.0.exe" AskUninstallFirst Install
+	AskUninstallFirst:
+		MessageBox MB_YESNO "Es wurde eine vorherige Installation des Copyclients gefunden.$\r$\nSoll diese vorher entfernt werden?" IDYES UninstallFirst IDNO Goodbye
+		UninstallFirst:
+			ExecWait "$INSTDIR\fakeprinter\uninstall_printer.cmd"
+			ExecWait '"$WINDIR\System32\taskkill.exe" /f /im AStA Copyclient 0.1.0.exe'
+			ExecWait '"$WINDIR\System32\taskkill.exe" /f /im pdf24.exe'
+			Delete "$INSTDIR\uninstall.exe"
+			Delete "$INSTDIR\AStA Copyclient 0.1.0.exe"
+			Delete "$INSTDIR\license.txt"
+			RMDir "$INSTDIR\fakeprinter"
+			Delete "$SMPROGRAMS\AStA Uni Paderborn\AStA Copyclient.lnk"
+			Delete "$SMPROGRAMS\AStA Uni Paderborn\Deinstallieren.lnk"
+			Delete "$DESKTOP\AStA Copyclient.lnk"
+			Delete "$SMSTARTUP\AStA Copyclient starten.lnk"
+			RMDir "$INSTDIR"
+			RMDir "$SMPROGRAMS\AStA Uni Paderborn"
 			Goto Install
 	Install:
 		File "dist\AStA Copyclient 0.1.0.exe"
@@ -48,13 +60,13 @@ Section ""
 		CreateShortCut "$DESKTOP\AStA Copyclient.lnk" "$INSTDIR\AStA Copyclient 0.1.0.exe" ""
 		CreateShortCut "$SMSTARTUP\AStA Copyclient starten.lnk" "$INSTDIR\AStA Copyclient 0.1.0.exe" ""
 		SetOutPath "$INSTDIR\fakeprinter"
-		ExecWait "install_printer.bat"
+		ExecWait "install_printer.cmd"
 	Goodbye:
 SectionEnd
 
 Section "Uninstall"
 	SetShellVarContext all
-	ExecWait "$INSTDIR\fakeprinter\uninstall_printer.bat"
+	ExecWait "$INSTDIR\fakeprinter\uninstall_printer.cmd"
 	ExecWait '"$WINDIR\System32\taskkill.exe" /f /im AStA Copyclient 0.1.0.exe'
 	ExecWait '"$WINDIR\System32\taskkill.exe" /f /im pdf24.exe'
 	Delete "$INSTDIR\uninstall.exe"
