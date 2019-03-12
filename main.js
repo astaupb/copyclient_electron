@@ -182,9 +182,9 @@ app.setAppUserModelId("de.upb.asta.copyclient");
 // initialization and is ready to create browser windows.
 // Some APIs can only be used after this event occurs.
 app.on('ready', function() {
-	if (! options.hide && ! _windowCreated) {
+	if (! _windowCreated) {
 		createWindow();
-		if (config._startHidden) {
+		if (options.hide || config._startHidden) {
 			mainWindow.hide();
 		} else if (_kiosk) {
 			mainWindow.maximize();
