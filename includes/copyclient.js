@@ -163,7 +163,7 @@ function setupWatches() {
 
 		_watcher = c.watch(path, {
 			awaitWriteFinish: {
-				stabilityThreshold: 2000,
+				stabilityThreshold: 4000,
 				pollInterval: 100
 			}
 		});
