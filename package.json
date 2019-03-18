@@ -47,8 +47,7 @@
 		"drag-drop": "^4.2.0",
 		"electron-better-dialog": "^1.0.6",
 		"jquery": "^3.3.1",
-		"underscore": "^1.9.1",
-		"mime-types": "^2.1.21"
+		"underscore": "^1.9.1"
 	},
 	"build": {
 		"appId": "de.upb.asta.copyclient",

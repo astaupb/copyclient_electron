@@ -79,12 +79,8 @@ const _supported_mime = [
  */
 function uploadJob(jobfile) {
 	var delFile = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : true;
-	var r;
 	var fs = require("fs");
 	var path = require("path");
-	var mime = require("mime-types");
-	var readline = require("readline");
-	var cnt = 1;
 	var filename = path.basename(jobfile);
 	var filesize_b = fs.statSync(jobfile).size;
 	var filesize_mb = (filesize_b / 1000000.0).toFixed(2);
