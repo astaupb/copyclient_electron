@@ -43,6 +43,15 @@ var _intervalJobs;
 var _dragDrop = false;
 
 /**
+ * Supported mime types
+ *
+ * @type {Array.String}
+ */
+const _supported_mime = [
+	"application/pdf"
+];
+
+/**
  * Upload a given file in chunks to the backend.<br />
  * If in kiosk mode, first request a kiosk login
  * (thus showing the login window and setting _callback with arguments).<br /><br />
@@ -224,7 +233,7 @@ function setupDragDrop() {
 	if (! _dragDrop) {
 		_dragDrop = dragDrop('body', function (files, pos, fileList, directories) {
 			$.each(fileList, function(index, file) {
-				if (file.type === "application/pdf") {
+				if (_supported_mime.includes(file.type)) {
 					uploadJob(file.path, false);
 				}
 			});
