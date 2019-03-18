@@ -48,7 +48,24 @@ var _dragDrop = false;
  * @type {Array.String}
  */
 const _supported_mime = [
-	"application/pdf"
+	"application/pdf",																// .pdf
+	"application/msword",															// .doc
+	"application/vnc.openxmlformats-officedocument.wordprocessingml.document",		// .docx
+	"application/vnc.ms-excel",														// .xls
+	"application/excel",															// .xls
+	"application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",			// .xlsx
+	"application/vnd.ms-powerpoint",												// .ppt, .pps
+	"application/powerpoint",														// .ppt, .pps
+	"application/vnd.openxmlformats-officedocument.presentationml.presentation",	// .pptx
+	"application/vnd.openxmlformats-officedocument.presentationml.slideshow",		// .ppsx
+	"application/vnd.oasis.opendocument.text",										// .odt
+	"application/vnd.oasis.opendocument.spreadsheet",								// .ods
+	"application/vnd.oasis.opendocument.presentation",								// .odp
+	"application/vnd.oasis.opendocument.chart",										// .odc
+	"application/rtf",																// .rtf
+	"text/rtf",																		// .rtf
+	"text/csv",																		// .csv
+	"text/plain"																	// other
 ];
 
 /**
