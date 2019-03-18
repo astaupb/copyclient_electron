@@ -49,6 +49,7 @@ var _dragDrop = false;
  */
 const _supported_mime = [
 	"application/pdf",																// .pdf
+	/**
 	"application/msword",															// .doc
 	"application/vnc.openxmlformats-officedocument.wordprocessingml.document",		// .docx
 	"application/vnc.ms-excel",														// .xls
@@ -66,6 +67,7 @@ const _supported_mime = [
 	"text/rtf",																		// .rtf
 	"text/csv",																		// .csv
 	"text/plain"																	// other
+	*/
 ];
 
 /**
