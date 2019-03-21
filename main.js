@@ -185,7 +185,7 @@ app.on('ready', function() {
 	if (! _windowCreated) {
 		createWindow();
 		if (options.hide || config._startHidden) {
-			mainWindow.hide();
+			mainWindow.minimize();
 		} else if (_kiosk) {
 			mainWindow.maximize();
 		}
