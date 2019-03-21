@@ -71,6 +71,11 @@ const _supported_mime = [
 ];
 
 /**
+ * IPC
+ */
+const ipc = require('electron').ipcRenderer;
+
+/**
  * Upload a given file in chunks to the backend.<br />
  * If in kiosk mode, first request a kiosk login
  * (thus showing the login window and setting _callback with arguments).<br /><br />
@@ -112,6 +117,7 @@ function uploadJob(jobfile) {
 			}
 			if (_kiosk) {
 				if (! currentWindow.isVisible()) {
+					ipc.send('showWindow');
 					currentWindow.show();
 				}
 				_kioskNotification = [getString(51), getString(52).format(filename, filesize_mb)];
@@ -197,9 +203,8 @@ function setupWatches() {
 				uploadJob(path);
 			} else if (_kiosk && ! _kioskIsLoggedIn) {
 				_kioskPrint.push(path);
-				if (! currentWindow.isVisible()) {
-					currentWindow.show();
-				}
+				ipc.send('showWindow');
+				currentWindow.show();
 			}
 		});
 		_watcher.on("change", function(path) {
@@ -207,9 +212,8 @@ function setupWatches() {
 				uploadJob(path);
 			} else if (_kiosk && ! _kioskIsLoggedIn) {
 				_kioskPrint.push(path);
-				if (! currentWindow.isVisible()) {
-					currentWindow.show();
-				}
+				ipc.send('showWindow');
+				currentWindow.show();
 			}
 		});
 		_watcher.on("unlink", function(path) {

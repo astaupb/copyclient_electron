@@ -30,6 +30,8 @@ const BrowserWindow = electron.BrowserWindow;
 const path = require('path');
 const url = require('url');
 
+const ipc = require('electron').ipcMain;
+
 const optionDefinitions = [
 	{
 		name: 'hide',
@@ -191,6 +193,9 @@ app.on('ready', function() {
 		}
 	}
 	createTray();
+	ipc.on('showWindow', (event, arg) => {
+		mainWindow.show();
+	});
 });
 
 // Quit when all windows are closed.
