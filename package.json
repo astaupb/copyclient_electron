@@ -1,7 +1,7 @@
 {
 	"name": "asta-copyclient",
 	"productName": "AStA Copyclient",
-	"version": "0.2.3",
+	"version": "0.2.4",
 	"description": "Copyclient für das Drucksystem des AStA Copyservice",
 	"author": {
 		"name": "AStA der Universität Paderborn",
