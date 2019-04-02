@@ -26,7 +26,7 @@ cd /d %~dp0
 
 :: Removing printer folder
 echo Entferne Spoolverzeichnis, wenn vorhanden
-if exist "%systemdrive%\astaprint" rmdir "%systemdrive%\astaprint"
+if exist "%systemdrive%\astaprint" rmdir /s /q "%systemdrive%\astaprint"
 
 :: Removing local printer port
 net stop spooler /yes >nul 2>nul
