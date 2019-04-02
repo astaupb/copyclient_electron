@@ -71,5 +71,5 @@ reg add "HKLM\SOFTWARE\Microsoft\Windows NT\CurrentVersion\Ports" /v "%systemdri
 net start spooler >nul 2>nul
 ping 127.0.0.1 -n 6 >nul
 echo Installiere modifizierten Windows 10 PDF-Drucker
-rundll32 printui.dll,PrintUIEntry /if /b "AStA Copyclient-App" /r "%systemdrive%\astaprint\print.pdf" /m "Microsoft Print To PDF"
+rundll32 printui.dll,PrintUIEntry /if /b "AStA Copyclient-App" /r "%systemdrive%\astaprint\astaprint_windows10.pdf" /m "Microsoft Print To PDF"
 goto EXIT
