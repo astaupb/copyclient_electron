@@ -99,20 +99,25 @@ function uploadJob(jobfile) {
 	console.log("Reading " + filename);
 	fs.readFile(jobfile, function(err, data) {
 		if (! err) {
-			console.log("Sending " + filename + " via custom event to Dart");
-			document.dispatchEvent(new CustomEvent("uploadJob", {
-				detail: JSON.stringify({
-					filename: filename,
-					data: data.toString('base64')
-				})
-			}));
-			if (delFile) {
-				fs.unlink(jobfile, function(err) {
-					if (! err) {
-						console.log("file " + filename + " successfully deleted");
-					} else {
-						console.error("could not delete file " + filename);
-					}
+			if ((_kiosk && _kioskIsLoggedIn) || ! _kiosk) {
+				console.log("Sending " + filename + " via custom event to Dart");
+				document.dispatchEvent(new CustomEvent("uploadJob", {
+					detail: JSON.stringify({
+						filename: filename,
+						data: data.toString('base64')
+					})
+				}));
+				if (delFile) {
+					fs.unlink(jobfile, function(err) {
+						if (! err) {
+							console.log("file " + filename + " successfully deleted");
+						} else {
+							console.error("could not delete file " + filename);
+						}
+					});
+				}
+				new Notification(getString(51), {
+					body: getString(52).format(filename, filesize_mb)
 				});
 			}
 			if (_kiosk) {
@@ -121,10 +126,6 @@ function uploadJob(jobfile) {
 					currentWindow.show();
 				}
 				_kioskNotification = [getString(51), getString(52).format(filename, filesize_mb)];
-			} else {
-				new Notification(getString(51), {
-					body: getString(52).format(filename, filesize_mb)
-				});
 			}
 		}
 	});
