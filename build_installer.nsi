@@ -61,7 +61,7 @@ Section ""
 		CreateShortCut "$SMSTARTUP\AStA Copyclient starten.lnk" "$INSTDIR\AStA Copyclient.exe" ""
 		SetOutPath "$INSTDIR\fakeprinter"
 		ExecWait "install_printer.cmd"
-		MessageBox MB_YESNO|MB_ICONQUESTION "Um die Installation abzuschließen, muss der Computer neugestartet werden.$\r$\nSoll der Computer jetzt neugestartet werden?" IDNO +2
+		MessageBox MB_YESNO|MB_ICONQUESTION "Um die Installation abzuschliessen, muss der Computer neugestartet werden.$\r$\nSoll der Computer jetzt neugestartet werden?" IDNO +2
 		Reboot
 	Goodbye:
 SectionEnd
@@ -81,6 +81,6 @@ Section "Uninstall"
 	Delete "$SMSTARTUP\AStA Copyclient starten.lnk"
 	RMDir /R "$INSTDIR"
 	RMDir /R "$SMPROGRAMS\AStA Uni Paderborn"
-		MessageBox MB_YESNO|MB_ICONQUESTION "Um die Deinstallation abzuschließen, muss der Computer neugestartet werden.$\r$\nSoll der Computer jetzt neugestartet werden?" IDNO +2
+		MessageBox MB_YESNO|MB_ICONQUESTION "Um die Deinstallation abzuschliessen, muss der Computer neugestartet werden.$\r$\nSoll der Computer jetzt neugestartet werden?" IDNO +2
 		Reboot
 SectionEnd
