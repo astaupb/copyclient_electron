@@ -29,24 +29,24 @@ echo Entferne Spoolverzeichnis, wenn vorhanden
 if exist "%systemdrive%\astaprint" rmdir /s /q "%systemdrive%\astaprint"
 
 :: Removing local printer port
-net stop spooler /yes >nul 2>nul
+net stop spooler /yes > NUL 2>&1
 for /f "tokens=2 delims=," %%i in ('wmic os get caption^,version /format:csv') do set OS=%%i
 echo %os% | find "Windows 10" >nul
 if errorlevel 1 (
 	:: Win 8.1, 8, 7, Vista, XP
 	echo Beende PDF-Drucker Software
-	net stop PDF24 /yes >nul 2>nul
-	taskkill /f /im pdf24.exe >nul 2>nul
+	net stop PDF24 /yes > NUL 2>&1
+	taskkill /f /im pdf24.exe > NUL 2>&1
 	echo Entferne PDF-Drucker Software
 	msiexec /x pdf24-creator-8.7.0.msi /qn
-	reg delete "HKLM\SOFTWARE\Microsoft\Windows NT\CurrentVersion\Ports" /f /v "\\.\pipe\PDFPrint"
+	reg delete "HKLM\SOFTWARE\Microsoft\Windows NT\CurrentVersion\Ports" /f /v "\\.\pipe\PDFPrint" > NUL 2>&1
 
 ) else (
 	:: Win 10
 	echo Entferne virtuellen Druckeranschluss
-	reg delete "HKLM\SOFTWARE\Microsoft\Windows NT\CurrentVersion\Ports" /f /v "%systemdrive%\astaprint\astaprint_windows10.pdf"
+	reg delete "HKLM\SOFTWARE\Microsoft\Windows NT\CurrentVersion\Ports" /f /v "%systemdrive%\astaprint\astaprint_windows10.pdf" > NUL 2>&1
 )
-net start spooler >nul 2>nul
+net start spooler > NUL 2>&1
 
 :: Removing local printer
 echo Entferne PDF-Drucker

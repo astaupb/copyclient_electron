@@ -46,8 +46,8 @@ exit
 :INST7
 echo Installiere PDF-Drucker
 start /wait msiexec /i pdf24-creator-8.7.0.msi /norestart TRANSFORMS=asta.mst /QN
-taskkill /f /im pdf24.exe >nul 2>nul
-net stop PDF24 /yes >nul 2>nul
+taskkill /f /im pdf24.exe > NUL 2>&1
+net stop PDF24 /yes > NUL 2>&1
 echo Importiere notwendige Einstellungen in die Registry
 reg Query "HKLM\Hardware\Description\System\CentralProcessor\0" | find /i "x86" > NUL && set ARCH=32BIT || set ARCH=64BIT
 if %ARCH%==32BIT (
@@ -58,18 +58,18 @@ if %ARCH%==64BIT (
 )
 ping 127.0.0.1 -n 3 >nul
 echo Starte PDF-Drucker Software
-net start PDF24 >nul 2>nul
+net start PDF24 > NUL 2>&1
 SET PROGFILES=%ProgramFiles(x86)%
 IF NOT DEFINED ProgramFiles(x86) SET PROGFILES=%PROGRAMFILES%
 start "" "%PROGFILES%\PDF24\pdf24.exe"
 goto EXIT
 
 :INST10
-net stop spooler /yes >nul 2>nul
+net stop spooler /yes > NUL 2>&1
 echo Fuege virtuellen Druckeranschluss hinzu
 reg add "HKLM\SOFTWARE\Microsoft\Windows NT\CurrentVersion\Ports" /v "%systemdrive%\astaprint\astaprint_windows10.pdf" /t reg_sz /f >nul
-net start spooler >nul 2>nul
+net start spooler > NUL 2>&1
 ping 127.0.0.1 -n 6 >nul
 echo Installiere modifizierten Windows 10 PDF-Drucker
-rundll32 printui.dll,PrintUIEntry /if /b "AStA Copyclient-App" /r "%systemdrive%\astaprint\astaprint_windows10.pdf" /m "Microsoft Print To PDF"
+rundll32 printui.dll,PrintUIEntry /if /b "AStA Copyclient" /r "%systemdrive%\astaprint\astaprint_windows10.pdf" /m "Microsoft Print To PDF"
 goto EXIT
