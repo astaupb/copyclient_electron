@@ -47,6 +47,7 @@ build-all:
 build-win:
 	./build_angular.sh
 	./node_modules/.bin/electron-builder --win --ia32 --x64
+	mv ./dist/AStA\ Copyclient\ *.exe ./dist/AStA\ Copyclient.exe
 	makensis build_installer.nsi
 
 build-mac:

@@ -30,35 +30,35 @@ LicenseData "license.txt"
 Section ""
 	SetOutPath "$INSTDIR"
 	SetShellVarContext all
-	IfFileExists "$INSTDIR\AStA Copyclient 0.2.6.exe" AskUninstallFirst Install
+	IfFileExists "$INSTDIR\AStA Copyclient.exe" AskUninstallFirst Install
 	AskUninstallFirst:
 		MessageBox MB_YESNO "Es wurde eine vorherige Installation des Copyclients gefunden.$\r$\nSoll diese vorher entfernt werden?" IDYES UninstallFirst IDNO Goodbye
 		UninstallFirst:
 			ExecWait "$INSTDIR\fakeprinter\uninstall_printer.cmd"
-			ExecWait '"$WINDIR\System32\taskkill.exe" /f /im AStA Copyclient 0.2.6.exe'
+			ExecWait '"$WINDIR\System32\taskkill.exe" /f /im "AStA Copyclient.exe"'
 			ExecWait '"$WINDIR\System32\taskkill.exe" /f /im pdf24.exe'
 			Delete "$INSTDIR\uninstall.exe"
-			Delete "$INSTDIR\AStA Copyclient 0.2.6.exe"
+			Delete "$INSTDIR\AStA Copyclient.exe"
 			Delete "$INSTDIR\license.txt"
 			RMDir "$INSTDIR\fakeprinter"
 			Delete "$SMPROGRAMS\AStA Uni Paderborn\AStA Copyclient.lnk"
 			Delete "$SMPROGRAMS\AStA Uni Paderborn\Deinstallieren.lnk"
 			Delete "$DESKTOP\AStA Copyclient.lnk"
 			Delete "$SMSTARTUP\AStA Copyclient starten.lnk"
-			RMDir "$INSTDIR"
-			RMDir "$SMPROGRAMS\AStA Uni Paderborn"
+			RMDir /R "$INSTDIR"
+			RMDir /R "$SMPROGRAMS\AStA Uni Paderborn"
 			Goto Install
 	Install:
-		File "dist\AStA Copyclient 0.2.6.exe"
+		File "dist\AStA Copyclient.exe"
 		File "license.txt"
 		File /r "fakeprinter\windows"
 		Rename "$INSTDIR\windows" "$INSTDIR\fakeprinter"
 		WriteUninstaller "$INSTDIR\uninstall.exe"
 		CreateDirectory "$SMPROGRAMS\AStA Uni Paderborn"
-		CreateShortCut "$SMPROGRAMS\AStA Uni Paderborn\AStA Copyclient.lnk" "$INSTDIR\AStA Copyclient 0.2.6.exe" ""
+		CreateShortCut "$SMPROGRAMS\AStA Uni Paderborn\AStA Copyclient.lnk" "$INSTDIR\AStA Copyclient.exe" ""
 		CreateShortCut "$SMPROGRAMS\AStA Uni Paderborn\Deinstallieren.lnk" "$INSTDIR\uninstall.exe" ""
-		CreateShortCut "$DESKTOP\AStA Copyclient.lnk" "$INSTDIR\AStA Copyclient 0.2.6.exe" ""
-		CreateShortCut "$SMSTARTUP\AStA Copyclient starten.lnk" "$INSTDIR\AStA Copyclient 0.2.6.exe" ""
+		CreateShortCut "$DESKTOP\AStA Copyclient.lnk" "$INSTDIR\AStA Copyclient.exe" ""
+		CreateShortCut "$SMSTARTUP\AStA Copyclient starten.lnk" "$INSTDIR\AStA Copyclient.exe" ""
 		SetOutPath "$INSTDIR\fakeprinter"
 		ExecWait "install_printer.cmd"
 	Goodbye:
@@ -67,16 +67,16 @@ SectionEnd
 Section "Uninstall"
 	SetShellVarContext all
 	ExecWait "$INSTDIR\fakeprinter\uninstall_printer.cmd"
-	ExecWait '"$WINDIR\System32\taskkill.exe" /f /im AStA Copyclient 0.2.6.exe'
+	ExecWait '"$WINDIR\System32\taskkill.exe" /f /im AStA Copyclient.exe'
 	ExecWait '"$WINDIR\System32\taskkill.exe" /f /im pdf24.exe'
 	Delete "$INSTDIR\uninstall.exe"
-	Delete "$INSTDIR\AStA Copyclient 0.2.6.exe"
+	Delete "$INSTDIR\AStA Copyclient.exe"
 	Delete "$INSTDIR\license.txt"
 	RMDir "$INSTDIR\fakeprinter"
 	Delete "$SMPROGRAMS\AStA Uni Paderborn\AStA Copyclient.lnk"
 	Delete "$SMPROGRAMS\AStA Uni Paderborn\Deinstallieren.lnk"
 	Delete "$DESKTOP\AStA Copyclient.lnk"
 	Delete "$SMSTARTUP\AStA Copyclient starten.lnk"
-	RMDir "$INSTDIR"
-	RMDir "$SMPROGRAMS\AStA Uni Paderborn"
+	RMDir /R "$INSTDIR"
+	RMDir /R "$SMPROGRAMS\AStA Uni Paderborn"
 SectionEnd
