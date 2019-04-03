@@ -172,6 +172,7 @@ function setupWatches() {
 	if (_watcher === undefined) {
 		var c = require("chokidar");
 		var fs = require("fs");
+		var p = require("path");
 
 		switch (process.platform) {
 			case "win32":
@@ -202,7 +203,21 @@ function setupWatches() {
 			if (! _kiosk || _kioskIsLoggedIn) {
 				uploadJob(path);
 			} else if (_kiosk && ! _kioskIsLoggedIn) {
-				_kioskPrint.push(path);
+				let filename = p.basename(jobfile);
+				let filesize_b = fs.statSync(jobfile).size;
+				let filesize_mb = (filesize_b / 1000000.0).toFixed(2);
+
+				if (filename === "astaprint_windows10.pdf") {
+					filename = "";
+				}
+
+				_kioskPrint.push({
+					"path": path,
+					"filename": filename,
+					"filesize_b": filesize_b,
+					"filesize_mb": filesize_mb
+				});
+
 				ipc.send('showWindow');
 				currentWindow.show();
 			}
@@ -211,7 +226,21 @@ function setupWatches() {
 			if (! _kiosk || _kioskIsLoggedIn) {
 				uploadJob(path);
 			} else if (_kiosk && ! _kioskIsLoggedIn) {
-				_kioskPrint.push(path);
+				let filename = p.basename(jobfile);
+				let filesize_b = fs.statSync(jobfile).size;
+				let filesize_mb = (filesize_b / 1000000.0).toFixed(2);
+
+				if (filename === "astaprint_windows10.pdf") {
+					filename = "";
+				}
+
+				_kioskPrint.push({
+					"path": path,
+					"filename": filename,
+					"filesize_b": filesize_b,
+					"filesize_mb": filesize_mb
+				});
+
 				ipc.send('showWindow');
 				currentWindow.show();
 			}
@@ -300,7 +329,10 @@ document.addEventListener("loggedIn", function(event) {
 	if (_kiosk) {
 		_kioskIsLoggedIn = true;
 		$.each(_kioskPrint, function(i, e) {
-			uploadJob(e);
+			uploadJob(e.path);
+			new Notification(getString(51), {
+				body: getString(52).format(e.filename, e.filesize_mb)
+			});
 		});
 		_kioskPrint = [];
 	} else {
