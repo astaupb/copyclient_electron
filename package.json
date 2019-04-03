@@ -79,7 +79,10 @@
 		},
 		"linux": {
 			"target": [
-				"deb"
+				"deb",
+				"rpm",
+				"pacman",
+				"tar.gz"
 			],
 			"extraFiles": [
 				"fakeprinter/unix",
