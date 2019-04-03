@@ -50,7 +50,7 @@ net start spooler > NUL 2>&1
 
 :: Removing local printer
 echo Entferne PDF-Drucker
-rundll32 printui.dll,PrintUIEntry /n /q "AStA Copyclient" /dl
+rundll32 printui.dll,PrintUIEntry /n /q "AStA Copyclient" /dl > NUL 2>&1
 
 echo Die Deinstallation ist abgeschlossen
 exit

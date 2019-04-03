@@ -56,12 +56,6 @@ if %ARCH%==32BIT (
 if %ARCH%==64BIT (
 	regedit /s asta64.reg >nul
 )
-ping 127.0.0.1 -n 3 >nul
-echo Starte PDF-Drucker Software
-net start PDF24 > NUL 2>&1
-SET PROGFILES=%ProgramFiles(x86)%
-IF NOT DEFINED ProgramFiles(x86) SET PROGFILES=%PROGRAMFILES%
-start "" "%PROGFILES%\PDF24\pdf24.exe"
 goto EXIT
 
 :INST10
