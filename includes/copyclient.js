@@ -193,6 +193,23 @@ function setupWatches() {
 			}
 		}
 
+		// delete old jobs before watching
+		fs.readdir(path, (err, files) => {
+			if (err) {
+				console.error(err);
+				return false;
+			}
+
+			for (const file of files) {
+				fs.unlink(p.join(path, file), err => {
+					if (err) {
+						console.error(err);
+						return false;
+					}
+				});
+			}
+		});
+
 		_watcher = c.watch(path, {
 			awaitWriteFinish: {
 				stabilityThreshold: 4000,
@@ -303,6 +320,9 @@ function unsetDragDrop() {
 	}
 }
 
+/**
+ * Setup kiosk timeout intervals
+ */
 function setupInterval() {
 	if (_kiosk) {
 		_kioskTimeoutInterval = window.setInterval(function() {
@@ -318,9 +338,54 @@ function setupInterval() {
 	}
 }
 
+/**
+ * Setup interval for deleting jobs older than 5 mins
+ */
+function setupDeleteOldInterval() {
+	if (_kiosk) {
+		var fs = require("fs");
+		var p = require("path");
+
+		switch (process.platform) {
+			case "win32":
+				path = process.env.SYSTEMDRIVE + "/astaprint";
+				break;
+			default:
+				path = "/var/spool/astaprint";
+		}
+
+		_kioskDeleteOldInterval = window.setInterval(function() {
+			fs.readdir(path, (err, files) => {
+				if (err) {
+					console.error(err);
+					return false;
+				}
+
+				for (const file in files) {
+					fs.stat(p.join(path, file), (err, stat) => {
+						if (err) {
+							console.error(err);
+							return false;
+						}
+
+						let tmax, now;
+						now = new Date().getTime();
+						tmax = new Date(stat.ctime).getTime() + 300000;
+
+						if (now > tmax) {
+							fs.unlink(file);
+						}
+					});
+				}
+			});
+		}, 60000);
+	}
+}
+
 if (_kiosk) {
 	setupWatches();
 	setupDragDrop();
+	setupDeleteOldInterval();
 }
 
 document.addEventListener("loggedIn", function(event) {
