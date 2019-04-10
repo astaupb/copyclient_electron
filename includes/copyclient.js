@@ -206,7 +206,7 @@ function setupWatches() {
 			}
 
 			for (let file of files) {
-				fs.unlink(p.join(path, file), err => {
+				fs.unlink(p.join(path, files[file]), err => {
 					if (err) {
 						console.error(err);
 						return false;
@@ -215,6 +215,7 @@ function setupWatches() {
 			}
 		});
 
+		console.debug("Trying to watch " + path);
 		_watcher = c.watch(path, {
 			awaitWriteFinish: {
 				stabilityThreshold: 4000,
@@ -222,12 +223,12 @@ function setupWatches() {
 			}
 		});
 
-		_watcher.on("add", function(path) {
+		_watcher.on("add", function(f) {
 			if (! _kiosk || _kioskIsLoggedIn) {
-				uploadJob(path);
+				uploadJob(f);
 			} else if (_kiosk && ! _kioskIsLoggedIn) {
-				let filename = p.basename(path);
-				let filesize_b = fs.statSync(path).size;
+				let filename = p.basename(f);
+				let filesize_b = fs.statSync(f).size;
 				let filesize_mb = (filesize_b / 1000000.0).toFixed(2);
 
 				if (filename === "astaprint_windows10.pdf") {
@@ -235,7 +236,7 @@ function setupWatches() {
 				}
 
 				_kioskPrint.push({
-					"path": path,
+					"path": f,
 					"filename": filename,
 					"filesize_b": filesize_b,
 					"filesize_mb": filesize_mb
@@ -245,12 +246,12 @@ function setupWatches() {
 				currentWindow.show();
 			}
 		});
-		_watcher.on("change", function(path) {
+		_watcher.on("change", function(f) {
 			if (! _kiosk || _kioskIsLoggedIn) {
-				uploadJob(path);
+				uploadJob(f);
 			} else if (_kiosk && ! _kioskIsLoggedIn) {
-				let filename = p.basename(jobfile);
-				let filesize_b = fs.statSync(jobfile).size;
+				let filename = p.basename(f);
+				let filesize_b = fs.statSync(f).size;
 				let filesize_mb = (filesize_b / 1000000.0).toFixed(2);
 
 				if (filename === "astaprint_windows10.pdf") {
@@ -258,7 +259,7 @@ function setupWatches() {
 				}
 
 				_kioskPrint.push({
-					"path": path,
+					"path": f,
 					"filename": filename,
 					"filesize_b": filesize_b,
 					"filesize_mb": filesize_mb
@@ -268,8 +269,8 @@ function setupWatches() {
 				currentWindow.show();
 			}
 		});
-		_watcher.on("unlink", function(path) {
-			console.log("unlink: " + path);
+		_watcher.on("unlink", function(f) {
+			console.log("unlink: " + f);
 		});
 		_watcher.on("error", function(error) {
 			console.log("error: " + error);
@@ -368,7 +369,7 @@ function setupDeleteOldInterval() {
 				}
 
 				for (let file in files) {
-					fs.stat(p.join(path, file), (err, stat) => {
+					fs.stat(p.join(path, files[file]), (err, stat) => {
 						if (err) {
 							console.error(err);
 							return false;
@@ -379,7 +380,7 @@ function setupDeleteOldInterval() {
 						tmax = new Date(stat.ctime).getTime() + 300000;
 
 						if (now > tmax) {
-							fs.unlink(file);
+							fs.unlink(files[file]);
 						}
 					});
 				}

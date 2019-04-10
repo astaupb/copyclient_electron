@@ -96,6 +96,7 @@ case ${#} in
 
 		# Make sure everyone can read it
 		chmod 777 "$outpdf"
+		chown ${cupsuser} "$outpdf"
 
 		# Open CC if not already opened, otherwise show window
 		if [ -f "/opt/AStA Copyclient/asta-copyclient" ]; then
