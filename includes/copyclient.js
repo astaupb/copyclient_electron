@@ -226,8 +226,8 @@ function setupWatches() {
 			if (! _kiosk || _kioskIsLoggedIn) {
 				uploadJob(path);
 			} else if (_kiosk && ! _kioskIsLoggedIn) {
-				let filename = p.basename(jobfile);
-				let filesize_b = fs.statSync(jobfile).size;
+				let filename = p.basename(path);
+				let filesize_b = fs.statSync(path).size;
 				let filesize_mb = (filesize_b / 1000000.0).toFixed(2);
 
 				if (filename === "astaprint_windows10.pdf") {
