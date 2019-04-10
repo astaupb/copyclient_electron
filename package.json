@@ -47,6 +47,7 @@
 		"drag-drop": "^4.2.0",
 		"electron-better-dialog": "^1.0.6",
 		"jquery": "^3.3.1",
+		"mousetrap": "^1.6.3",
 		"underscore": "^1.9.1"
 	},
 	"build": {
