@@ -242,6 +242,14 @@ function setupWatches() {
 					"filesize_mb": filesize_mb
 				});
 
+				const notif = new Notification(getString(73), {
+					body: getString(74).format(filename)
+				});
+				notif.onclick = () => {
+					ipc.send('showWindow');
+					currentWindow.show();
+				};
+
 				ipc.send('showWindow');
 				currentWindow.show();
 			}
@@ -264,6 +272,14 @@ function setupWatches() {
 					"filesize_b": filesize_b,
 					"filesize_mb": filesize_mb
 				});
+
+				const notif = new Notification(getString(73), {
+					body: getString(74).format(filename)
+				});
+				notif.onclick = () => {
+					ipc.send('showWindow');
+					currentWindow.show();
+				};
 
 				ipc.send('showWindow');
 				currentWindow.show();
