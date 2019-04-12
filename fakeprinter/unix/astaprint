@@ -27,7 +27,8 @@ printtime=$(date +%Y-%b-%d-%H-%M-%S)
 # we prefer to radically convert every "weird" character to an underscore
 # for our current purpose...
 
-sanitized_jobtitle="$(echo ${jobtitle} | tr -cd '[[:alnum:]][[:blank:]]_-äöüÄÖÜß()')"
+sanitized_jobtitle="$(echo ${jobtitle} | tr -cd '[[:alnum:]][[:blank:]]_-äöüÄÖÜß().,' | cut -c 1-80)"
+sanitized_jobtitle="${sanitized_jobtitle%.pdf}" # remove .pdf from file end so no more "foo.pdf.pdf" filenames
 
 # the following lines would do (nearly) the same as the above, but slower
 # -- yet better readable (and the above may be in need of some fixing still):
