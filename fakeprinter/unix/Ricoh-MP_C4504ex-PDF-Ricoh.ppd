@@ -75,9 +75,6 @@
 *OpenUI *OptionTray/Option Tray: PickOne
 *DefaultOptionTray: NotInstalled
 *OptionTray NotInstalled/Not Installed: ""
-*OptionTray 1Cassette/Lower Paper Tray: ""
-*OptionTray LCT/Tray 3 (LCT): ""
-*OptionTray 2Cassette/Lower Paper Trays: ""
 *CloseUI: *OptionTray
 
 *OpenUI *LargeCapacityTray/Large Capacity Tray: PickOne
@@ -118,297 +115,31 @@
 
 *JCLOpenUI *PageSize: PickOne
 *OrderDependency: 100 JCLSetup *PageSize
-*DefaultPageSize: Letter
+*DefaultPageSize: A4
 *PageSize A3/A3 (297 x 420 mm): "@PJL SET FITTOPAGESIZE=A3<0A>"
 *PageSize A4/A4 (210 x 297 mm): "@PJL SET FITTOPAGESIZE=A4<0A>"
-*PageSize A5/A5 (148 x 210 mm): "@PJL SET FITTOPAGESIZE=A5<0A>"
-*PageSize A6/A6 (105 x 148 mm): "@PJL SET FITTOPAGESIZE=A6<0A>"
-*PageSize B4/B4 JIS (257 x 364 mm): "@PJL SET FITTOPAGESIZE=JISB4<0A>"
-*PageSize B5/B5 JIS (182 x 257 mm): "@PJL SET FITTOPAGESIZE=JISB5<0A>"
-*PageSize B6/B6 JIS (128 x 182 mm): "@PJL SET FITTOPAGESIZE=JISB6<0A>"
-*PageSize Legal/Legal (8.5 x 14): "@PJL SET FITTOPAGESIZE=LEGAL<0A>"
-*PageSize GovernmentLG/8.25 x 14: "@PJL SET FITTOPAGESIZE=GOVERNMENTLG<0A>"
-*PageSize EngQuatro/8 x 10: "@PJL SET FITTOPAGESIZE=ENGQUATRO<0A>"
-*PageSize Letter/Letter (8.5 x 11): "@PJL SET FITTOPAGESIZE=LETTER<0A>"
-*PageSize Statement/5.5 x 8.5: "@PJL SET FITTOPAGESIZE=HALFLETTER<0A>"
-*PageSize F/8 x 13: "@PJL SET FITTOPAGESIZE=FGL<0A>"
-*PageSize Folio/8.25 x 13: "@PJL SET FITTOPAGESIZE=FOLIO<0A>"
-*PageSize FanFoldGermanLegal/8.5 x 13: "@PJL SET FITTOPAGESIZE=FOOLSCAP<0A>"
-*PageSize Tabloid/11 x 17: "@PJL SET FITTOPAGESIZE=LEDGER<0A>"
-*PageSize 12x18/12 x 18: "@PJL SET FITTOPAGESIZE=A3WIDE<0A>"
-*PageSize 11x15/11 x 15: "@PJL SET FITTOPAGESIZE=INCH11x15<0A>"
-*PageSize 10x14/10 x 14: "@PJL SET FITTOPAGESIZE=INCH10x14<0A>"
-*PageSize SRA3/SRA3 (320 x 450 mm): "@PJL SET FITTOPAGESIZE=SRA3<0A>"
-*PageSize SRA4/SRA4 (225 x 320 mm): "@PJL SET FITTOPAGESIZE=SRA4<0A>"
-*PageSize Executive/Executive (7.25 x 10.5): "@PJL SET FITTOPAGESIZE=EXECUTIVE<0A>"
-*PageSize Env10/Com10 Env. (4.125 x 9.5): "@PJL SET FITTOPAGESIZE=COM10<0A>"
-*PageSize EnvMonarch/Monarch Env. (3.875 x 7.5): "@PJL SET FITTOPAGESIZE=MONARCH<0A>"
-*PageSize EnvC5/C5 Env. (162 x 229 mm): "@PJL SET FITTOPAGESIZE=C5<0A>"
-*PageSize EnvC6/C6 Env. (114 x 162 mm): "@PJL SET FITTOPAGESIZE=C6<0A>"
-*PageSize DLEnv/DL Env. (110 x 220 mm): "@PJL SET FITTOPAGESIZE=DL<0A>"
-*PageSize 8Kai/8K (267 x 390 mm): "@PJL SET FITTOPAGESIZE=K8<0A>"
-*PageSize 16Kai/16K (195 x 267 mm): "@PJL SET FITTOPAGESIZE=K16<0A>"
-*PageSize Oficio/8.5 x 13.4: "@PJL SET FITTOPAGESIZE=OFICIO<0A>"
 *JCLCloseUI: *PageSize
 
 *JCLOpenUI *PageRegion: PickOne
 *OrderDependency: 100 JCLSetup *PageRegion
-*DefaultPageRegion: Letter
+*DefaultPageRegion: A4
 *PageRegion A3/A3 (297 x 420 mm): "@PJL SET PAPER=A3<0A>"
 *PageRegion A4/A4 (210 x 297 mm): "@PJL SET PAPER=A4<0A>"
-*PageRegion A5/A5 (148 x 210 mm): "@PJL SET PAPER=A5<0A>"
-*PageRegion A6/A6 (105 x 148 mm): "@PJL SET PAPER=A6<0A>"
-*PageRegion B4/B4 JIS (257 x 364 mm): "@PJL SET PAPER=JISB4<0A>"
-*PageRegion B5/B5 JIS (182 x 257 mm): "@PJL SET PAPER=JISB5<0A>"
-*PageRegion B6/B6 JIS (128 x 182 mm): "@PJL SET PAPER=JISB6<0A>"
-*PageRegion Legal/Legal (8.5 x 14): "@PJL SET PAPER=LEGAL<0A>"
-*PageRegion GovernmentLG/8.25 x 14: "@PJL SET PAPER=GOVERNMENTLG<0A>"
-*PageRegion EngQuatro/8 x 10: "@PJL SET PAPER=ENGQUATRO<0A>"
-*PageRegion Letter/Letter (8.5 x 11): "@PJL SET PAPER=LETTER<0A>"
-*PageRegion Statement/5.5 x 8.5: "@PJL SET PAPER=HALFLETTER<0A>"
-*PageRegion F/8 x 13: "@PJL SET PAPER=FGL<0A>"
-*PageRegion Folio/8.25 x 13: "@PJL SET PAPER=FOLIO<0A>"
-*PageRegion FanFoldGermanLegal/8.5 x 13: "@PJL SET PAPER=FOOLSCAP<0A>"
-*PageRegion Tabloid/11 x 17: "@PJL SET PAPER=LEDGER<0A>"
-*PageRegion 12x18/12 x 18: "@PJL SET PAPER=A3WIDE<0A>"
-*PageRegion 11x15/11 x 15: "@PJL SET PAPER=INCH11x15<0A>"
-*PageRegion 10x14/10 x 14: "@PJL SET PAPER=INCH10x14<0A>"
-*PageRegion SRA3/SRA3 (320 x 450 mm): "@PJL SET PAPER=SRA3<0A>"
-*PageRegion SRA4/SRA4 (225 x 320 mm): "@PJL SET PAPER=SRA4<0A>"
-*PageRegion Executive/Executive (7.25 x 10.5): "@PJL SET PAPER=EXECUTIVE<0A>"
-*PageRegion Env10/Com10 Env. (4.125 x 9.5): "@PJL SET PAPER=COM10<0A>"
-*PageRegion EnvMonarch/Monarch Env. (3.875 x 7.5): "@PJL SET PAPER=MONARCH<0A>"
-*PageRegion EnvC5/C5 Env. (162 x 229 mm): "@PJL SET PAPER=C5<0A>"
-*PageRegion EnvC6/C6 Env. (114 x 162 mm): "@PJL SET PAPER=C6<0A>"
-*PageRegion DLEnv/DL Env. (110 x 220 mm): "@PJL SET PAPER=DL<0A>"
-*PageRegion 8Kai/8K (267 x 390 mm): "@PJL SET PAPER=K8<0A>"
-*PageRegion 16Kai/16K (195 x 267 mm): "@PJL SET PAPER=K16<0A>"
-*PageRegion Oficio/8.5 x 13.4: "@PJL SET PAPER=OFICIO<0A>"
 *JCLCloseUI: *PageRegion
 
-*DefaultImageableArea: Letter
+*DefaultImageableArea: A4
 *ImageableArea A3/A3 (297 x 420 mm): "12 12 830 1179"
 *ImageableArea A4/A4 (210 x 297 mm): "12 12 583 830"
-*ImageableArea A5/A5 (148 x 210 mm): "12 12 408 583"
-*ImageableArea A6/A6 (105 x 148 mm): "12 12 285 408"
-*ImageableArea B4/B4 JIS (257 x 364 mm): "12 12 717 1020"
-*ImageableArea B5/B5 JIS (182 x 257 mm): "12 12 504 717"
-*ImageableArea B6/B6 JIS (128 x 182 mm): "12 12 351 504"
-*ImageableArea Legal/Legal (8.5 x 14): "12 12 600 996"
-*ImageableArea GovernmentLG/8.25 x 14: "12 12 582 996"
-*ImageableArea EngQuatro/8 x 10: "12 12 564 708"
-*ImageableArea Letter/Letter (8.5 x 11): "12 12 600 780"
-*ImageableArea Statement/5.5 x 8.5: "12 12 384 600"
-*ImageableArea F/8 x 13: "12 12 564 924"
-*ImageableArea Folio/8.25 x 13: "12 12 583 923"
-*ImageableArea FanFoldGermanLegal/8.5 x 13: "12 12 600 924"
-*ImageableArea Tabloid/11 x 17: "12 12 780 1212"
-*ImageableArea 12x18/12 x 18: "12 12 852 1284"
-*ImageableArea 11x15/11 x 15: "12 12 780 1068"
-*ImageableArea 10x14/10 x 14: "12 12 708 996"
-*ImageableArea SRA3/SRA3 (320 x 450 mm): "12 12 895 1264"
-*ImageableArea SRA4/SRA4 (225 x 320 mm): "12 12 626 895"
-*ImageableArea Executive/Executive (7.25 x 10.5): "12 12 510 744"
-*ImageableArea Env10/Com10 Env. (4.125 x 9.5): "12 12 285 672"
-*ImageableArea EnvMonarch/Monarch Env. (3.875 x 7.5): "12 12 267 528"
-*ImageableArea EnvC5/C5 Env. (162 x 229 mm): "12 12 447 637"
-*ImageableArea EnvC6/C6 Env. (114 x 162 mm): "12 12 311 447"
-*ImageableArea DLEnv/DL Env. (110 x 220 mm): "12 12 299 611"
-*ImageableArea 8Kai/8K (267 x 390 mm): "12 12 745 1094"
-*ImageableArea 16Kai/16K (195 x 267 mm): "12 12 541 745"
-*ImageableArea Oficio/8.5 x 13.4: "12 12 600 953"
 
-*DefaultPaperDimension: Letter
+*DefaultPaperDimension: A4
 *PaperDimension A3/A3 (297 x 420 mm): "842 1191"
 *PaperDimension A4/A4 (210 x 297 mm): "595 842"
-*PaperDimension A5/A5 (148 x 210 mm): "420 595"
-*PaperDimension A6/A6 (105 x 148 mm): "297 420"
-*PaperDimension B4/B4 JIS (257 x 364 mm): "729 1032"
-*PaperDimension B5/B5 JIS (182 x 257 mm): "516 729"
-*PaperDimension B6/B6 JIS (128 x 182 mm): "363 516"
-*PaperDimension Legal/Legal (8.5 x 14): "612 1008"
-*PaperDimension GovernmentLG/8.25 x 14: "594 1008"
-*PaperDimension EngQuatro/8 x 10: "576 720"
-*PaperDimension Letter/Letter (8.5 x 11): "612 792"
-*PaperDimension Statement/5.5 x 8.5: "396 612"
-*PaperDimension F/8 x 13: "576 936"
-*PaperDimension Folio/8.25 x 13: "595 935"
-*PaperDimension FanFoldGermanLegal/8.5 x 13: "612 936"
-*PaperDimension Tabloid/11 x 17: "792 1224"
-*PaperDimension 12x18/12 x 18: "864 1296"
-*PaperDimension 11x15/11 x 15: "792 1080"
-*PaperDimension 10x14/10 x 14: "720 1008"
-*PaperDimension SRA3/SRA3 (320 x 450 mm): "907 1276"
-*PaperDimension SRA4/SRA4 (225 x 320 mm): "638 907"
-*PaperDimension Executive/Executive (7.25 x 10.5): "522 756"
-*PaperDimension Env10/Com10 Env. (4.125 x 9.5): "297 684"
-*PaperDimension EnvMonarch/Monarch Env. (3.875 x 7.5): "279 540"
-*PaperDimension EnvC5/C5 Env. (162 x 229 mm): "459 649"
-*PaperDimension EnvC6/C6 Env. (114 x 162 mm): "323 459"
-*PaperDimension DLEnv/DL Env. (110 x 220 mm): "311 623"
-*PaperDimension 8Kai/8K (267 x 390 mm): "757 1106"
-*PaperDimension 16Kai/16K (195 x 267 mm): "553 757"
-*PaperDimension Oficio/8.5 x 13.4: "612 965"
 
 *JCLOpenUI *InputSlot: PickOne
 *OrderDependency: 100 JCLSetup *InputSlot
 *DefaultInputSlot: Auto
-*InputSlot MultiTray/Bypass Tray: "@PJL SET TRAY=BYPASS<0A>"
-*InputSlot 1Tray/Tray 1: "@PJL SET TRAY=TRAY1<0A>"
-*InputSlot 2Tray/Tray 2: "@PJL SET TRAY=TRAY2<0A>"
-*InputSlot 3Tray/Tray 3: "@PJL SET TRAY=TRAY3<0A>"
-*InputSlot 4Tray/Tray 4: "@PJL SET TRAY=TRAY4<0A>"
-*InputSlot 5Tray/Large Capacity Tray: "@PJL SET TRAY=LCT<0A>"
 *InputSlot Auto/Auto Select: "@PJL SET TRAY=ALL<0A>"
 *JCLCloseUI: *InputSlot
-
-*JCLOpenUI *Duplex/Duplex: PickOne
-*OrderDependency: 100 JCLSetup *Duplex
-*DefaultDuplex: DuplexNoTumble
-*Duplex None/Off:  "@PJL SET DUPLEX=OFF<0A>"
-*Duplex DuplexNoTumble/Long Edge:  "@PJL SET DUPLEX=ON<0A>@PJL SET BINDING=LONGEDGE<0A>"
-*Duplex DuplexTumble/Short Edge:  "@PJL SET DUPLEX=ON<0A>@PJL SET BINDING=SHORTEDGE<0A>"
-*JCLCloseUI: *Duplex
-
-*JCLOpenUI *Collate/Collate: Boolean
-*OrderDependency: 100 JCLSetup *Collate
-*DefaultCollate: False
-*Collate False/Off: "@PJL SET COLLATE=OFF<0A>@PJL SET COPIES=&copies;<0A>"
-*Collate True/On:   "@PJL SET COLLATE=ON<0A>@PJL SET QTY=&copies;<0A>"
-*JCLCloseUI: *Collate
-
-*OpenGroup: Basic/Basic
-*JCLOpenUI *ColorModel/Color Mode: PickOne
-*OrderDependency: 100 JCLSetup *ColorModel
-*DefaultColorModel: CMYK
-*ColorModel CMYK/Color: "@PJL SET RENDERMODE=COLOR<0A>@PJL SET DATAMODE=COLOR<0A>"
-*ColorModel Gray/Black and White: "@PJL SET RENDERMODE=GRAYSCALE<0A>@PJL SET DATAMODE=GRAYSCALE<0A>"
-*JCLCloseUI: *ColorModel
-
-*CloseGroup: Basic
-
-*OpenGroup: Paper/Paper
-*JCLOpenUI *MediaType/Paper Type: PickOne
-*OrderDependency: 100 JCLSetup *MediaType
-*DefaultMediaType: Auto
-*MediaType Auto/Plain/Recycled: "@PJL SET MEDIATYPE=PLAINORRECYCLED<0A>"
-*MediaType Plain1/Plain 1 (60 - 74 g/m2): "@PJL SET MEDIATYPE=PLAIN<0A>"
-*MediaType Plain2/Plain 2 (75 - 81 g/m2): "@PJL SET MEDIATYPE=PLAIN2<0A>"
-*MediaType Recycled/Recycled: "@PJL SET MEDIATYPE=RECYCLED<0A>"
-*MediaType Special1/Special 1: "@PJL SET MEDIATYPE=SPECIAL<0A>"
-*MediaType Special2/Special 2: "@PJL SET MEDIATYPE=SPECIAL2<0A>"
-*MediaType Special3/Special 3: "@PJL SET MEDIATYPE=SPECIAL3<0A>"
-*MediaType Colored/Color: "@PJL SET MEDIATYPE=COLOR<0A>"
-*MediaType Letterhead/Letterhead: "@PJL SET MEDIATYPE=LETTERHEAD<0A>"
-*MediaType Preprinted/Preprinted: "@PJL SET MEDIATYPE=PREPRINTED<0A>"
-*MediaType Labels/Labels: "@PJL SET MEDIATYPE=LABELS<0A>"
-*MediaType Bond/Bond: "@PJL SET MEDIATYPE=BOND<0A>"
-*MediaType Cardstock/Cardstock: "@PJL SET MEDIATYPE=CARDSTOCK<0A>"
-*MediaType OHP/Transparency: "@PJL SET MEDIATYPE=TRANSPARENCY<0A>"
-*MediaType Thick1/Thick 1 (106 - 169 g/m2): "@PJL SET MEDIATYPE=THICK<0A>"
-*MediaType Thick2/Thick 2 (170 - 220 g/m2): "@PJL SET MEDIATYPE=THICK2<0A>"
-*MediaType Thick3/Thick 3 (221 - 256 g/m2): "@PJL SET MEDIATYPE=THICK3<0A>"
-*MediaType Thick4/Thick 4 (257 - 300 g/m2): "@PJL SET MEDIATYPE=THICK4<0A>"
-*MediaType Thin/Thin (52 - 59 g/m2): "@PJL SET MEDIATYPE=THIN<0A>"
-*MediaType Middlethick/Middle Thick (82 - 105 g/m2): "@PJL SET MEDIATYPE=MIDDLETHICK<0A>"
-*MediaType GlossCoated/Coated (Glossy): "@PJL SET MEDIATYPE=GLOSSYCOATED<0A>"
-*MediaType MatCoated/Coated (Matte): "@PJL SET MEDIATYPE=MATCOATED<0A>"
-*MediaType Envelope/Envelope: "@PJL SET MEDIATYPE=ENVELOPE<0A>"
-*JCLCloseUI: *MediaType
-
-*JCLOpenUI *OutputBin/Destination: PickOne
-*OrderDependency: 100 JCLSetup *OutputBin
-*DefaultOutputBin: Default
-*OutputBin Default/Printer Default: "@PJL SET OUTBIN=SYSDEFAULT<0A>"
-*OutputBin Standard/Internal Tray 1: "@PJL SET OUTBIN=UPPER<0A>"
-*OutputBin Bin1/Internal Tray 2: "@PJL SET OUTBIN=INNER<0A>"
-*OutputBin Shift/Internal Shift Tray: "@PJL SET OUTBIN=UPPER<0A>"
-*OutputBin External/External Tray: "@PJL SET OUTBIN=LOWER<0A>"
-*OutputBin FinRUBICONBShift/Finisher SR3130 Shift Tray: "@PJL SET OUTBIN=FINISHERSHIFT<0A>"
-*OutputBin FinVOLGADBKUpper/Finisher SR3240 Upper Tray: "@PJL SET OUTBIN=FINISHERPROOF<0A>"
-*OutputBin FinVOLGADBKShift/Finisher SR3240 Shift Tray: "@PJL SET OUTBIN=FINISHERSHIFT<0A>"
-*OutputBin FinVOLGADBKLower/Finisher SR3240 Booklet Tray: "@PJL SET OUTBIN=FINISHERBOOKLET<0A>"
-*OutputBin FinVOLGADUpper/Finisher SR3230 Upper Tray: "@PJL SET OUTBIN=FINISHERPROOF<0A>"
-*OutputBin FinVOLGADShift/Finisher SR3230 Shift Tray: "@PJL SET OUTBIN=FINISHERSHIFT<0A>"
-*OutputBin FinAMURBBKUpper/Finisher SR3220 Upper Tray: "@PJL SET OUTBIN=FINISHERPROOF<0A>"
-*OutputBin FinAMURBBKShift/Finisher SR3220 Shift Tray: "@PJL SET OUTBIN=FINISHERSHIFT<0A>"
-*OutputBin FinAMURBBKLower/Finisher SR3220 Booklet Tray: "@PJL SET OUTBIN=FINISHERBOOKLET<0A>"
-*OutputBin FinAMURHYUpper/Finisher SR3210 Upper Tray: "@PJL SET OUTBIN=FINISHERPROOF<0A>"
-*OutputBin FinAMURHYShift/Finisher SR3210 Shift Tray: "@PJL SET OUTBIN=FINISHERSHIFT<0A>"
-*JCLCloseUI: *OutputBin
-
-*CloseGroup: Paper
-
-*OpenGroup: Finishing/Finishing
-*JCLOpenUI *RICollateKind/Collate Type: PickOne
-*OrderDependency: 100 JCLSetup *RICollateKind
-*DefaultRICollateKind: Normal
-*RICollateKind Normal/Collate: "@PJL SET JOBOFFSET=OFF<0A>"
-*RICollateKind RotateCollate/Rotating Collate: "@PJL SET JOBOFFSET=ROTATE<0A>"
-*RICollateKind ShiftCollate/Shift Collate: "@PJL SET JOBOFFSET=SHIFT<0A>"
-*JCLCloseUI: *RICollateKind
-
-*JCLOpenUI *StapleLocation/Staple: PickOne
-*OrderDependency: 100 JCLSetup *StapleLocation
-*DefaultStapleLocation: None
-*StapleLocation None/Off: "@PJL SET STAPLE=OFF<0A>"
-*StapleLocation StaplessUpperLeft/Top left (stapleless): "@PJL SET STAPLE=STAPLELESSLEFTTOPSLANTPORT<0A>"
-*StapleLocation StaplessUpperRight/Top right (stapleless): "@PJL SET STAPLE=STAPLELESSRIGHTTOPSLANTPORT<0A>"
-*StapleLocation UpperLeft/Top left: "@PJL SET STAPLE=LEFTTOP<0A>"
-*StapleLocation UpperRight/Top right: "@PJL SET STAPLE=RIGHTTOP<0A>"
-*StapleLocation LeftW/2 at left: "@PJL SET STAPLE=LEFT2PORT<0A>"
-*StapleLocation RightW/2 at right: "@PJL SET STAPLE=RIGHT2PORT<0A>"
-*StapleLocation UpperW/2 at top: "@PJL SET STAPLE=TOP2PORT<0A>"
-*StapleLocation CenterW/2 at center: "@PJL SET STAPLE=BOOKLET<0A>"
-*JCLCloseUI: *StapleLocation
-
-*JCLOpenUI *RIPunch/Punch: PickOne
-*OrderDependency: 100 JCLSetup *RIPunch
-*DefaultRIPunch: None
-*RIPunch None/Off: "@PJL SET PUNCH=OFF<0A>"
-*RIPunch LeftJP2/2 at left (Japan/Europe): "@PJL SET PUNCH=LEFTPORT<0A>@PJL SET PUNCHHOLE=JP2<0A>"
-*RIPunch LeftUS2/2 at left (North America): "@PJL SET PUNCH=LEFTPORT<0A>@PJL SET PUNCHHOLE=US2<0A>"
-*RIPunch LeftUS3/3 at left (North America): "@PJL SET PUNCH=LEFTPORT<0A>@PJL SET PUNCHHOLE=US3<0A>"
-*RIPunch LeftEU4/4 at left (Europe): "@PJL SET PUNCH=LEFTPORT<0A>@PJL SET PUNCHHOLE=EU4<0A>"
-*RIPunch LeftNEU4/4 at left (Northern Europe): "@PJL SET PUNCH=LEFTPORT<0A>@PJL SET PUNCHHOLE=NEU4<0A>"
-*RIPunch RightJP2/2 at right (Japan/Europe): "@PJL SET PUNCH=RIGHTPORT<0A>@PJL SET PUNCHHOLE=JP2<0A>"
-*RIPunch RightUS2/2 at right (North America): "@PJL SET PUNCH=RIGHTPORT<0A>@PJL SET PUNCHHOLE=US2<0A>"
-*RIPunch RightUS3/3 at right (North America): "@PJL SET PUNCH=RIGHTPORT<0A>@PJL SET PUNCHHOLE=US3<0A>"
-*RIPunch RightEU4/4 at right (Europe): "@PJL SET PUNCH=RIGHTPORT<0A>@PJL SET PUNCHHOLE=EU4<0A>"
-*RIPunch RightNEU4/4 at right (Northern Europe): "@PJL SET PUNCH=RIGHTPORT<0A>@PJL SET PUNCHHOLE=NEU4<0A>"
-*RIPunch UpperJP2/2 at top (Japan/Europe): "@PJL SET PUNCH=TOPPORT<0A>@PJL SET PUNCHHOLE=JP2<0A>"
-*RIPunch UpperUS2/2 at top (North America): "@PJL SET PUNCH=TOPPORT<0A>@PJL SET PUNCHHOLE=US2<0A>"
-*RIPunch UpperUS3/3 at top (North America): "@PJL SET PUNCH=TOPPORT<0A>@PJL SET PUNCHHOLE=US3<0A>"
-*RIPunch UpperEU4/4 at top (Europe): "@PJL SET PUNCH=TOPPORT<0A>@PJL SET PUNCHHOLE=EU4<0A>"
-*RIPunch UpperNEU4/4 at top (Northern Europe): "@PJL SET PUNCH=TOPPORT<0A>@PJL SET PUNCHHOLE=NEU4<0A>"
-*JCLCloseUI: *RIPunch
-
-*CloseGroup: Finishing
-
-*OpenGroup: PrintQuality/Print Quality
-*JCLOpenUI *Resolution/Resolution: PickOne
-*OrderDependency: 100 JCLSetup *Resolution
-*DefaultResolution: 600dpi
-*Resolution 600dpi/600 dpi: "@PJL SET RESOLUTION=600<0A>"
-*Resolution 1200dpi/1200 dpi: "@PJL SET RESOLUTION=1200<0A>"
-*JCLCloseUI: *Resolution
-
-*JCLOpenUI *RPSBitsPerPixel/Gradation: PickOne
-*OrderDependency: 100 JCLSetup *RPSBitsPerPixel
-*DefaultRPSBitsPerPixel: 2BitsPerPixel
-*RPSBitsPerPixel 2BitsPerPixel/Standard: "@PJL SET BITSPERDOT=2<0A>"
-*RPSBitsPerPixel 1BitsPerPixel/Fast: "@PJL SET BITSPERDOT=1<0A>"
-*RPSBitsPerPixel 4BitsPerPixel/Fine: "@PJL SET BITSPERDOT=4<0A>"
-*JCLCloseUI: *RPSBitsPerPixel
-
-*JCLOpenUI *RIPrintMode/Print Mode: PickOne
-*OrderDependency: 100 JCLSetup *RIPrintMode
-*DefaultRIPrintMode: 0rhit
-*RIPrintMode 0rhit/Off: "@PJL SET ECONOMODE=OFF<0A>"
-*RIPrintMode 3rhit/Toner Saving: "@PJL SET ECONOMODE=ON<0A>"
-*JCLCloseUI: *RIPrintMode
-
-*CloseGroup: PrintQuality
 
 *OpenGroup: Effects/Effects
 *CloseGroup: Effects
