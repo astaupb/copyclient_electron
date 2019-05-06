@@ -24,7 +24,7 @@ jobfile=${6}
 
 # sanitize job title (only allow alphanumeric characters and a bit of punctuation)
 # also remove .pdf from file name as it's added later on
-sanitized_jobtitle="$(echo ${jobtitle} | tr -cd '[[:alnum:]][[:blank:]]_-äöüÄÖÜß().,' | cut -c 1-80)"
+sanitized_jobtitle="$(echo ${jobtitle} | tr -cd 'A-Za-zäöüÄÖÜß0-9 .()_-' | cut -c 1-80)"
 sanitized_jobtitle="${sanitized_jobtitle%.pdf}"
 outname=${sanitized_jobtitle}
 
