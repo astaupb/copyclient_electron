@@ -1,5 +1,5 @@
 # @license LGPL-3.0-or-later
-# Copyright (c) 2018 Michael Koch <m.koch@emkay443.de>
+# Copyright (c) 2019 Michael Koch <m.koch@emkay443.de>
 #
 # This file is part of AStA Copyclient.
 # AStA Copyclient is free software: you can redistribute it and/or modify
@@ -57,3 +57,5 @@ build-mac:
 build-linux:
 	./build_angular.sh
 	env SHELL=bash ./node_modules/.bin/electron-builder --linux --ia32 --x64
+
+include includes/make.mk

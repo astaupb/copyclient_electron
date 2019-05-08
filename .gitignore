@@ -2,6 +2,7 @@
 package-lock.json
 node_modules
 config.*
+includes/*.mk
 dist
 fakeprinter/drivers/32/*
 fakeprinter/drivers/64/*
