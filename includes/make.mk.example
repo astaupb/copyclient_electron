@@ -16,18 +16,8 @@
 # along with AStA Copyclient.  If not, see <http://www.gnu.org/licenses/>.
 
 VERSION=1.2.3
-
-build-directprint:
-	-@rm -rf dist 2>/dev/null || true
-	./build_angular.sh 12345 left
-	env SHELL=bash ./node_modules/.bin/electron-builder --linux --x64
-	ssh deployuser@deployhost 'mkdir -p /path/to/dist/directprint/${VERSION}/12345'
-	ssh deployuser@deployhost 'mkdir -p /path/to/dist/directprint/current/12345'
-	scp dist/asta-copyclient*.deb deployuser@deployhost:/path/to/dist/directprint/${VERSION}/12345/asta-copyclient.deb
-	scp dist/asta-copyclient*.deb deployuser@deployhost:/path/to/dist/directprint/current/12345/asta-copyclient.deb
-	./build_angular.sh 54321 right
-	env SHELL=bash ./node_modules/.bin/electron-builder --linux --x64
-	ssh deployuser@deployhost 'mkdir -p /path/to/dist/directprint/${VERSION}/54321'
-	ssh deployuser@deployhost 'mkdir -p /path/to/dist/directprint/current/54321'
-	scp dist/asta-copyclient*.deb deployuser@deployhost:/path/to/dist/directprint/${VERSION}/54321/asta-copyclient.deb
-	scp dist/asta-copyclient*.deb deployuser@deployhost:/path/to/dist/directprint/current/54321/asta-copyclient.deb
+directprint_left=12345 67890
+directprint_right=09876 54321
+deploy_user=foo
+deploy_host=bar
+dist_folder=/path/to/dist

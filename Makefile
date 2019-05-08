@@ -15,6 +15,8 @@
 # You should have received a copy of the GNU Lesser General Public License
 # along with AStA Copyclient.  If not, see <http://www.gnu.org/licenses/>.
 
+include includes/make.mk
+
 default: install run
 
 install:
@@ -58,4 +60,21 @@ build-linux:
 	./build_angular.sh
 	env SHELL=bash ./node_modules/.bin/electron-builder --linux --ia32 --x64
 
-include includes/make.mk
+build-directprint:
+	-@rm -rf dist 2>/dev/null || true
+	for id in ${directprint_left}; do \
+		./build_angular.sh $$id left; \
+		env SHELL=bash ./node_modules/.bin/electron-builder --linux --x64; \
+		ssh ${deploy_user}@${deploy_host} 'mkdir -p ${dist_folder}/directprint/${VERSION}/$$id'; \
+		ssh ${deploy_user}@${deploy_host} 'mkdir -p ${dist_folder}/directprint/current/$$id'; \
+		scp dist/asta-copyclient*.deb ${deploy_user}@${deploy_host}:${dist_folder}/directprint/${VERSION}/$$id/asta-copyclient.deb; \
+		scp dist/asta-copyclient*.deb ${deploy_user}@${deploy_host}:${dist_folder}/directprint/current/$$id/asta-copyclient.deb; \
+	done
+	for id in ${directprint_right}; do \
+		./build_angular.sh $$id right; \
+		env SHELL=bash ./node_modules/.bin/electron-builder --linux --x64; \
+		ssh ${deploy_user}@${deploy_host} 'mkdir -p ${dist_folder}/directprint/${VERSION}/$$id'; \
+		ssh ${deploy_user}@${deploy_host} 'mkdir -p ${dist_folder}/directprint/current/$$id'; \
+		scp dist/asta-copyclient*.deb ${deploy_user}@${deploy_host}:${dist_folder}/directprint/${VERSION}/$$id/asta-copyclient.deb; \
+		scp dist/asta-copyclient*.deb ${deploy_user}@${deploy_host}:${dist_folder}/directprint/current/$$id/asta-copyclient.deb; \
+	done
