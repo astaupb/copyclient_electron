@@ -101,7 +101,7 @@ build-kiosk:
 	-@rm -rf dist 2>/dev/null || true
 	./build_angular.sh
 	env SHELL=bash ./node_modules/.bin/electron-builder --linux --x64
-	ssh ${deploy_user}@${deploy_host} 'mkdir -p ${dist_folder}/directprint/${VERSION}'
-	ssh ${deploy_user}@${deploy_host} 'mkdir -p ${dist_folder}/directprint/current'
-	scp dist/asta-copyclient*.deb ${deploy_user}@${deploy_host}:${dist_folder}/directprint/${VERSION}/asta-copyclient_${VERSION}.deb
-	ssh ${deploy_user}@${deploy_host} 'ln -sf ${dist_folder}/directprint/${VERSION}/asta-copyclient_${VERSION}.deb ${dist_folder}/directprint/current/asta-copyclient.deb'
+	ssh ${deploy_user}@${deploy_host} 'mkdir -p ${dist_folder}/kiosk/${VERSION}'
+	ssh ${deploy_user}@${deploy_host} 'mkdir -p ${dist_folder}/kiosk/current'
+	scp dist/asta-copyclient*.deb ${deploy_user}@${deploy_host}:${dist_folder}/kiosk/${VERSION}/asta-copyclient_${VERSION}.deb
+	ssh ${deploy_user}@${deploy_host} 'ln -sf ${dist_folder}/kiosk/${VERSION}/asta-copyclient_${VERSION}.deb ${dist_folder}/kiosk/current/asta-copyclient.deb'
