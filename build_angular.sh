@@ -1,10 +1,13 @@
 #!/bin/bash
 if [[ ! -z "$1" ]]; then
 	if [[ ! -z "$2" ]]; then
-		if [[ "$2" == "left" ]]; then
-			leftPrinter=$1
-		elif [[ "$2" == "right" ]]; then
-			rightPrinter=$1
+		if [[ "$1" == "left" ]]; then
+			leftPrinter=$2
+		elif [[ "$1" == "right" ]]; then
+			rightPrinter=$2
+		elif [[ "$1" == "both" ]]; then
+			leftPrinter=$2
+			rightPrinter=$3
 		fi
 	fi
 fi

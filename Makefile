@@ -79,7 +79,7 @@ build-directprint:
 	./change_config.sh disable_starthidden
 	-@rm -rf dist 2>/dev/null || true
 	for id in ${directprint_left}; do \
-		./build_angular.sh $$id left; \
+		./build_angular.sh left $$id; \
 		env SHELL=bash ./node_modules/.bin/electron-builder --linux --x64; \
 		ssh ${deploy_user}@${deploy_host} 'mkdir -p ${dist_folder}/directprint/${VERSION}/$$id'; \
 		ssh ${deploy_user}@${deploy_host} 'mkdir -p ${dist_folder}/directprint/current/$$id'; \
@@ -87,7 +87,7 @@ build-directprint:
 		ssh ${deploy_user}@${deploy_host} 'ln -sf ${dist_folder}/directprint/${VERSION}/$$id/asta-copyclient.deb ${dist_folder}/directprint/current/$$id/asta-copyclient.deb'; \
 	done
 	for id in ${directprint_right}; do \
-		./build_angular.sh $$id right; \
+		./build_angular.sh right $$id; \
 		env SHELL=bash ./node_modules/.bin/electron-builder --linux --x64; \
 		ssh ${deploy_user}@${deploy_host} 'mkdir -p ${dist_folder}/directprint/${VERSION}/$$id'; \
 		ssh ${deploy_user}@${deploy_host} 'mkdir -p ${dist_folder}/directprint/current/$$id'; \
