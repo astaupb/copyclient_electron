@@ -46,6 +46,7 @@ build-all:
 	$(MAKE) build-win
 	$(MAKE) build-mac
 
+build-windows: build-win
 build-win:
 	./change_config.sh disable_kiosk
 	./change_config.sh disable_starthidden
@@ -72,7 +73,13 @@ build-linux:
 	ssh ${deploy_user}@${deploy_host} 'mkdir -p ${dist_folder}/public/linux/${VERSION}'
 	ssh ${deploy_user}@${deploy_host} 'mkdir -p ${dist_folder}/public/linux/current'
 	scp dist/asta-copyclient*.deb ${deploy_user}@${deploy_host}:${dist_folder}/public/linux/${VERSION}/asta-copyclient_${VERSION}.deb
-	ssh ${deploy_user}@${deploy_host} 'ln -sf ${dist_folder}/public/linux/${VERSION}/asta-copyclient_${VERSION}.deb ${dist_folder}/public/linux/current/asta-copyclient.deb'
+	scp dist/asta-copyclient*.rpm ${deploy_user}@${deploy_host}:${dist_folder}/public/linux/${VERSION}/asta-copyclient_${VERSION}.rpm
+	scp dist/asta-copyclient*.pacman ${deploy_user}@${deploy_host}:${dist_folder}/public/linux/${VERSION}/asta-copyclient_${VERSION}_archlinux.tar.xz
+	scp dist/asta-copyclient*.tar.gz ${deploy_user}@${deploy_host}:${dist_folder}/public/linux/${VERSION}/asta-copyclient_${VERSION}_generic.tar.gz
+	ssh ${deploy_user}@${deploy_host} "ln -sf ${dist_folder}/public/linux/${VERSION}/asta-copyclient_${VERSION}.deb ${dist_folder}/public/linux/current/asta-copyclient.deb"
+	ssh ${deploy_user}@${deploy_host} "ln -sf ${dist_folder}/public/linux/${VERSION}/asta-copyclient_${VERSION}.rpm ${dist_folder}/public/linux/current/asta-copyclient.rpm"
+	ssh ${deploy_user}@${deploy_host} "ln -sf ${dist_folder}/public/linux/${VERSION}/asta-copyclient_${VERSION}_archlinux.tar.xz ${dist_folder}/public/linux/current/asta-copyclient_archlinux.tar.xz"
+	ssh ${deploy_user}@${deploy_host} "ln -sf ${dist_folder}/public/linux/${VERSION}/asta-copyclient_${VERSION}_generic.tar.gz ${dist_folder}/public/linux/current/asta-copyclient_generic.tar.gz"
 
 build-directprint:
 	./change_config.sh enable_kiosk
@@ -81,18 +88,18 @@ build-directprint:
 	for id in ${directprint_left}; do \
 		./build_angular.sh left $$id; \
 		env SHELL=bash ./node_modules/.bin/electron-builder --linux --x64; \
-		ssh ${deploy_user}@${deploy_host} 'mkdir -p ${dist_folder}/directprint/${VERSION}/$$id'; \
-		ssh ${deploy_user}@${deploy_host} 'mkdir -p ${dist_folder}/directprint/current/$$id'; \
+		ssh ${deploy_user}@${deploy_host} "mkdir -p ${dist_folder}/directprint/${VERSION}/$$id"; \
+		ssh ${deploy_user}@${deploy_host} "mkdir -p ${dist_folder}/directprint/current/$$id"; \
 		scp dist/asta-copyclient*.deb ${deploy_user}@${deploy_host}:${dist_folder}/directprint/${VERSION}/$$id/asta-copyclient.deb; \
-		ssh ${deploy_user}@${deploy_host} 'ln -sf ${dist_folder}/directprint/${VERSION}/$$id/asta-copyclient.deb ${dist_folder}/directprint/current/$$id/asta-copyclient.deb'; \
+		ssh ${deploy_user}@${deploy_host} "ln -sf ${dist_folder}/directprint/${VERSION}/$$id/asta-copyclient.deb ${dist_folder}/directprint/current/$$id/asta-copyclient.deb"; \
 	done
 	for id in ${directprint_right}; do \
 		./build_angular.sh right $$id; \
 		env SHELL=bash ./node_modules/.bin/electron-builder --linux --x64; \
-		ssh ${deploy_user}@${deploy_host} 'mkdir -p ${dist_folder}/directprint/${VERSION}/$$id'; \
-		ssh ${deploy_user}@${deploy_host} 'mkdir -p ${dist_folder}/directprint/current/$$id'; \
+		ssh ${deploy_user}@${deploy_host} "mkdir -p ${dist_folder}/directprint/${VERSION}/$$id"; \
+		ssh ${deploy_user}@${deploy_host} "mkdir -p ${dist_folder}/directprint/current/$$id"; \
 		scp dist/asta-copyclient*.deb ${deploy_user}@${deploy_host}:${dist_folder}/directprint/${VERSION}/$$id/asta-copyclient.deb; \
-		ssh ${deploy_user}@${deploy_host} 'ln -sf ${dist_folder}/directprint/${VERSION}/$$id/asta-copyclient.deb ${dist_folder}/directprint/current/$$id/asta-copyclient.deb'; \
+		ssh ${deploy_user}@${deploy_host} "ln -sf ${dist_folder}/directprint/${VERSION}/$$id/asta-copyclient.deb ${dist_folder}/directprint/current/$$id/asta-copyclient.deb"; \
 	done
 
 build-kiosk:
@@ -101,7 +108,7 @@ build-kiosk:
 	-@rm -rf dist 2>/dev/null || true
 	./build_angular.sh
 	env SHELL=bash ./node_modules/.bin/electron-builder --linux --x64
-	ssh ${deploy_user}@${deploy_host} 'mkdir -p ${dist_folder}/kiosk/${VERSION}'
-	ssh ${deploy_user}@${deploy_host} 'mkdir -p ${dist_folder}/kiosk/current'
+	ssh ${deploy_user}@${deploy_host} "mkdir -p ${dist_folder}/kiosk/${VERSION}"
+	ssh ${deploy_user}@${deploy_host} "mkdir -p ${dist_folder}/kiosk/current"
 	scp dist/asta-copyclient*.deb ${deploy_user}@${deploy_host}:${dist_folder}/kiosk/${VERSION}/asta-copyclient_${VERSION}.deb
-	ssh ${deploy_user}@${deploy_host} 'ln -sf ${dist_folder}/kiosk/${VERSION}/asta-copyclient_${VERSION}.deb ${dist_folder}/kiosk/current/asta-copyclient.deb'
+	ssh ${deploy_user}@${deploy_host} "ln -sf ${dist_folder}/kiosk/${VERSION}/asta-copyclient_${VERSION}.deb ${dist_folder}/kiosk/current/asta-copyclient.deb"
