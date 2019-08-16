@@ -15,7 +15,7 @@ fi
 rm -rf web
 cd src
 cp build.yaml /tmp/build.yaml.orig
-head -n -2 build.yaml > /tmp/build.yaml
+sed -ne :1 -e 'N;1,2b1' -e 'P;D' build.yaml > /tmp/build.yaml
 mv /tmp/build.yaml build.yaml
 echo "           - -DleftPrinter=$leftPrinter" >> build.yaml
 echo "           - -DrightPrinter=$rightPrinter" >> build.yaml
