@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/usr/bin/env bash
 ################# "astaprint" CUPS backend script ##############################
 #
 # /usr/lib/cups/backend/astaprint
@@ -7,13 +7,12 @@
 #                                  <kurt.pfeifle@infotec.com>
 #     Network printing consultant Linux/Unix/Windows/Samba/CUPS
 #
-# Modifications by:
-#     2018-2019       Michael Koch <mkoch@asta.upb.de>
+# (c) December 2018-2019  Michael Koch <m.koch@emkay443.de>
+#                                      <mkoch@asta.upb.de>
 #
 # License: GNU GPLv2 or GPLv3 (your choice)
 # Warranty: None at all; you may need to fix included defects on your own.
 
-# helper variables
 backend=${0}
 jobid=${1}
 cupsuser=${2}
@@ -28,56 +27,54 @@ sanitized_jobtitle="$(echo ${jobtitle} | tr -cd 'A-Za-zäöüÄÖÜß0-9 .()_-' 
 sanitized_jobtitle="${sanitized_jobtitle%.pdf}"
 outname=${sanitized_jobtitle}
 
-case ${#} in
-	0)
-		# this case is for "backend discovery mode"
-		echo "file astaprint \"AStA Copyclient Fakeprinter\" \"AStA Copyclient Fakeprinter for UNIX-like operating systems\""
-		exit 0
-		;;
-	5)
-		tmpfile="$(mktemp)"
-		cat - > $tmpfile
-		;;&
-	6)
-		tmpfile="$(mktemp)"
-		cat ${6} > $tmpfile
-		;;&
-	5|6)
-		if [ ! -e ${DEVICE_URI#astaprint:} ]; then
-			mkdir -p ${DEVICE_URI#astaprint:}
-			chmod 777 ${DEVICE_URI#astaprint:}
-		fi
+# now do the real work:
+if [ "${#}" -eq 0 ]; then
+	echo "file astaprint \"AStA Copyclient Fakeprinter\" \"AStA Copyclient Fakeprinter for UNIX-like operating systems\""
+	exit 0
+elif [ "${#}" -eq 5 ]; then
+	tmpfile=$(mktemp)
+	cat - > $tmpfile
+elif [ "${#}" -eq 6 ]; then
+	tmpfile=$(mktemp)
+	cat $jobfile > $tmpfile
+else
+	echo " "
+	echo " Usage: astaprint job-id user title copies options [file]"
+	echo " "
+	echo " Also accepts data from stdin instead of a file"
+	echo " "
+	echo " (Install as CUPS backend in /usr/lib/cups/backend/astaprint)"
+	echo " (Use as 'device URI' like \"astaprint:/path/to/writeable/directory\" for printer installation.)"
+	exit 0
+fi
 
-		outpdf=${DEVICE_URI#astaprint:}/${outname}.pdf
+if [ "${#}" -eq 5 ] || [ "${#}" -eq 6 ]; then
+	if [ ! -e ${DEVICE_URI#astaprint:} ]; then
+		mkdir -p ${DEVICE_URI#astaprint:}
+		chmod 777 ${DEVICE_URI#astaprint:}
+	fi
 
-		# remove PJL shit
-		if [[ $(head -n 3 $tmpfile) == *"@PJL"* ]]; then
-			cat $tmpfile | sed -n '/^%PDF-/,$p' | sed -n '1,/^%%EOF/p' > "$outpdf"
-		else
-			mv $tmpfile "$outpdf"
-		fi
+	outpdf=${DEVICE_URI#astaprint:}/${outname}.pdf
 
-		# remove tmp file
-		rm $tmpfile
+	# remove PJL shit
+	if [[ $(head -n 3 $tmpfile) == *"@PJL"* ]]; then
+		cat $tmpfile | sed -n '/^%PDF-/,$p' | sed -n '1,/^%%EOF/p' > "$outpdf"
+	else
+		mv $tmpfile "$outpdf"
+	fi
 
-		# Make sure everyone can read and delete it
-		chmod 777 "$outpdf"
-		chown ${cupsuser} "$outpdf"
+	# remove tmp file
+	rm $tmpfile
 
-		# Open CC if not already opened, otherwise show window
-		if [ -f "/opt/AStA Copyclient/asta-copyclient" ]; then
-			nohup sudo -u ${cupsuser} DISPLAY=:0 XDG_RUNTIME_DIR=/run/user/$(id -u ${cupsuser}) "/opt/AStA Copyclient/asta-copyclient" &>/dev/null &
-		fi
-		;;
-	1|2|3|4|*)
-		# these cases are unsupported
-		echo " "
-		echo " Usage: astaprint job-id user title copies options [file]"
-		echo " "
-		echo " (Install as CUPS backend in /usr/lib/cups/backend/astaprint)"
-		echo " (Use as 'device URI' like \"astaprint:/path/to/writeable/directory\" for printer installation.)"
-		exit 0
-esac
+	# Make sure everyone can read and delete it
+	chmod 777 "$outpdf"
+	chown ${cupsuser} "$outpdf"
+
+	# Open CC if not already opened, otherwise show window
+	if [ -f "/opt/AStA Copyclient/asta-copyclient" ]; then
+		nohup sudo -u ${cupsuser} DISPLAY=:0 XDG_RUNTIME_DIR=/run/user/$(id -u ${cupsuser}) "/opt/AStA Copyclient/asta-copyclient" &>/dev/null &
+	fi
+fi
 
 # remove residual files older than 5 minutes
 find "${DEVICE_URI#astaprint:}" -type f -mmin +5 -delete
