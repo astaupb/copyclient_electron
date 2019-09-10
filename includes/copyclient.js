@@ -63,11 +63,31 @@ const _supported_mime = [
 	"application/vnd.oasis.opendocument.spreadsheet",								// .ods
 	"application/vnd.oasis.opendocument.presentation",								// .odp
 	"application/vnd.oasis.opendocument.chart",										// .odc
+	*/
 	"application/rtf",																// .rtf
 	"text/rtf",																		// .rtf
 	"text/csv",																		// .csv
-	"text/plain"																	// other
-	*/
+	"application/json",																// .json
+	"text/xml",																		// .xml
+	"application/xml",																// .xml
+	"text/tab-separated-values",													// .tsv
+	"text/yaml",																	// .yaml
+	"application/x-yaml",															// .yaml
+	"application/toml",																// .toml
+	"text/markdown",																// .md
+	"text/x-diff",																	// .diff
+	"text/plain",																	// other text
+	"image/jpeg",																	// .jpeg, .jpg, .jif, .jfif, .jpe
+	"image/png",																	// .png, .apng
+	"image/gif",																	// .gif
+	"image/tiff",																	// .tiff, .tif
+	"image/vnd.mozilla.apng",														// .apng
+	"image/webp",																	// .webp
+	"image/x-tga",																	// .tga
+	"image/x-targa",																// .tga
+	"image/vnd.adobe.photoshop",													// .psd
+	"application/x-extension-exr",													// .exr
+	"image/x-exr"																	// .exr
 ];
 
 /**
