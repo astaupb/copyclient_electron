@@ -118,7 +118,10 @@ function createWindow() {
 		minWidth: 800,
 		minHeight: 600,
 		title: l10n.getString(0),
-		icon: "./includes/icons/asta.png"
+		icon: "./includes/icons/asta.png",
+		webPreferences: {
+			nodeIntegration: true
+		}
 	});
 
 	// and load the index.html of the app.
