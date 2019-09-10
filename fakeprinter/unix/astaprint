@@ -49,18 +49,45 @@ else
 fi
 
 if [ "${#}" -eq 5 ] || [ "${#}" -eq 6 ]; then
+	uuid=$(uuidgen)
+
 	if [ ! -e ${DEVICE_URI#astaprint:} ]; then
 		mkdir -p ${DEVICE_URI#astaprint:}
 		chmod 777 ${DEVICE_URI#astaprint:}
 	fi
 
-	outpdf=${DEVICE_URI#astaprint:}/${outname}.pdf
+	outpdf=${DEVICE_URI#astaprint:}/${uuid}.pdf
 
 	# remove PJL shit
 	if [[ $(head -n 3 $tmpfile) == *"@PJL"* ]]; then
 		cat $tmpfile | sed -n '/^%PDF-/,$p' | sed -n '1,/^%%EOF/p' > "$outpdf"
 	else
 		mv $tmpfile "$outpdf"
+	fi
+
+	# detect job options
+	if [[ -d "${DEVICE_URI#astaprint:}" ]]; then
+		color=true
+		a3=false
+		duplex=0
+		optionsfile="${outpdf}.options"
+
+		if [[ "$joboptions" == *"ColorModel=Gray"* ]]; then
+			color=false
+		fi
+		if [[ "$joboptions" == *"PageSize=A3"* ]]; then
+			a3=true
+		fi
+		if [[ "$joboptions" == *"Duplex=DuplexNoTumble"* ]]; then
+			duplex=1
+		elif [[ "$joboptions" == *"Duplex=DuplexTumble"* ]]; then
+			duplex=2
+		fi
+
+		echo "{\"filename\": \"${outname}.pdf\",\"a3\": ${a3},\"color\": ${color},\"duplex\": ${duplex}}" > "$optionsfile"
+
+		chmod 777 "$optionsfile"
+		chown ${cupsuser} "$optionsfile"
 	fi
 
 	# remove tmp file
@@ -71,9 +98,9 @@ if [ "${#}" -eq 5 ] || [ "${#}" -eq 6 ]; then
 	chown ${cupsuser} "$outpdf"
 
 	# Open CC if not already opened, otherwise show window
-	if [ -f "/opt/AStA Copyclient/asta-copyclient" ]; then
-		nohup sudo -u ${cupsuser} DISPLAY=:0 XDG_RUNTIME_DIR=/run/user/$(id -u ${cupsuser}) "/opt/AStA Copyclient/asta-copyclient" &>/dev/null &
-	fi
+	#if [ -f "/opt/AStA Copyclient/asta-copyclient" ]; then
+	#	nohup sudo -u ${cupsuser} DISPLAY=:0 XDG_RUNTIME_DIR=/run/user/$(id -u ${cupsuser}) "/opt/AStA Copyclient/asta-copyclient" &>/dev/null &
+	#fi
 fi
 
 # remove residual files older than 5 minutes

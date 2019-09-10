@@ -116,6 +116,7 @@ function uploadJob(jobfile) {
 	var filename = path.basename(jobfile);
 	var filesize_b = fs.statSync(jobfile).size;
 	var filesize_mb = (filesize_b / 1000000.0).toFixed(2);
+	let options = {};
 
 	if (filename === "astaprint_windows10.pdf") {
 		filename = "";
@@ -126,16 +127,32 @@ function uploadJob(jobfile) {
 		if (! err) {
 			if ((_kiosk && _kioskIsLoggedIn) || ! _kiosk) {
 				console.log("Sending " + filename + " via custom event to Dart");
+
+				if (fs.existsSync(jobfile + ".options")) {
+					options = JSON.parse(fs.readFileSync(jobfile + ".options"));
+				} else {
+					options.filename = filename;
+					options.a3 = null;
+					options.color = null;
+					options.duplex = null;
+				}
+
 				document.dispatchEvent(new CustomEvent("uploadJob", {
 					detail: JSON.stringify({
-						filename: filename,
-						data: data.toString('base64')
+						filename: options.filename,
+						data: data.toString('base64'),
+						a3: options.a3,
+						color: options.color,
+						duplex: options.duplex
 					})
 				}));
 				if (delFile) {
 					fs.unlink(jobfile, function(err) {
 						if (! err) {
 							console.log("file " + filename + " successfully deleted");
+							if (fs.existsSync(jobfile + ".options")) {
+								fs.unlink(jobfile + ".options", (err) => {});
+							}
 						} else {
 							console.error("could not delete file " + filename);
 						}
@@ -195,6 +212,39 @@ function showOpenPDF() {
 function setupWatches() {
 	var path;
 
+	function _doUpload(f) {
+		if (! _kiosk || _kioskIsLoggedIn) {
+			uploadJob(f);
+		} else if (_kiosk && ! _kioskIsLoggedIn) {
+
+			let filename = p.basename(f);
+			let filesize_b = fs.statSync(f).size;
+			let filesize_mb = (filesize_b / 1000000.0).toFixed(2);
+
+			if (filename === "astaprint_windows10.pdf") {
+				filename = "";
+			}
+
+			_kioskPrint.push({
+				"path": f,
+				"filename": filename,
+				"filesize_b": filesize_b,
+				"filesize_mb": filesize_mb
+			});
+
+			const notif = new Notification(getString(73), {
+				body: getString(74).format(filename)
+			});
+			notif.onclick = () => {
+				ipc.send('showWindow');
+				currentWindow.show();
+			};
+
+			ipc.send('showWindow');
+			currentWindow.show();
+		}
+	}
+
 	if (_watcher === undefined) {
 		var c = require("chokidar");
 		var fs = require("fs");
@@ -244,65 +294,13 @@ function setupWatches() {
 		});
 
 		_watcher.on("add", function(f) {
-			if (! _kiosk || _kioskIsLoggedIn) {
-				uploadJob(f);
-			} else if (_kiosk && ! _kioskIsLoggedIn) {
-				let filename = p.basename(f);
-				let filesize_b = fs.statSync(f).size;
-				let filesize_mb = (filesize_b / 1000000.0).toFixed(2);
-
-				if (filename === "astaprint_windows10.pdf") {
-					filename = "";
-				}
-
-				_kioskPrint.push({
-					"path": f,
-					"filename": filename,
-					"filesize_b": filesize_b,
-					"filesize_mb": filesize_mb
-				});
-
-				const notif = new Notification(getString(73), {
-					body: getString(74).format(filename)
-				});
-				notif.onclick = () => {
-					ipc.send('showWindow');
-					currentWindow.show();
-				};
-
-				ipc.send('showWindow');
-				currentWindow.show();
+			if (! f.endsWith(".options")) {
+				_doUpload(f);
 			}
 		});
 		_watcher.on("change", function(f) {
-			if (! _kiosk || _kioskIsLoggedIn) {
-				uploadJob(f);
-			} else if (_kiosk && ! _kioskIsLoggedIn) {
-				let filename = p.basename(f);
-				let filesize_b = fs.statSync(f).size;
-				let filesize_mb = (filesize_b / 1000000.0).toFixed(2);
-
-				if (filename === "astaprint_windows10.pdf") {
-					filename = "";
-				}
-
-				_kioskPrint.push({
-					"path": f,
-					"filename": filename,
-					"filesize_b": filesize_b,
-					"filesize_mb": filesize_mb
-				});
-
-				const notif = new Notification(getString(73), {
-					body: getString(74).format(filename)
-				});
-				notif.onclick = () => {
-					ipc.send('showWindow');
-					currentWindow.show();
-				};
-
-				ipc.send('showWindow');
-				currentWindow.show();
+			if (! f.endsWith(".options")) {
+				_doUpload(f);
 			}
 		});
 		_watcher.on("unlink", function(f) {
