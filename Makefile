@@ -81,6 +81,11 @@ build-linux:
 	ssh ${deploy_user}@${deploy_host} "ln -sf ${dist_folder}/public/linux/${VERSION}/asta-copyclient_${VERSION}_archlinux.tar.xz ${dist_folder}/public/linux/current/asta-copyclient_archlinux.tar.xz"
 	ssh ${deploy_user}@${deploy_host} "ln -sf ${dist_folder}/public/linux/${VERSION}/asta-copyclient_${VERSION}_generic.tar.gz ${dist_folder}/public/linux/current/asta-copyclient_generic.tar.gz"
 
+build-debug:
+	-@rm -rf dist 2>/dev/null || true
+	./build_angular.sh left 44336
+	env SHELL=bash ./node_modules/.bin/electron-builder --linux --x64
+
 build-directprint:
 	./change_config.sh enable_kiosk
 	./change_config.sh disable_starthidden
