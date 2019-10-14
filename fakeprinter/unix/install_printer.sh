@@ -72,5 +72,6 @@ $SUDO chmod $spool_chmod "$spool_dir"
 $SUDO lpadmin -p "Copyclient" -v "astaprint:$spool_dir" -E -P "$cups_ppd_file"
 $SUDO lpadmin -p "Copyclient" -o "media=A4"
 $SUDO lpoptions -p "Copyclient" -o "ColorModel=Gray"
+$SUDO lpoptions -p "Copyclient" -o "Duplex=None"
 $SUDO lpadmin -d "Copyclient"
 exit 0
