@@ -50,6 +50,7 @@ Section ""
 			Goto Install
 	Install:
 		File "dist\AStA Copyclient.exe"
+		File "includes\icons\asta.ico"
 		File "license.txt"
 		File /r "fakeprinter\windows"
 		Rename "$INSTDIR\windows" "$INSTDIR\fakeprinter"
@@ -61,6 +62,10 @@ Section ""
 		CreateShortCut "$SMSTARTUP\AStA Copyclient starten.lnk" "$INSTDIR\AStA Copyclient.exe" ""
 		SetOutPath "$INSTDIR\fakeprinter"
 		ExecWait "install_printer.cmd"
+		WriteRegStr HKLM "Software\Microsoft\Windows\CurrentVersion\Uninstall\AStA Copyclient" "DisplayName" "AStA Copyclient"
+		WriteRegStr HKLM "Software\Microsoft\Windows\CurrentVersion\Uninstall\AStA Copyclient" "DisplayIcon" "$\"$INSTDIR\asta.ico$\""
+		WriteRegStr HKLM "Software\Microsoft\Windows\CurrentVersion\Uninstall\AStA Copyclient" "UninstallString" "$\"$INSTDIR\uninstall.exe$\""
+
 		MessageBox MB_YESNO|MB_ICONQUESTION "Um die Installation abzuschliessen, muss der Computer neugestartet werden.$\r$\nSoll der Computer jetzt neugestartet werden?" IDNO +2
 		Reboot
 	Goodbye:
@@ -73,6 +78,7 @@ Section "Uninstall"
 	ExecWait '"$WINDIR\System32\taskkill.exe" /f /im pdf24.exe'
 	Delete "$INSTDIR\uninstall.exe"
 	Delete "$INSTDIR\AStA Copyclient.exe"
+	Delete "$INSTDIR\asta.ico"
 	Delete "$INSTDIR\license.txt"
 	RMDir "$INSTDIR\fakeprinter"
 	Delete "$SMPROGRAMS\AStA Uni Paderborn\AStA Copyclient.lnk"
@@ -81,6 +87,7 @@ Section "Uninstall"
 	Delete "$SMSTARTUP\AStA Copyclient starten.lnk"
 	RMDir /R "$INSTDIR"
 	RMDir /R "$SMPROGRAMS\AStA Uni Paderborn"
-		MessageBox MB_YESNO|MB_ICONQUESTION "Um die Deinstallation abzuschliessen, muss der Computer neugestartet werden.$\r$\nSoll der Computer jetzt neugestartet werden?" IDNO +2
-		Reboot
+	DeleteRegKey HKLM "Software\Microsoft\Windows\CurrentVersion\Uninstall\AStA Copyclient"
+	MessageBox MB_YESNO|MB_ICONQUESTION "Um die Deinstallation abzuschliessen, muss der Computer neugestartet werden.$\r$\nSoll der Computer jetzt neugestartet werden?" IDNO +2
+	Reboot
 SectionEnd
