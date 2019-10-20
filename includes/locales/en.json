@@ -73,5 +73,6 @@
 	"71": "only print {0} {1}",
 	"72": "Invalid input",
 	"73": "AStA Copyclient Login",
-	"74": "Log into AStA Copyclient using your App account or SN and PIN from your AStA Copycard to upload print job {0} to the system."
+	"74": "Log into AStA Copyclient using your App account or SN and PIN from your AStA Copycard to upload print job {0} to the system.",
+	"75": "of your print job"
 }

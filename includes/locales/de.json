@@ -73,5 +73,6 @@
 	"71": "nur {0} {1} drucken",
 	"72": "Ungültige Eingabe",
 	"73": "Anmelden im AStA Copyclient",
-	"74": "Melden Sie sich im AStA Copyclient mit Ihrem App-Account oder SN und PIN von der AStA Copycard an, um den Druckjob {0} in das Drucksystem hochzuladen."
+	"74": "Melden Sie sich im AStA Copyclient mit Ihrem App-Account oder SN und PIN von der AStA Copycard an, um den Druckjob {0} in das Drucksystem hochzuladen.",
+	"75": "Ihres Druckjobs"
 }

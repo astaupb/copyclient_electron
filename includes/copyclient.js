@@ -159,7 +159,7 @@ function uploadJob(jobfile) {
 					});
 				}
 				new Notification(getString(51), {
-					body: getString(52).format(filename, filesize_mb)
+					body: getString(52).format((filename === "" ? getString(75) : filename), filesize_mb)
 				});
 			}
 			if (_kiosk) {
@@ -167,7 +167,7 @@ function uploadJob(jobfile) {
 					ipc.send('showWindow');
 					currentWindow.show();
 				}
-				_kioskNotification = [getString(51), getString(52).format(filename, filesize_mb)];
+				_kioskNotification = [getString(51), getString(52).format((filename === "" ? getString(75) : filename), filesize_mb)];
 			}
 		}
 	});
