@@ -84,7 +84,7 @@ if [ "${#}" -eq 5 ] || [ "${#}" -eq 6 ]; then
 			duplex=2
 		fi
 
-		echo "{\"filename\": \"${outname}.pdf\",\"a3\": ${a3},\"color\": ${color},\"duplex\": ${duplex}}" > "$optionsfile"
+		echo "{\"filename\": \"${outname}.pdf\",\"a3\": ${a3},\"color\": ${color},\"duplex\": ${duplex}, \"copies\": ${jobcopies}}" > "$optionsfile"
 
 		chmod 777 "$optionsfile"
 		chown ${cupsuser} "$optionsfile"
