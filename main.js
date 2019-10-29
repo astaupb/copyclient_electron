@@ -152,6 +152,15 @@ function createWindow() {
 		return false;
 	});
 
+	// Redirect to index.html again if (re)loading fails
+	mainWindow.webContents.on('did-fail-load', function(event) {
+		mainWindow.loadURL(url.format({
+			pathname: path.join(__dirname, 'web/index.html'),
+			protocol: 'file:',
+			slashes: true
+		}));
+	});
+
 	// Open the DevTools.
 	// mainWindow.webContents.openDevTools();
 
