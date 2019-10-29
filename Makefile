@@ -67,6 +67,7 @@ build-mac:
 build-linux:
 	./change_config.sh disable_kiosk
 	./change_config.sh disable_starthidden
+	./change_config.sh build_all_linux
 	-@rm -rf dist 2>/dev/null || true
 	./build_angular.sh
 	env SHELL=bash ./node_modules/.bin/electron-builder --linux --x64
@@ -89,6 +90,7 @@ build-debug:
 build-directprint:
 	./change_config.sh enable_kiosk
 	./change_config.sh disable_starthidden
+	./change_config.sh build_only_deb
 	-@rm -rf dist 2>/dev/null || true
 	for id in ${directprint_left}; do \
 		./build_angular.sh left $$id; \
@@ -110,6 +112,7 @@ build-directprint:
 build-kiosk:
 	./change_config.sh enable_kiosk
 	./change_config.sh enable_starthidden
+	./change_config.sh build_only_deb
 	-@rm -rf dist 2>/dev/null || true
 	./build_angular.sh
 	env SHELL=bash ./node_modules/.bin/electron-builder --linux --x64

@@ -12,4 +12,14 @@ if [[ ! -z "$1" ]]; then
 	if [[ "$1" == "disable_starthidden" ]]; then
 		sed -i "s/_startHidden = true/_startHidden = false/g" includes/config.js
 	fi
+	if [[ "$1" == "build_all_linux" ]]; then
+		tmp=$(mktemp)
+		jq '.build.linux.target = [ "deb", "rpm", "pacman", "snap", "tar.gz" ]' package.json > $tmp
+		mv $tmp package.json
+	fi
+	if [[ "$1" == "build_only_deb" ]]; then
+		tmp=$(mktemp)
+		jq '.build.linux.target = [ "deb" ]' package.json > $tmp
+		mv $tmp package.json
+	fi
 fi
