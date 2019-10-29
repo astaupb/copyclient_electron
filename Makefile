@@ -40,11 +40,12 @@ endif
 clean:
 	rm -rf dist
 
-build-all:
-	$(MAKE) install
-	$(MAKE) build-linux
-	$(MAKE) build-win
-	$(MAKE) build-mac
+deploy:
+	cd ../astansible; make setup_copyclient
+
+build-all: install build-kiosk build-directprint build-linux build-windows
+
+build-deploy: build-all deploy
 
 build-windows: build-win
 build-win:
@@ -122,6 +123,3 @@ build-kiosk:
 	ssh ${deploy_user}@${deploy_host} "mkdir -p ${dist_folder}/kiosk/current"
 	scp dist/asta-copyclient*.deb ${deploy_user}@${deploy_host}:${dist_folder}/kiosk/${VERSION}/asta-copyclient_${VERSION}.deb
 	ssh ${deploy_user}@${deploy_host} "ln -sf ${dist_folder}/kiosk/${VERSION}/asta-copyclient_${VERSION}.deb ${dist_folder}/kiosk/current/asta-copyclient.deb"
-
-build-deploy: build-kiosk build-directprint build-linux build-win
-	cd ../astansible; make setup_copyclient
