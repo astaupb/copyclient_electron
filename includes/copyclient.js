@@ -159,7 +159,7 @@ function uploadJob(jobfile) {
 					});
 				}
 				new Notification(getString(51), {
-					body: getString(52).format((filename === "" ? getString(75) : filename), filesize_mb)
+					body: getString(52).format((options.filename === "" ? getString(75) : options.filename), filesize_mb)
 				});
 			}
 			if (_kiosk) {
@@ -225,6 +225,15 @@ function setupWatches() {
 				filename = "";
 			}
 
+			if (fs.existsSync(f + ".options")) {
+				options = JSON.parse(fs.readFileSync(f + ".options"));
+			} else {
+				options.filename = filename;
+				options.a3 = null;
+				options.color = null;
+				options.duplex = null;
+			}
+
 			_kioskPrint.push({
 				"path": f,
 				"filename": filename,
@@ -233,7 +242,7 @@ function setupWatches() {
 			});
 
 			const notif = new Notification(getString(73), {
-				body: getString(74).format(filename)
+				body: getString(74).format(options.filename)
 			});
 			notif.onclick = () => {
 				ipc.send('showWindow');
