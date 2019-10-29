@@ -29,9 +29,13 @@ module.exports = l10n;
 
 function l10n() {
 
-	if (typeof _locale === "undefined") {
-		console.warn("_locale hasn't been set in config.js, falling back to default locale (German).")
-		_locale = "de";
+	if (typeof _locale === "undefined" || ! ["de", "en"].includes(_locale)) {
+		console.warn("_locale hasn't been set in config.js, trying to get system locale");
+		if (app.getLocale().startsWith("en")) {
+			_locale = "en";
+		} else {
+			_locale = "de";
+		}
 	}
 
 	try {
