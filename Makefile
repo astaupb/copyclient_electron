@@ -117,3 +117,6 @@ build-kiosk:
 	ssh ${deploy_user}@${deploy_host} "mkdir -p ${dist_folder}/kiosk/current"
 	scp dist/asta-copyclient*.deb ${deploy_user}@${deploy_host}:${dist_folder}/kiosk/${VERSION}/asta-copyclient_${VERSION}.deb
 	ssh ${deploy_user}@${deploy_host} "ln -sf ${dist_folder}/kiosk/${VERSION}/asta-copyclient_${VERSION}.deb ${dist_folder}/kiosk/current/asta-copyclient.deb"
+
+build-deploy: build-kiosk build-directprint build-linux build-win
+	cd ../astansible; make setup_copyclient
