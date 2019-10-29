@@ -75,10 +75,12 @@ build-linux:
 	ssh ${deploy_user}@${deploy_host} 'mkdir -p ${dist_folder}/public/linux/current'
 	scp dist/asta-copyclient*.deb ${deploy_user}@${deploy_host}:${dist_folder}/public/linux/${VERSION}/asta-copyclient_${VERSION}.deb
 	scp dist/asta-copyclient*.rpm ${deploy_user}@${deploy_host}:${dist_folder}/public/linux/${VERSION}/asta-copyclient_${VERSION}.rpm
+	scp dist/asta-copyclient*.snap ${deploy_user}@${deploy_host}:${dist_folder}/public/linux/${VERSION}/asta-copyclient_${VERSION}.snap
 	scp dist/asta-copyclient*.pacman ${deploy_user}@${deploy_host}:${dist_folder}/public/linux/${VERSION}/asta-copyclient_${VERSION}_archlinux.tar.xz
 	scp dist/asta-copyclient*.tar.gz ${deploy_user}@${deploy_host}:${dist_folder}/public/linux/${VERSION}/asta-copyclient_${VERSION}_generic.tar.gz
 	ssh ${deploy_user}@${deploy_host} "ln -sf ${dist_folder}/public/linux/${VERSION}/asta-copyclient_${VERSION}.deb ${dist_folder}/public/linux/current/asta-copyclient.deb"
 	ssh ${deploy_user}@${deploy_host} "ln -sf ${dist_folder}/public/linux/${VERSION}/asta-copyclient_${VERSION}.rpm ${dist_folder}/public/linux/current/asta-copyclient.rpm"
+	ssh ${deploy_user}@${deploy_host} "ln -sf ${dist_folder}/public/linux/${VERSION}/asta-copyclient_${VERSION}.snap ${dist_folder}/public/linux/current/asta-copyclient.snap"
 	ssh ${deploy_user}@${deploy_host} "ln -sf ${dist_folder}/public/linux/${VERSION}/asta-copyclient_${VERSION}_archlinux.tar.xz ${dist_folder}/public/linux/current/asta-copyclient_archlinux.tar.xz"
 	ssh ${deploy_user}@${deploy_host} "ln -sf ${dist_folder}/public/linux/${VERSION}/asta-copyclient_${VERSION}_generic.tar.gz ${dist_folder}/public/linux/current/asta-copyclient_generic.tar.gz"
 
