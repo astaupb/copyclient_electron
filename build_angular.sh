@@ -25,3 +25,13 @@ mkdir -p ../web
 cp -R build/* ../web/
 cp -R ../includes/*.js ../web/
 cp -R ../includes/locales ../web/
+
+# inject our stuff into the HTML
+sed -i 's/<!--electroninject-->/\
+<script defer src="config.js"><\/script>\n  \
+<script defer src="l10n.js"><\/script>\n  \
+<script defer src="main.js"><\/script>\n  \
+<script defer src="copyclient.js"><\/script>\n  \
+<script src="main.dart.js_1.part.js"><\/script>\n  \
+<script src="main.dart.js_2.part.js"><\/script>\n  \
+<script src="main.dart.js_3.part.js"><\/script>\n/g' ../web/index.html
