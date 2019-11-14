@@ -27,7 +27,12 @@ cp -R ../includes/*.js ../web/
 cp -R ../includes/locales ../web/
 
 # inject our stuff into the HTML
-sed -i 's/<!--electroninject-->/\
+if [[ "$(uname)" == *Darwin* ]]; then
+	sed=gsed
+else
+	sed=sed
+fi
+$sed -i 's/<!--electroninject-->/\
 <script defer src="config.js"><\/script>\n  \
 <script defer src="l10n.js"><\/script>\n  \
 <script defer src="main.js"><\/script>\n  \
