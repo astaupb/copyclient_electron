@@ -17,7 +17,7 @@
 
 !include LogicLib.nsh
 Name "AStA Copyclient"
-OutFile "dist\setup-copyclient.exe"
+OutFile "..\dist\setup-copyclient.exe"
 InstallDir "$PROGRAMFILES\AStA Uni Paderborn\Copyclient"
 Page license
 Page directory
@@ -50,10 +50,10 @@ Section ""
 			RMDir /R "$SMPROGRAMS\AStA Uni Paderborn"
 			Goto Install
 	Install:
-		File "dist\AStA Copyclient.exe"
-		File "includes\icons\asta.ico"
+		File "..\dist\AStA Copyclient.exe"
+		File "..\includes\icons\asta.ico"
 		File "license.txt"
-		File /r "fakeprinter\windows"
+		File /r "..\fakeprinter\windows"
 		Rename "$INSTDIR\windows" "$INSTDIR\fakeprinter"
 		WriteUninstaller "$INSTDIR\uninstall.exe"
 		CreateDirectory "$SMPROGRAMS\AStA Uni Paderborn"

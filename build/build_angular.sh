@@ -1,4 +1,6 @@
 #!/bin/bash
+cd -P -- "$(dirname -- "$0")"/..
+
 if [[ ! -z "$1" ]]; then
 	if [[ ! -z "$2" ]]; then
 		if [[ "$1" == "left" ]]; then

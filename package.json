@@ -89,8 +89,8 @@
 			"extraFiles": [
 				"fakeprinter/unix",
 				"README.TXT",
-				"asta-copyclient.desktop",
-				"asta.svg"
+				"build/asta-copyclient.desktop",
+				"includes/icons/asta.svg"
 			],
 			"category": "Office",
 			"icon": "includes/icons/linux"

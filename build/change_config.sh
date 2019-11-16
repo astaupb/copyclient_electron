@@ -1,4 +1,6 @@
 #!/bin/bash
+cd -P -- "$(dirname -- "$0")"/..
+
 if [[ ! -z "$1" ]]; then
 	if [[ "$1" == "enable_kiosk" ]]; then
 		sed -i "s/_kiosk = false/_kiosk = true/g" includes/config.js

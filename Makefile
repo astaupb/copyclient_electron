@@ -49,28 +49,28 @@ build-deploy: build-all deploy
 
 build-windows: build-win
 build-win:
-	./change_config.sh disable_kiosk
-	./change_config.sh disable_starthidden
+	./build/change_config.sh disable_kiosk
+	./build/change_config.sh disable_starthidden
 	-@rm -rf dist 2>/dev/null || true
-	./build_angular.sh
+	./build/build_angular.sh
 	./node_modules/.bin/electron-builder --win --ia32 --x64
 	mv ./dist/AStA\ Copyclient\ *.exe ./dist/AStA\ Copyclient.exe
-	makensis build_installer.nsi
+	makensis ./build/build_installer.nsi
 	ssh ${deploy_user}@${deploy_host} 'mkdir -p ${dist_folder}/public/windows/${VERSION}'
 	ssh ${deploy_user}@${deploy_host} 'mkdir -p ${dist_folder}/public/windows/current'
 	scp dist/setup-copyclient.exe ${deploy_user}@${deploy_host}:${dist_folder}/public/windows/${VERSION}/setup-copyclient_${VERSION}.exe
 	ssh ${deploy_user}@${deploy_host} 'ln -sf ${dist_folder}/public/windows/${VERSION}/setup-copyclient_${VERSION}.exe ${dist_folder}/public/windows/current/setup-copyclient.exe'
 
 build-mac:
-	./build_angular.sh
+	./build/build_angular.sh
 	./node_modules/.bin/electron-builder --mac --x64
 
 build-linux:
-	./change_config.sh disable_kiosk
-	./change_config.sh disable_starthidden
-	./change_config.sh build_all_linux
+	./build/change_config.sh disable_kiosk
+	./build/change_config.sh disable_starthidden
+	./build/change_config.sh build_all_linux
 	-@rm -rf dist 2>/dev/null || true
-	./build_angular.sh
+	./build/build_angular.sh
 	env SHELL=bash ./node_modules/.bin/electron-builder --linux --x64
 	ssh ${deploy_user}@${deploy_host} 'mkdir -p ${dist_folder}/public/linux/${VERSION}'
 	ssh ${deploy_user}@${deploy_host} 'mkdir -p ${dist_folder}/public/linux/current'
@@ -87,16 +87,16 @@ build-linux:
 
 build-debug:
 	-@rm -rf dist 2>/dev/null || true
-	./build_angular.sh left 44336
+	./build/build_angular.sh left 44336
 	env SHELL=bash ./node_modules/.bin/electron-builder --linux --x64
 
 build-directprint:
-	./change_config.sh enable_kiosk
-	./change_config.sh disable_starthidden
-	./change_config.sh build_only_deb
+	./build/change_config.sh enable_kiosk
+	./build/change_config.sh disable_starthidden
+	./build/change_config.sh build_only_deb
 	-@rm -rf dist 2>/dev/null || true
 	for id in ${directprint_left}; do \
-		./build_angular.sh left $$id; \
+		./build/build_angular.sh left $$id; \
 		env SHELL=bash ./node_modules/.bin/electron-builder --linux --x64; \
 		ssh ${deploy_user}@${deploy_host} "mkdir -p ${dist_folder}/directprint/${VERSION}/$$id"; \
 		ssh ${deploy_user}@${deploy_host} "mkdir -p ${dist_folder}/directprint/current/$$id"; \
@@ -104,7 +104,7 @@ build-directprint:
 		ssh ${deploy_user}@${deploy_host} "ln -sf ${dist_folder}/directprint/${VERSION}/$$id/asta-copyclient.deb ${dist_folder}/directprint/current/$$id/asta-copyclient.deb"; \
 	done
 	for id in ${directprint_right}; do \
-		./build_angular.sh right $$id; \
+		./build/build_angular.sh right $$id; \
 		env SHELL=bash ./node_modules/.bin/electron-builder --linux --x64; \
 		ssh ${deploy_user}@${deploy_host} "mkdir -p ${dist_folder}/directprint/${VERSION}/$$id"; \
 		ssh ${deploy_user}@${deploy_host} "mkdir -p ${dist_folder}/directprint/current/$$id"; \
@@ -113,11 +113,11 @@ build-directprint:
 	done
 
 build-kiosk:
-	./change_config.sh enable_kiosk
-	./change_config.sh enable_starthidden
-	./change_config.sh build_only_deb
+	./build/change_config.sh enable_kiosk
+	./build/change_config.sh enable_starthidden
+	./build/change_config.sh build_only_deb
 	-@rm -rf dist 2>/dev/null || true
-	./build_angular.sh
+	./build/build_angular.sh
 	env SHELL=bash ./node_modules/.bin/electron-builder --linux --x64
 	ssh ${deploy_user}@${deploy_host} "mkdir -p ${dist_folder}/kiosk/${VERSION}"
 	ssh ${deploy_user}@${deploy_host} "mkdir -p ${dist_folder}/kiosk/current"
