@@ -62,8 +62,15 @@ build-win:
 	ssh ${deploy_user}@${deploy_host} 'ln -sf ${dist_folder}/public/windows/${VERSION}/setup-copyclient_${VERSION}.exe ${dist_folder}/public/windows/current/setup-copyclient.exe'
 
 build-mac:
+	./build/change_config.sh disable_kiosk
+	./build/change_config.sh disable_starthidden
+	-@rm -rf dist 2>/dev/null || true
 	./build/build_angular.sh
 	./node_modules/.bin/electron-builder --mac --x64
+	ssh ${deploy_user}@${deploy_host} 'mkdir -p ${dist_folder}/public/mac/${VERSION}'
+	ssh ${deploy_user}@${deploy_host} 'mkdir -p ${dist_folder}/public/mac/current'
+	scp dist/*.pkg ${deploy_user}@${deploy_host}:${dist_folder}/public/mac/${VERSION}/asta-copyclient_${VERSION}.pkg
+	ssh ${deploy_user}@${deploy_host} 'ln -sf ${dist_folder}/public/mac/${VERSION}/asta-copyclient_${VERSION}.pkg ${dist_folder}/public/windows/current/asta-copyclient.pkg'
 
 build-linux:
 	./build/change_config.sh disable_kiosk

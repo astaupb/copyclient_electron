@@ -70,7 +70,8 @@
 		},
 		"pkg": {
 			"scripts": "fakeprinter/unix",
-			"allowCurrentUserHome": false
+			"allowCurrentUserHome": false,
+			"license": "build/license.txt"
 		},
 		"win": {
 			"target": [
