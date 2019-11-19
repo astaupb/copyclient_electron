@@ -21,3 +21,5 @@ directprint_right=09876 54321
 deploy_user=foo
 deploy_host=bar
 dist_folder=/path/to/dist
+APPLE_ACCOUNT=email@host.tld
+APPLE_PASSWORD=password

@@ -66,11 +66,18 @@ build-mac:
 	./build/change_config.sh disable_starthidden
 	-@rm -rf dist 2>/dev/null || true
 	./build/build_angular.sh
+	CSC_IDENTITY_AUTO_DISCOVERY=false
+	sudo rm -rf dist
 	./node_modules/.bin/electron-builder --mac --x64
+	productsign --sign "Developer ID Installer: ASTA Allgemeiner Studentenausschuss Uni Paderborn (VK3N2H79U2)" dist/AStA\ Copyclient-${VERSION}.pkg dist/AStA\ Copyclient-${VERSION}_signed.pkg
+	xcrun altool --notarize-app --primary-bundle-id "de.upb.asta.copyclient-mac" -t osx -f dist/AStA\ Copyclient-${VERSION}_signed.pkg -u ${APPLE_ACCOUNT} -p ${APPLE_PASSWORD}
+	sleep 180
+	xcrun altool --notarization-history -u ${APPLE_ACCOUNT} -p ${APPLE_PASSWORD}
+	xcrun stapler staple dist/AStA\ Copyclient-${VERSION}_signed.pkg
 	ssh ${deploy_user}@${deploy_host} 'mkdir -p ${dist_folder}/public/mac/${VERSION}'
 	ssh ${deploy_user}@${deploy_host} 'mkdir -p ${dist_folder}/public/mac/current'
-	scp dist/*.pkg ${deploy_user}@${deploy_host}:${dist_folder}/public/mac/${VERSION}/asta-copyclient_${VERSION}.pkg
-	ssh ${deploy_user}@${deploy_host} 'ln -sf ${dist_folder}/public/mac/${VERSION}/asta-copyclient_${VERSION}.pkg ${dist_folder}/public/windows/current/asta-copyclient.pkg'
+	scp dist/AStA\ Copyclient-${VERSION}_signed.pkg ${deploy_user}@${deploy_host}:${dist_folder}/public/mac/${VERSION}/asta-copyclient_${VERSION}.pkg
+	ssh ${deploy_user}@${deploy_host} 'ln -sf ${dist_folder}/public/mac/${VERSION}/asta-copyclient_${VERSION}.pkg ${dist_folder}/public/mac/current/asta-copyclient.pkg'
 
 build-linux:
 	./build/change_config.sh disable_kiosk
