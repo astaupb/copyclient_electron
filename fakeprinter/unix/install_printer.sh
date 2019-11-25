@@ -40,25 +40,29 @@ else
 	spool_group="root"
 	spool_chmod=777
 	spool_dir="/var/spool/astaprint"
-	if [ -x "$(command -v systemctl)" ]; then # systemd exists
-		if systemctl list-unit-files | grep org.cups.cupsd.service; then
-			$SUDO systemctl enable org.cups.cupsd.service > /dev/null 2>&1
-			$SUDO systemctl start org.cups.cupsd.service > /dev/null 2>&1
-		else
-			if systemctl list-unit-files | grep cups.service; then
-				$SUDO systemctl enable cups.service > /dev/null 2>&1
-				$SUDO systemctl start cups.service > /dev/null 2>&1
-			fi
-		fi
+	if grep -qE "(Microsoft|microsoft|WSL)" /proc/version &> /dev/null; then # running in WSL
+		$SUDO cupsd &
 	else
-		if [ -x "$(command -v service)" ]; then # service exists
-			if service --status-all 2>&1 | grep -Fq 'org.cups.cupsd'; then
-				$SUDO update-rc.d org.cups.cupsd enable > /dev/null 2>&1
-				$SUDO service org.cups.cupsd start > /dev/null 2>&1
+		if [ -x "$(command -v systemctl)" ]; then # systemd exists
+			if systemctl list-unit-files | grep org.cups.cupsd.service; then
+				$SUDO systemctl enable org.cups.cupsd.service > /dev/null 2>&1
+				$SUDO systemctl start org.cups.cupsd.service > /dev/null 2>&1
 			else
-				if service --status-all 2>&1 | grep -Fq 'cups'; then
-					$SUDO update-rc.d cups enable > /dev/null 2>&1
-					$SUDO service cups start > /dev/null 2>&1
+				if systemctl list-unit-files | grep cups.service; then
+					$SUDO systemctl enable cups.service > /dev/null 2>&1
+					$SUDO systemctl start cups.service > /dev/null 2>&1
+				fi
+			fi
+		else
+			if [ -x "$(command -v service)" ]; then # service exists
+				if service --status-all 2>&1 | grep -Fq 'org.cups.cupsd'; then
+					$SUDO update-rc.d org.cups.cupsd enable > /dev/null 2>&1
+					$SUDO service org.cups.cupsd start > /dev/null 2>&1
+				else
+					if service --status-all 2>&1 | grep -Fq 'cups'; then
+						$SUDO update-rc.d cups enable > /dev/null 2>&1
+						$SUDO service cups start > /dev/null 2>&1
+					fi
 				fi
 			fi
 		fi
