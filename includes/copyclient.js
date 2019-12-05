@@ -485,7 +485,7 @@ document.addEventListener("setScanLock", function(event) {
 	var fs = require("fs");
 	var path = require("path");
 	var os = require("os");
-	var lockfile = path.join(os.tmpdir(), '.astaprrint_scan.lock');
+	var lockfile = path.join(os.tmpdir(), '.astaprint_scan.lock');
 
 	console.log("Caught event setScanLock");
 
@@ -498,7 +498,7 @@ document.addEventListener("unsetScanLock", function(event) {
 	var fs = require("fs");
 	var path = require("path");
 	var os = require("os");
-	var lockfile = path.join(os.tmpdir(), '.astaprrint_scan.lock');
+	var lockfile = path.join(os.tmpdir(), '.astaprint_scan.lock');
 
 	console.log("Caught event unsetScanLock");
 
