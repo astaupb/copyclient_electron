@@ -492,6 +492,11 @@ document.addEventListener("setScanLock", function(event) {
 	if (! fs.existsSync(lockfile)) {
 		fs.closeSync(fs.openSync(lockfile, 'w'));
 	}
+
+	if (_kioskTimeoutInterval !== false) {
+		window.clearInterval(_kioskTimeoutInterval);
+		_kioskTimeoutInterval = false;
+	}
 });
 
 document.addEventListener("unsetScanLock", function(event) {
@@ -504,6 +509,10 @@ document.addEventListener("unsetScanLock", function(event) {
 
 	if (fs.existsSync(lockfile)) {
 		fs.unlinkSync(lockfile);
+	}
+
+	if (_kioskTimeoutInterval === false) {
+		setupInterval();
 	}
 });
 

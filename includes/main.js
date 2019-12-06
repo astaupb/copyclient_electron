@@ -48,7 +48,7 @@ const currentWindow = remote.getCurrentWindow();
 const showBetterMessageBox = remote.require('electron-better-dialog').showBetterMessageBox;
 
 var _kioskTimeoutCnt = 0;
-var _kioskTimeoutInterval;
+var _kioskTimeoutInterval = false;
 var _kioskIsLoggedIn = false;
 var _kioskPrint = [];
 
