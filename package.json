@@ -28,7 +28,7 @@
 	},
 	"main": "main.js",
 	"scripts": {
-		"start": "./build_angular.sh && electron ."
+		"start": "./build/build_angular.sh && electron ."
 	},
 	"keywords": [
 		"AStA",
