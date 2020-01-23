@@ -100,8 +100,6 @@
 			"afterInstall": "fakeprinter/unix/install_printer.sh",
 			"afterRemove": "fakeprinter/unix/uninstall_printer.sh",
 			"depends": [
-				"gconf2",
-				"gconf-service",
 				"libnotify4",
 				"libappindicator1",
 				"libxtst6",
@@ -117,7 +115,6 @@
 			"afterRemove": "fakeprinter/unix/uninstall_printer.sh",
 			"depends": [
 				"libappindicator3",
-				"gconf",
 				"libnotify",
 				"libxtst",
 				"nss",
@@ -129,7 +126,6 @@
 			"afterInstall": "fakeprinter/unix/install_printer.sh",
 			"afterRemove": "fakeprinter/unix/uninstall_printer.sh",
 			"depends": [
-				"gconf2",
 				"libnotify4",
 				"libappindicator1",
 				"libXtst6",
