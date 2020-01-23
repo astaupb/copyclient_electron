@@ -131,6 +131,9 @@ function createWindow() {
 		slashes: true
 	}));
 
+	// hide menu bar because newer electron versions don't do that automagically
+	mainWindow.removeMenu();
+
 	mainWindow.on('minimize', function(event) {
 		if (! _kiosk) {
 			event.preventDefault();
