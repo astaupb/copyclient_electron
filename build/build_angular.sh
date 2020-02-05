@@ -16,6 +16,7 @@ fi
 
 rm -rf web
 cd src
+rm -rf build
 cp build.yaml /tmp/build.yaml.orig
 sed -ne :1 -e 'N;1,2b1' -e 'P;D' build.yaml > /tmp/build.yaml
 mv /tmp/build.yaml build.yaml
