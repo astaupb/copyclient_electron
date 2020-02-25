@@ -38,8 +38,8 @@
 	],
 	"license": "LGPL-3.0-or-later",
 	"devDependencies": {
-		"electron": "^7.1.10",
-		"electron-builder": "^22.3.1"
+		"electron": "^8.0.1",
+		"electron-builder": "^22.3.2"
 	},
 	"dependencies": {
 		"chokidar": "^3.3.1",
@@ -47,7 +47,7 @@
 		"drag-drop": "^5.0.2",
 		"electron-better-dialog": "^1.0.6",
 		"jquery": "^3.4.1",
-		"mousetrap": "^1.6.3",
+		"mousetrap": "^1.6.5",
 		"underscore": "^1.9.2"
 	},
 	"build": {
