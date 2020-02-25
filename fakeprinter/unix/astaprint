@@ -98,11 +98,11 @@ if [ "${#}" -eq 5 ] || [ "${#}" -eq 6 ]; then
 	chown ${cupsuser} "$outpdf"
 
 	# Open CC if not already opened, otherwise show window
-	if [ -f "/opt/AStA Copyclient/asta-copyclient" ]; then
-		nohup sudo -u ${cupsuser} DISPLAY=:0 XDG_RUNTIME_DIR=/run/user/$(id -u ${cupsuser}) "/opt/AStA Copyclient/asta-copyclient" &>/dev/null &
-	elif [ -f "/Applications/AStA Copyclient.app/Contents/MacOS/AStA Copyclient" ]; then
-		nohup sudo -u ${cupsuser} /Applications/AStA\ Copyclient.app/Contents/MacOS/AStA\ Copyclient
-	fi
+	#if [ -f "/opt/AStA Copyclient/asta-copyclient" ]; then
+	#	nohup sudo -u ${cupsuser} DISPLAY=:0 XDG_RUNTIME_DIR=/run/user/$(id -u ${cupsuser}) "/opt/AStA Copyclient/asta-copyclient" &>/dev/null &
+	#elif [ -f "/Applications/AStA Copyclient.app/Contents/MacOS/AStA Copyclient" ]; then
+	#	nohup sudo -u ${cupsuser} /Applications/AStA\ Copyclient.app/Contents/MacOS/AStA\ Copyclient
+	#fi
 fi
 
 # remove residual files older than 5 minutes
