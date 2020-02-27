@@ -91,8 +91,22 @@ function createTray() {
 			}
 		}
 	]);
+	var contextMenuKiosk = Menu.buildFromTemplate([
+		{
+			label: l10n.getString(56),
+			click: function() {
+				if (! _windowCreated) {
+					createWindow();
+				} else {
+					mainWindow.show();
+				}
+			}
+		}
+	]);
 	tray.setToolTip(l10n.getString(0));
-	if (! _kiosk) {
+	if (_kiosk) {
+		tray.setContextMenu(contextMenuKiosk);
+	} else {
 		tray.setContextMenu(contextMenu);
 	}
 	tray.on('click', function() {
