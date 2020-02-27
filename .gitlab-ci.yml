@@ -29,7 +29,7 @@ build:
     - cp $IDRSAPUB $HOME/.ssh/id_rsa.pub
     - cp $KNOWNHOSTS $HOME/.ssh/known_hosts
     - git submodule init
-    - git submodule update
+    - git submodule update --force
     - npm install
     - make build-kiosk
     - make build-directprint
