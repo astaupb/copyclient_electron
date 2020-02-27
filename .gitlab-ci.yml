@@ -9,6 +9,7 @@ build:
     - tags
     - triggers
     - schedules
+    - web
   script:
     - apt update
     - curl -sL https://deb.nodesource.com/setup_13.x | bash -
