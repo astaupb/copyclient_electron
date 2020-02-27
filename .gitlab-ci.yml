@@ -1,4 +1,4 @@
-image: astait/copyclient_build_core:latest
+image: astait/copyclient_build_core:0.1.1
 
 stages:
   - build
