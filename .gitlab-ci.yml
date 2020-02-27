@@ -23,6 +23,8 @@ build:
     - pub global activate webdev
     - export PATH="$PATH":"$HOME/.pub-cache/bin"
     - npm install
+    - mv $MAKEMK includes/make.mk
+    - mv $CONFIGJS includes/config.js
     - make build-kiosk
   artifacts:
     paths:
