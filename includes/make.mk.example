@@ -15,9 +15,6 @@
 # You should have received a copy of the GNU Lesser General Public License
 # along with AStA Copyclient.  If not, see <http://www.gnu.org/licenses/>.
 
-VERSION=1.2.3
-directprint_left=12345 67890
-directprint_right=09876 54321
 deploy_user=foo
 deploy_host=bar
 dist_folder=/path/to/dist
