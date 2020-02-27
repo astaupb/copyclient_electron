@@ -1,9 +1,21 @@
-image: ubuntu:latest
+image: astait/copyclient_build_core:latest
 
 stages:
   - build
 
-build:
+before_script:
+  - cp $MAKEMK includes/make.mk
+  - cp $CONFIGJS includes/config.js
+  - mkdir -p $HOME/.ssh
+  - cp $IDRSA $HOME/.ssh/id_rsa
+  - cp $IDRSAPUB $HOME/.ssh/id_rsa.pub
+  - cp $KNOWNHOSTS $HOME/.ssh/known_hosts
+  - git submodule init
+  - git submodule update --force
+  - cp $MAKEMKNG src/make.mk
+  - npm install
+
+build-kiosk:
   stage: build
   only:
     - tags
@@ -11,34 +23,46 @@ build:
     - schedules
     - web
   script:
-    - dpkg --add-architecture i386
-    - apt update
-    - apt install -y apt-transport-https curl gnupg git rpm make jq sed binutils wine-stable wine32 nsis bsdtar
-    - curl -sL https://deb.nodesource.com/setup_13.x | bash -
-    - apt install -y nodejs
-    - sh -c 'curl https://dl-ssl.google.com/linux/linux_signing_key.pub | apt-key add -'
-    - sh -c 'curl https://storage.googleapis.com/download.dartlang.org/linux/debian/dart_unstable.list > /etc/apt/sources.list.d/dart_unstable.list'
-    - apt update
-    - apt install -y dart
-    - export PATH="$PATH:/usr/lib/dart/bin"
-    - pub global activate webdev
-    - export PATH="$PATH":"$HOME/.pub-cache/bin"
-    - cp $MAKEMK includes/make.mk
-    - cp $CONFIGJS includes/config.js
-    - mkdir -p $HOME/.ssh
-    - cp $IDRSA $HOME/.ssh/id_rsa
-    - cp $IDRSAPUB $HOME/.ssh/id_rsa.pub
-    - cp $KNOWNHOSTS $HOME/.ssh/known_hosts
-    - git submodule init
-    - git submodule update --force
-    - cp $MAKEMKNG src/make.mk
-    - npm install
     - make build-kiosk
-    - make build-directprint
-    - make build-linux
-    - make build-win
   artifacts:
     paths:
     - dist/kiosk
+
+build-directprint:
+  stage: build
+  only:
+    - tags
+    - triggers
+    - schedules
+    - web
+  script:
+    - make build-directprint
+  artifacts:
+    paths:
     - dist/directprint
-    - dist/public
+
+build-win:
+  stage: build
+  only:
+    - tags
+    - triggers
+    - schedules
+    - web
+  script:
+    - make build-win
+  artifacts:
+    paths:
+    - dist/public/windows
+
+build-linux:
+  stage: build
+  only:
+    - tags
+    - triggers
+    - schedules
+    - web
+  script:
+    - make build-linux
+  artifacts:
+    paths:
+    - dist/public/linux
