@@ -26,15 +26,6 @@ prepare-build:
     - mv $CONFIGJS includes/config.js
     - git submodule init
     - git submodule update
-
-build-kiosk:
-  stage: build
-  only:
-    - tags
-    - triggers
-    - schedules
-    - web
-  script:
     - npm install
     - make build-kiosk
   artifacts:
