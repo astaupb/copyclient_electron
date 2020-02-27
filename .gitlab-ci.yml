@@ -24,6 +24,7 @@ build:
     - export PATH="$PATH":"$HOME/.pub-cache/bin"
     - cp $MAKEMK includes/make.mk
     - cp $CONFIGJS includes/config.js
+    - mkdir -p $HOME/.ssh
     - cp $IDRSA $HOME/.ssh/id_rsa
     - cp $IDRSAPUB $HOME/.ssh/id_rsa.pub
     - cp $KNOWNHOSTS $HOME/.ssh/known_hosts
