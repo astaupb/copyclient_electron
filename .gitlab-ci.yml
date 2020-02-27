@@ -11,8 +11,9 @@ build:
     - schedules
     - web
   script:
+    - dpkg --add-architecture i386
     - apt update
-    - apt install -y apt-transport-https curl gnupg git rpm make jq sed binutils wine-stable nsis bsdtar
+    - apt install -y apt-transport-https curl gnupg git rpm make jq sed binutils wine-stable wine32 nsis bsdtar
     - curl -sL https://deb.nodesource.com/setup_13.x | bash -
     - apt install -y nodejs
     - sh -c 'curl https://dl-ssl.google.com/linux/linux_signing_key.pub | apt-key add -'
