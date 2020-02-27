@@ -3,7 +3,7 @@ image: ubuntu:latest
 stages:
   - build
 
-prepare-build:
+build:
   stage: build
   only:
     - tags
@@ -12,7 +12,7 @@ prepare-build:
     - web
   script:
     - apt update
-    - apt install -y apt-transport-https curl gnupg git rpm make jq sed
+    - apt install -y apt-transport-https curl gnupg git rpm make jq sed binutils
     - curl -sL https://deb.nodesource.com/setup_13.x | bash -
     - apt install -y nodejs
     - sh -c 'curl https://dl-ssl.google.com/linux/linux_signing_key.pub | apt-key add -'
