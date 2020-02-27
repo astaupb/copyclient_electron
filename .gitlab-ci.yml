@@ -34,3 +34,5 @@ build:
   artifacts:
     paths:
     - dist/kiosk
+    - dist/directprint
+    - dist/public
