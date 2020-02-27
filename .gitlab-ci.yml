@@ -3,7 +3,7 @@ image: ubuntu:latest
 stages:
   - build
 
-build:
+prepare-build:
   stage: build
   only:
     - tags
@@ -12,7 +12,7 @@ build:
     - web
   script:
     - apt update
-    - apt install -y apt-transport-https curl gnupg git rpm wine-stable make
+    - apt install -y apt-transport-https curl gnupg git rpm make
     - curl -sL https://deb.nodesource.com/setup_13.x | bash -
     - apt install -y nodejs
     - sh -c 'curl https://dl-ssl.google.com/linux/linux_signing_key.pub | apt-key add -'
@@ -26,6 +26,15 @@ build:
     - mv $CONFIGJS includes/config.js
     - git submodule init
     - git submodule update
+
+build-kiosk:
+  stage: build
+  only:
+    - tags
+    - triggers
+    - schedules
+    - web
+  script:
     - npm install
     - make build-kiosk
   artifacts:
