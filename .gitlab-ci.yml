@@ -22,11 +22,11 @@ build:
     - export PATH="$PATH:/usr/lib/dart/bin"
     - pub global activate webdev
     - export PATH="$PATH":"$HOME/.pub-cache/bin"
-    - npm install
     - mv $MAKEMK includes/make.mk
     - mv $CONFIGJS includes/config.js
     - git submodule init
     - git submodule update
+    - npm install
     - make build-kiosk
   artifacts:
     paths:
