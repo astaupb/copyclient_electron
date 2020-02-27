@@ -1,27 +1,27 @@
 image: ubuntu:latest
 
 stages:
-	- build
+  - build
 
 build:
-	stage: build
-	only:
-		- tags
-		- triggers
-		- schedules
-	script:
-		- apt update
-		- curl -sL https://deb.nodesource.com/setup_13.x | bash -
-		- apt install -y apt-transport-https curl gnupg git-core rpm wine nodejs make
-		- sh -c 'curl https://dl-ssl.google.com/linux/linux_signing_key.pub | apt-key add -'
-		- sh -c 'curl https://storage.googleapis.com/download.dartlang.org/linux/debian/dart_unstable.list > /etc/apt/sources.list.d/dart_unstable.list'
-		- apt update
-		- apt install -y dart
-		- export PATH="$PATH:/usr/lib/dart/bin"
-		- pub global activate webdev
-		- export PATH="$PATH":"$HOME/.pub-cache/bin"
-		- npm install
-		- make build-kiosk
-	artifacts:
-		paths:
-		- dist/kiosk
+  stage: build
+  only:
+    - tags
+    - triggers
+    - schedules
+  script:
+    - apt update
+    - curl -sL https://deb.nodesource.com/setup_13.x | bash -
+    - apt install -y apt-transport-https curl gnupg git-core rpm wine nodejs make
+    - sh -c 'curl https://dl-ssl.google.com/linux/linux_signing_key.pub | apt-key add -'
+    - sh -c 'curl https://storage.googleapis.com/download.dartlang.org/linux/debian/dart_unstable.list > /etc/apt/sources.list.d/dart_unstable.list'
+    - apt update
+    - apt install -y dart
+    - export PATH="$PATH:/usr/lib/dart/bin"
+    - pub global activate webdev
+    - export PATH="$PATH":"$HOME/.pub-cache/bin"
+    - npm install
+    - make build-kiosk
+  artifacts:
+    paths:
+    - dist/kiosk
