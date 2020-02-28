@@ -1,7 +1,10 @@
 image: astait/copyclient_build_core:0.1.1
 
+cache:
+  key: "$CI_JOB_STAGE-$CI_COMMIT_REF_SLUG"
+
 stages:
-  - build
+  - deploy
 
 before_script:
   - cp $MAKEMK includes/make.mk
@@ -15,8 +18,8 @@ before_script:
   - cp $MAKEMKNG src/make.mk
   - npm install
 
-build-kiosk:
-  stage: build
+deploy-kiosk:
+  stage: deploy
   only:
     - tags
     - triggers
@@ -24,12 +27,10 @@ build-kiosk:
     - web
   script:
     - make build-kiosk
-  artifacts:
-    paths:
-    - dist/kiosk
+    - make deploy-kiosk
 
-build-directprint:
-  stage: build
+deploy-directprint:
+  stage: deploy
   only:
     - tags
     - triggers
@@ -37,12 +38,10 @@ build-directprint:
     - web
   script:
     - make build-directprint
-  artifacts:
-    paths:
-    - dist/directprint
+    - make deploy-directprint
 
-build-win:
-  stage: build
+deploy-win:
+  stage: deploy
   only:
     - tags
     - triggers
@@ -50,12 +49,10 @@ build-win:
     - web
   script:
     - make build-win
-  artifacts:
-    paths:
-    - dist/public/windows
+    - make deploy-win
 
-build-linux:
-  stage: build
+deploy-linux:
+  stage: deploy
   only:
     - tags
     - triggers
@@ -63,6 +60,4 @@ build-linux:
     - web
   script:
     - make build-linux
-  artifacts:
-    paths:
-    - dist/public/linux
+    - make deploy-linux
