@@ -13,6 +13,9 @@ before_script:
   - cp $IDRSA $HOME/.ssh/id_rsa
   - cp $IDRSAPUB $HOME/.ssh/id_rsa.pub
   - cp $KNOWNHOSTS $HOME/.ssh/known_hosts
+  - chmod 600 $HOME/.ssh/id_rsa
+  - chmod 644 $HOME/.ssh/id_rsa.pub
+  - chmod 644 $HOME/.ssh/known_hosts
   - git submodule init
   - git submodule update --force
   - cp $MAKEMKNG src/make.mk
