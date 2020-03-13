@@ -28,7 +28,13 @@ $sed -ne :1 -e 'N;1,2b1' -e 'P;D' build.yaml > /tmp/build.yaml
 mv /tmp/build.yaml build.yaml
 echo "           - -DleftPrinter=$leftPrinter" >> build.yaml
 echo "           - -DrightPrinter=$rightPrinter" >> build.yaml
-make build
+
+if [ -z $DART_WORKAROUND ]; then
+	make build
+else
+	make build-workaround
+fi
+
 mv /tmp/build.yaml.orig build.yaml
 mkdir -p ../web
 cp -R build/* ../web/
