@@ -28,7 +28,7 @@ cd /d %~dp0
 echo Erstelle Spoolverzeichnis, wenn noch nicht vorhanden
 if not exist "%systemdrive%\astaprint" (
 	mkdir "%systemdrive%\astaprint"
-	icacls "%systemdrive%\astaprint" /grant *S-1-5-32-545:(OI)(CI)F /T
+	icacls "%systemdrive%\astaprint" /grant "*S-1-5-32-545:(OI)(CI)F" /T
 )
 
 :: Installing printer port and driver (PDF on W10, XPS else)
