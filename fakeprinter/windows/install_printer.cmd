@@ -26,7 +26,10 @@ cd /d %~dp0
 
 :: Creating printer folder
 echo Erstelle Spoolverzeichnis, wenn noch nicht vorhanden
-if not exist "%systemdrive%\astaprint" mkdir "%systemdrive%\astaprint"
+if not exist "%systemdrive%\astaprint" (
+	mkdir "%systemdrive%\astaprint"
+	icacls "%systemdrive%\astaprint" /grant *S-1-5-32-545:(OI)(CI)F /T
+)
 
 :: Installing printer port and driver (PDF on W10, XPS else)
 for /f "tokens=2 delims=," %%i in ('wmic os get caption^,version /format:csv') do set OS=%%i
