@@ -1,4 +1,4 @@
-image: astait/copyclient_build_core:0.1.1
+image: astait/copyclient_build_core:0.2.0
 
 cache:
   key: "$CI_JOB_STAGE-$CI_COMMIT_REF_SLUG"
