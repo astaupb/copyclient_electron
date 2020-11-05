@@ -46,7 +46,7 @@
 		"command-line-args": "^5.1.1",
 		"drag-drop": "^5.0.2",
 		"electron-better-dialog": "^1.0.6",
-		"jquery": "^3.5.1",
+		"jquery": "^3.5.0",
 		"mousetrap": "^1.6.5",
 		"underscore": "^1.9.2"
 	},
