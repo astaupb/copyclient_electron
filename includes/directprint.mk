@@ -1,2 +1,2 @@
-directprint_left=44328 44321
-directprint_right=44330 44334
+directprint_left=44328
+directprint_right=44324 44334
