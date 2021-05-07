@@ -48,7 +48,7 @@
 		"electron-better-dialog": "^1.0.6",
 		"jquery": "^3.5.1",
 		"mousetrap": "^1.6.5",
-		"underscore": "^1.9.2"
+		"underscore": "^1.12.1"
 	},
 	"build": {
 		"appId": "de.upb.asta.copyclient",
